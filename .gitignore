@@ -1,0 +1,5 @@
+# 내부 문서·백엔드 소스는 공개 저장소에 올리지 않음
+기획안*.md
+apps-script/
+.claude/
+.DS_Store

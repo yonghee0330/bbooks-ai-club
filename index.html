@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>부천 AI 프로젝트 클럽 1기</title>
+<meta name="description" content="3개월, 내 일에 AI를 붙여 숫자로 증명하기. 비북스에서 매주 토요일, 8명이 각자의 숫자를 들고 모이는 AI 작업실. 10/16 모집 마감.">
+<meta property="og:title" content="부천 AI 프로젝트 클럽 1기 · 멤버 모집">
+<meta property="og:description" content="강의 없는 AI 작업실. 매주 토요일 비북스, 10회, 8명. 3개월 뒤 숫자로 보여주기.">
+<meta name="theme-color" content="#16120f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23221b16'/%3E%3Cpath d='M7 22l6-6 4 4 8-9' stroke='%23e2552b' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+/* ---------- HERO ---------- */
+.hero { background: var(--night); color: var(--night-ink); position: relative; overflow: hidden; padding: clamp(56px, 9vw, 110px) 0 clamp(64px, 9vw, 104px); isolation: isolate; }
+.hero::before { content: ''; position: absolute; inset: 0; z-index: -2;
+  background-image: linear-gradient(rgba(243,237,226,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(243,237,226,.05) 1px, transparent 1px);
+  background-size: 48px 48px; mask-image: radial-gradient(ellipse 80% 70% at 60% 40%, #000 30%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 80% 70% at 60% 40%, #000 30%, transparent 75%); }
+.glow { position: absolute; z-index: -1; width: 620px; height: 620px; border-radius: 50%; filter: blur(90px); opacity: .5; pointer-events: none; }
+.glow.a { background: #e2552b; top: -260px; right: -120px; animation: drift 14s ease-in-out infinite alternate; opacity: .38; }
+.glow.b { background: #4c5fd5; bottom: -320px; left: -200px; animation: drift 18s ease-in-out infinite alternate-reverse; opacity: .28; }
+@keyframes drift { to { transform: translate(-80px, 60px) scale(1.15); } }
+.hero-grid { display: grid; grid-template-columns: 1.12fr .88fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
+@media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+.hero .eyebrow { color: #f5a27f; }
+.live-dot { width: 8px; height: 8px; border-radius: 50%; background: #5fd38d; box-shadow: 0 0 0 0 rgba(95,211,141,.6); animation: ping 1.8s infinite; }
+@keyframes ping { to { box-shadow: 0 0 0 10px rgba(95,211,141,0); } }
+.hero h1 { font: 800 clamp(38px, 6.6vw, 80px)/1.08 var(--sans); letter-spacing: -.05em; margin: 22px 0 24px; }
+.hero h1 .line { display: block; overflow: hidden; padding-bottom: .06em; }
+.hero h1 .line > span { display: inline-block; transform: translateY(105%); animation: rise 1s cubic-bezier(.2,.75,.15,1) forwards; animation-delay: calc(.12s + var(--i) * .13s); }
+@keyframes rise { to { transform: none; } }
+.hero h1 .num-word { font-family: var(--serif); color: #ff7a4d; position: relative; }
+.hero h1 .num-word::after { content: ''; position: absolute; left: 0; right: 0; bottom: .02em; height: .09em; background: currentColor; transform: scaleX(0); transform-origin: left; animation: draw .8s 1.1s cubic-bezier(.6,0,.2,1) forwards; }
+@keyframes draw { to { transform: scaleX(1); } }
+.hero .sub { color: var(--night-muted); font-size: clamp(16px, 1.8vw, 19px); max-width: 560px; margin: 0 0 32px; opacity: 0; animation: fade .9s .7s forwards; }
+.hero .sub b { color: var(--night-ink); font-weight: 600; }
+@keyframes fade { to { opacity: 1; } }
+.meta { display: grid; grid-template-columns: repeat(4, auto); gap: 0; border-top: 1px solid rgba(243,237,226,.14); border-bottom: 1px solid rgba(243,237,226,.14); margin-bottom: 32px; opacity: 0; animation: fade .9s .85s forwards; }
+.meta div { padding: 14px 18px 14px 0; }
+.meta div + div { padding-left: 18px; border-left: 1px solid rgba(243,237,226,.14); }
+.meta dt { font: 600 11px/1 var(--mono); letter-spacing: .1em; color: var(--night-muted); text-transform: uppercase; margin-bottom: 8px; }
+.meta dd { margin: 0; font-weight: 600; font-size: 15px; line-height: 1.35; }
+@media (max-width: 600px) { .meta { grid-template-columns: 1fr 1fr; } .meta div:nth-child(3) { border-left: 0; padding-left: 0; } .meta div:nth-child(n+3) { border-top: 1px solid rgba(243,237,226,.14); } }
+.cta-row { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center; opacity: 0; animation: fade .9s 1s forwards; }
+.cta-row .btn-ghost { color: var(--night-ink); }
+.cd { display: flex; gap: 10px; font-size: 12px; color: var(--night-muted); align-items: baseline; }
+.cd b { font: 600 22px/1 var(--mono); color: var(--night-ink); margin-right: 2px; }
+.cd-label { font: 600 11px/1 var(--mono); color: var(--night-muted); letter-spacing: .08em; display: block; margin-bottom: 8px; }
+
+/* hero number card */
+.ncard { position: relative; background: linear-gradient(160deg, rgba(243,237,226,.09), rgba(243,237,226,.03)); border: 1px solid rgba(243,237,226,.14); border-radius: 22px; padding: 24px 24px 18px;
+  box-shadow: 0 40px 80px -40px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.06); backdrop-filter: blur(10px); opacity: 0; transform: translateY(30px) rotate(1.5deg); animation: cardIn 1.1s .5s cubic-bezier(.2,.7,.2,1) forwards; }
+@keyframes cardIn { to { opacity: 1; transform: rotate(-1deg); } }
+.ncard-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 18px; }
+.ncard .chip { background: rgba(243,237,226,.1); color: var(--night-ink); transition: color .4s; }
+.ncard .ex { font: 500 11px/1 var(--mono); color: var(--night-muted); letter-spacing: .06em; }
+.ncard .metric { font-size: 14px; color: var(--night-muted); min-height: 1.5em; transition: opacity .3s; }
+.ncard .bignum { display: flex; align-items: baseline; gap: 12px; margin: 4px 0 6px; }
+.ncard .bignum .v { font: 500 clamp(56px, 8vw, 84px)/1 var(--display); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.ncard .bignum .u { font-size: 18px; color: var(--night-muted); }
+.ncard .delta { font: 600 13px/1 var(--mono); padding: 6px 10px; border-radius: 999px; margin-left: auto; align-self: center; transition: background .4s, color .4s; }
+.ncard svg { width: 100%; height: auto; overflow: visible; }
+.ncard .axis text { font: 500 9px var(--mono); fill: var(--night-muted); }
+.ncard .gl { stroke: rgba(243,237,226,.08); }
+.ncard .path { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.ncard .area { opacity: .18; }
+.ncard .dot { transition: opacity .3s; }
+.ncard .tgt { stroke-dasharray: 3 4; stroke: rgba(243,237,226,.35); }
+.ncard .tgt-l { font: 600 9px var(--mono); fill: rgba(243,237,226,.6); }
+.ncard-foot { display: flex; justify-content: space-between; font: 500 11px/1 var(--mono); color: var(--night-muted); margin-top: 12px; }
+.ncard .pager { display: flex; gap: 6px; }
+.ncard .pager i { width: 18px; height: 3px; border-radius: 2px; background: rgba(243,237,226,.18); overflow: hidden; position: relative; }
+.ncard .pager i.on::after { content: ''; position: absolute; inset: 0; background: var(--night-ink); transform-origin: left; animation: bar 5s linear forwards; }
+@keyframes bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.floaty { position: absolute; font: 600 12px/1 var(--mono); padding: 8px 12px; border-radius: 10px; background: var(--night-2); border: 1px solid rgba(243,237,226,.14); color: var(--night-ink); box-shadow: 0 20px 40px -20px #000; animation: bob 6s ease-in-out infinite; white-space: nowrap; }
+.floaty.f1 { top: -18px; left: -26px; } .floaty.f2 { bottom: 54px; right: -30px; animation-delay: -3s; }
+.floaty em { font-style: normal; color: #5fd38d; }
+@keyframes bob { 50% { transform: translateY(-10px); } }
+@media (max-width: 900px) { .floaty { display: none; } .ncard { max-width: 520px; } }
+
+/* marquee */
+.marquee { background: var(--night); color: var(--night-muted); border-top: 1px solid rgba(243,237,226,.08); overflow: hidden; padding: 18px 0; }
+.marquee .track { display: flex; gap: 40px; width: max-content; animation: scroll 40s linear infinite; }
+.marquee span { font: 500 14px/1 var(--mono); white-space: nowrap; display: inline-flex; align-items: center; gap: 40px; }
+.marquee span::after { content: '✳'; color: #ff7a4d; }
+.marquee b { color: var(--night-ink); font-weight: 600; }
+@keyframes scroll { to { transform: translateX(-50%); } }
+
+/* ---------- STATS + PRINCIPLES ---------- */
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line); margin: 48px 0 64px; }
+.stats > div { padding: 28px 24px 26px 0; }
+.stats > div + div { padding-left: 24px; border-left: 1px solid var(--line); }
+.stats .v { font: 400 clamp(56px, 9vw, 104px)/.9 var(--display); letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.stats .v small { font: 600 clamp(16px, 2vw, 22px) var(--sans); margin-left: 4px; letter-spacing: -.02em; }
+.stats .k { margin-top: 14px; color: var(--ink-2); font-size: 15px; }
+@media (max-width: 640px) { .stats { grid-template-columns: 1fr; } .stats > div + div { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); } }
+.principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 860px) { .principles { grid-template-columns: 1fr; } }
+.pr { padding: 28px; position: relative; overflow: hidden; }
+.pr .ico { height: 76px; margin-bottom: 18px; }
+.pr h3 { font-size: 21px; letter-spacing: -.03em; margin: 0 0 8px; line-height: 1.35; }
+.pr h3 s { color: var(--muted); text-decoration-thickness: 2px; text-decoration-color: var(--signal); font-weight: 500; }
+.pr p { margin: 0; color: var(--ink-2); font-size: 15px; }
+.pr .n { position: absolute; top: 22px; right: 24px; font: 600 12px var(--mono); color: var(--muted); }
+.ico-share circle { animation: pulse 3s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+.ico-share circle:nth-child(2) { animation-delay: .4s; } .ico-share circle:nth-child(3) { animation-delay: .8s; } .ico-share circle:nth-child(4) { animation-delay: 1.2s; }
+@keyframes pulse { 50% { transform: scale(1.18); } }
+.ico-share line { stroke-dasharray: 4 4; animation: dash 1.2s linear infinite; }
+@keyframes dash { to { stroke-dashoffset: -16; } }
+.ico-rot { animation: spin 12s linear infinite; transform-origin: 38px 38px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.ico-rot-c { animation: spin 12s linear infinite reverse; transform-origin: center; transform-box: fill-box; }
+.ico-prob .p { animation: probe 3.6s ease-in-out infinite; }
+@keyframes probe { 0%,100% { transform: translate(0,0); } 33% { transform: translate(14px, -6px); } 66% { transform: translate(-8px, 8px); } }
+
+/* ---------- TYPES ---------- */
+.types { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
+@media (max-width: 860px) { .types { grid-template-columns: 1fr; } }
+.type { padding: 26px; display: flex; flex-direction: column; gap: 12px; }
+.type .mini { height: 120px; margin: -4px -6px 4px; }
+.type .mini .ln { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 600; stroke-dashoffset: 600; transition: stroke-dashoffset 2s cubic-bezier(.4,0,.2,1) .3s; }
+.type.in .mini .ln { stroke-dashoffset: 0; }
+.type .mini .ar { opacity: 0; transition: opacity .8s 1.6s; }
+.type.in .mini .ar { opacity: 1; }
+.type .mini .base { stroke: var(--line); stroke-dasharray: 3 4; }
+.type .mini text { font: 600 10px var(--mono); fill: var(--muted); }
+.type h3 { margin: 0; font-size: 22px; letter-spacing: -.03em; display: flex; align-items: center; gap: 10px; }
+.type h3 .arrow { font: 600 13px var(--mono); padding: 4px 8px; border-radius: 6px; background: var(--rule); }
+.type p { margin: 0; color: var(--ink-2); font-size: 15px; }
+.type .eg { font-size: 13px; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 12px; margin-top: auto; }
+.type .eg b { color: var(--ink); font-weight: 600; }
+.promise { margin-top: 28px; display: flex; gap: 14px; align-items: flex-start; padding: 18px 22px; border-radius: var(--r); border: 1.5px dashed var(--line); font-size: 15px; color: var(--ink-2); }
+.promise b { color: var(--ink); }
+.promise .st { flex: none; font: 700 11px/1 var(--mono); color: var(--signal); border: 1.5px solid var(--signal); padding: 6px 8px; border-radius: 6px; transform: rotate(-4deg); }
+
+/* ---------- ROADMAP ---------- */
+.road { background: var(--night); color: var(--night-ink); overflow: hidden; }
+.road .lead { color: var(--night-muted); }
+.road .eyebrow { color: #f5a27f; }
+.phasebar { display: grid; grid-template-columns: 3fr 4fr 3fr; gap: 6px; margin: 56px 0 12px; }
+.phasebar > div { position: relative; }
+.phasebar .bar { height: 8px; border-radius: 4px; background: rgba(243,237,226,.1); overflow: hidden; }
+.phasebar .bar i { display: block; height: 100%; background: var(--pc); transform: scaleX(0); transform-origin: left; transition: transform 1.2s cubic-bezier(.6,0,.2,1); transition-delay: var(--d); }
+.road.in .phasebar .bar i { transform: scaleX(1); }
+.phasebar h4 { margin: 14px 0 2px; font-size: 18px; display: flex; gap: 10px; align-items: baseline; }
+.phasebar h4 .mono { font-size: 11px; color: var(--night-muted); font-weight: 500; }
+.phasebar p { margin: 0; font-size: 13px; color: var(--night-muted); }
+@media (max-width: 720px) { .phasebar { grid-template-columns: 1fr; gap: 18px; } }
+.sessions { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 40px; }
+@media (max-width: 980px) { .sessions { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 460px) { .sessions { grid-template-columns: 1fr; } }
+.ss { background: var(--night-2); border: 1px solid rgba(243,237,226,.08); border-radius: 14px; padding: 18px 16px 16px; position: relative; overflow: hidden; transition: transform .3s, border-color .3s; min-height: 168px; display: flex; flex-direction: column; }
+.ss:hover { transform: translateY(-4px); border-color: var(--pc); }
+.ss::before { content: ''; position: absolute; left: 0; top: 0; height: 3px; width: 100%; background: var(--pc); transform: scaleX(0); transform-origin: left; transition: transform .6s var(--d2, 0s); }
+.ss.in::before { transform: scaleX(1); }
+.ss .top { display: flex; justify-content: space-between; align-items: baseline; font: 500 11px var(--mono); color: var(--night-muted); }
+.ss .top b { font: 400 30px/1 var(--display); color: var(--night-ink); }
+.ss h5 { font-size: 15px; margin: 14px 0 8px; line-height: 1.4; letter-spacing: -.02em; }
+.ss p { margin: auto 0 0; font-size: 12px; color: var(--night-muted); line-height: 1.5; }
+.ss.demo { background: linear-gradient(150deg, #2f8a5b, #1d5a3b); border-color: transparent; }
+.ss.demo .top, .ss.demo p { color: rgba(255,255,255,.75); }
+.ss.demo .badge { position: absolute; right: -28px; top: 14px; transform: rotate(35deg); background: #f5c445; color: #2a2003; font: 700 10px var(--mono); padding: 4px 32px; }
+
+/* ---------- WEEKLY ---------- */
+.weekly { display: grid; grid-template-columns: 300px 1fr; gap: clamp(32px, 6vw, 80px); align-items: center; margin-top: 48px; }
+@media (max-width: 860px) { .weekly { grid-template-columns: 1fr; } .clock { max-width: 280px; margin: auto; } }
+.clock { position: relative; aspect-ratio: 1; }
+.clock svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.clock .seg { fill: none; stroke-width: 26; transition: stroke-dashoffset 1s cubic-bezier(.6,0,.2,1); }
+.clock .hand { transform-origin: 150px 150px; transition: transform .7s cubic-bezier(.6,0,.2,1); }
+.clock .ctr { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; pointer-events: none; }
+.clock .ctr b { font: 400 54px/1 var(--display); display: block; letter-spacing: -.03em; }
+.clock .ctr span { font: 500 12px var(--mono); color: var(--muted); }
+.wsteps { display: grid; gap: 10px; }
+.wstep { display: grid; grid-template-columns: 64px 1fr auto; gap: 18px; align-items: center; padding: 18px 20px; border-radius: var(--r); border: 1.5px solid var(--line); background: var(--card); cursor: default; transition: border-color .25s, transform .25s; }
+.wstep.on { border-color: var(--wc); transform: translateX(6px); }
+.wstep .t { font: 600 13px/1.3 var(--mono); color: var(--muted); }
+.wstep h4 { margin: 0 0 2px; font-size: 17px; letter-spacing: -.02em; }
+.wstep p { margin: 0; font-size: 14px; color: var(--ink-2); }
+.wstep .m { font: 400 30px/1 var(--display); color: var(--wc); }
+.wstep .m small { font: 500 12px var(--sans); color: var(--muted); }
+.roles { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; font-size: 14px; color: var(--ink-2); align-items: center; }
+
+/* ---------- PROJECT IDEAS ---------- */
+.ideas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; margin-top: 48px; }
+@media (max-width: 860px) { .ideas { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .ideas { grid-template-columns: 1fr; } }
+.idea { background: var(--card); padding: 26px 24px; position: relative; overflow: hidden; min-height: 190px; display: flex; flex-direction: column; }
+.idea .no { font: 500 12px var(--mono); color: var(--muted); }
+.idea h3 { font-size: 20px; letter-spacing: -.03em; margin: 12px 0 6px; }
+.idea p { margin: 0; color: var(--ink-2); font-size: 14px; }
+.idea .metric { margin-top: auto; padding-top: 18px; font: 600 13px/1.4 var(--mono); color: var(--signal); display: flex; gap: 8px; align-items: center; }
+.idea .metric::before { content: '→'; }
+.idea::after { content: ''; position: absolute; inset: auto 0 0 0; height: 3px; background: var(--signal); transform: scaleX(0); transform-origin: left; transition: transform .4s; }
+.idea:hover::after { transform: scaleX(1); }
+
+/* ---------- SAMPLE ---------- */
+.sample { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(28px, 5vw, 64px); align-items: start; margin-top: 48px; }
+@media (max-width: 900px) { .sample { grid-template-columns: 1fr; } }
+.sample-hero { padding: 30px; background: var(--ink); color: var(--paper); border: 0; position: sticky; top: 84px; }
+.sample-hero .who { display: flex; gap: 12px; align-items: center; font-size: 14px; color: color-mix(in srgb, var(--paper) 70%, transparent); }
+.sample-hero .av { width: 40px; height: 40px; border-radius: 50%; background: var(--signal); color: #fff; display: grid; place-items: center; font-weight: 700; }
+.sample-hero h3 { font-size: 26px; letter-spacing: -.03em; margin: 22px 0 6px; }
+.sample-hero .goal { margin-top: 26px; padding-top: 22px; border-top: 1px solid rgba(243,237,226,.18); }
+.sample-hero .goal .v { font: 400 92px/.9 var(--display); letter-spacing: -.04em; }
+.sample-hero .goal .v small { font: 600 22px var(--sans); }
+.sample-hero .goal p { margin: 8px 0 0; font-size: 14px; color: color-mix(in srgb, var(--paper) 70%, transparent); }
+@media (max-width: 900px) { .sample-hero { position: static; } }
+.areas { display: grid; gap: 14px; }
+.area { padding: 24px; }
+.area .h { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 14px; }
+.area h4 { margin: 0; font-size: 18px; letter-spacing: -.02em; }
+.area .when { font: 500 12px var(--mono); color: var(--muted); }
+.goals { display: grid; gap: 12px; }
+.g { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; font-size: 14px; }
+.g .gv { font: 600 13px var(--mono); }
+.g .track { grid-column: 1/-1; height: 6px; border-radius: 3px; background: var(--rule); overflow: hidden; }
+.g .track i { display: block; height: 100%; width: 100%; background: repeating-linear-gradient(90deg, var(--signal) 0 8px, transparent 8px 11px); transform: scaleX(0); transform-origin: left; transition: transform 1.4s cubic-bezier(.6,0,.2,1) var(--d, .2s); opacity: .85; }
+.area.in .g .track i { transform: scaleX(1); }
+.note-s { font-size: 13px; color: var(--muted); margin-top: 14px; }
+
+/* ---------- FIT ---------- */
+.fit { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; }
+@media (max-width: 760px) { .fit { grid-template-columns: 1fr; } }
+.fit .card { padding: 26px 28px; }
+.fit h3 { margin: 0 0 14px; font-size: 18px; display: flex; gap: 10px; align-items: center; }
+.fit ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.fit li { display: flex; gap: 10px; font-size: 15px; color: var(--ink-2); }
+.fit li::before { content: '✓'; font-weight: 700; color: var(--ok); flex: none; }
+.fit .no li::before { content: '—'; color: var(--muted); }
+
+/* ---------- PROCESS ---------- */
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 48px; position: relative; }
+.steps::before { content: ''; position: absolute; top: 15px; left: 16px; right: 16px; height: 2px; background: var(--line); }
+.steps .prog { position: absolute; top: 15px; left: 16px; height: 2px; background: var(--signal); width: 0; transition: width 1.6s cubic-bezier(.6,0,.2,1) .3s; }
+.steps.in .prog { width: calc(var(--p) * (100% - 32px)); }
+.step { position: relative; padding-right: 16px; }
+.step .pt { width: 32px; height: 32px; border-radius: 50%; background: var(--paper); border: 2px solid var(--line); display: grid; place-items: center; font: 600 12px var(--mono); position: relative; z-index: 1; }
+.step.done .pt { background: var(--signal); border-color: var(--signal); color: #fff; }
+.step.now .pt { border-color: var(--signal); color: var(--signal); }
+.step .d { font: 600 13px var(--mono); margin: 16px 0 4px; }
+.step h4 { margin: 0 0 4px; font-size: 17px; }
+.step p { margin: 0; font-size: 14px; color: var(--ink-2); }
+@media (max-width: 760px) {
+  .steps { grid-template-columns: 1fr; gap: 26px; }
+  .steps::before { top: 16px; bottom: 16px; left: 15px; right: auto; width: 2px; height: auto; }
+  .steps .prog { display: none; }
+  .step { padding-left: 52px; } .step .pt { position: absolute; left: 0; top: 0; } .step .d { margin-top: 4px; }
+}
+.select { display: grid; grid-template-columns: 1.2fr .8fr; gap: 16px; margin-top: 48px; }
+@media (max-width: 860px) { .select { grid-template-columns: 1fr; } }
+.select .card { padding: 26px 28px; }
+.select h3 { margin: 0 0 6px; font-size: 18px; }
+.select ol { margin: 14px 0 0; padding: 0; list-style: none; counter-reset: c; display: grid; gap: 12px; }
+.select li { counter-increment: c; display: grid; grid-template-columns: 30px 1fr; gap: 10px; font-size: 15px; }
+.select li::before { content: counter(c); width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: var(--paper); display: grid; place-items: center; font: 600 12px var(--mono); }
+.select li b { display: block; }
+.select li span { color: var(--muted); font-size: 13px; }
+.fee dl { margin: 14px 0 0; display: grid; gap: 14px; }
+.fee dt { font: 600 11px var(--mono); color: var(--muted); letter-spacing: .08em; }
+.fee dd { margin: 4px 0 0; font-size: 15px; }
+
+/* ---------- FAQ ---------- */
+.faq { margin-top: 40px; border-top: 1px solid var(--ink); }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { list-style: none; cursor: pointer; padding: 22px 44px 22px 0; font-weight: 600; font-size: 17px; position: relative; letter-spacing: -.02em; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: ''; position: absolute; right: 8px; top: 50%; width: 14px; height: 14px; margin-top: -7px;
+  background: linear-gradient(currentColor, currentColor) center/14px 2px no-repeat, linear-gradient(currentColor, currentColor) center/2px 14px no-repeat; transition: transform .3s; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq .a { padding: 0 0 22px; color: var(--ink-2); font-size: 15px; max-width: 760px; }
+.faq .a p { margin: 0 0 8px; }
+
+/* ---------- FINAL ---------- */
+.final { background: var(--night); color: var(--night-ink); text-align: center; overflow: hidden; position: relative; isolation: isolate; }
+.final h2 { font: 800 clamp(34px, 6vw, 72px)/1.1 var(--sans); letter-spacing: -.05em; margin: 18px 0 20px; }
+.final h2 em { font-style: normal; font-family: var(--serif); color: #ff7a4d; }
+.final .lead { margin: 0 auto 34px; color: var(--night-muted); }
+.final .cd { justify-content: center; margin-top: 30px; }
+.final .eyebrow { color: #f5a27f; }
+.final .glow.a { top: auto; bottom: -380px; right: 50%; transform: translateX(50%); }
+.sticky-cta { position: fixed; z-index: 40; left: 50%; bottom: 16px; transform: translate(-50%, 120%); transition: transform .4s cubic-bezier(.2,.7,.2,1); display: flex; gap: 12px; align-items: center;
+  background: var(--ink); color: var(--paper); padding: 8px 8px 8px 20px; border-radius: 999px; box-shadow: 0 20px 40px -16px rgba(0,0,0,.5); font-size: 14px; white-space: nowrap; }
+.sticky-cta.show { transform: translate(-50%, 0); }
+.sticky-cta .t { font: 600 13px var(--mono); }
+@media (max-width: 420px) { .sticky-cta .lbl { display: none; } }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="./"><span class="brand-mark">AI</span>부천 AI 프로젝트 클럽 <small>1기 · 비북스</small></a>
+    <nav class="nav" aria-label="주요">
+      <a href="#about">소개</a>
+      <a href="#roadmap">로드맵</a>
+      <a href="#sample">샘플</a>
+      <a href="#faq">FAQ</a>
+      <a href="members.html">멤버 라운지</a>
+      <a class="btn btn-primary btn-sm" href="apply.html">신청하기</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="glow a"></div><div class="glow b"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><i class="live-dot"></i>비북스 · 1기 멤버 모집 중</span>
+      <h1>
+        <span class="line"><span style="--i:0">3개월,</span></span>
+        <span class="line"><span style="--i:1">내 일에 AI를 붙여</span></span>
+        <span class="line"><span style="--i:2"><span class="num-word">숫자</span>로 증명하기</span></span>
+      </h1>
+      <p class="sub">강의 없는 AI 작업실. <b>매주 토요일 비북스</b>에서 8명이 각자의 프로젝트와 숫자 하나를 들고 모입니다. 3개월 뒤, 무엇이 달라졌는지 <b>숫자로</b> 보여줍니다.</p>
+      <dl class="meta">
+        <div><dt>When</dt><dd>토 14:00–16:00</dd></div>
+        <div><dt>Period</dt><dd>10.17 – 12.19<br><span class="muted" style="color:var(--night-muted);font-weight:500">총 10회</span></dd></div>
+        <div><dt>Seats</dt><dd>8명</dd></div>
+        <div><dt>Where</dt><dd>비북스<br><span style="color:var(--night-muted);font-weight:500">부천 원미동</span></dd></div>
+      </dl>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="apply.html">1기 신청하기 <span class="arr">→</span></a>
+        <div><span class="cd-label">마감 10/16(금) 12:00 까지</span><div class="cd" data-countdown></div></div>
+      </div>
+    </div>
+
+    <div style="position:relative">
+      <div class="floaty f1">week 06 · <em>▲ +38%</em></div>
+      <div class="floaty f2">baseline → target</div>
+      <article class="ncard" aria-label="숫자 진척 예시" id="ncard">
+        <div class="ncard-top"><span class="chip" id="nc-type"><i></i>절감형</span><span class="ex">EXAMPLE · 예시</span></div>
+        <div class="metric" id="nc-metric"></div>
+        <div class="bignum"><span class="v" id="nc-v">0</span><span class="u" id="nc-u"></span><span class="delta" id="nc-d"></span></div>
+        <svg viewBox="0 0 320 150" id="nc-svg" aria-hidden="true"></svg>
+        <div class="ncard-foot"><span id="nc-cap">W1 시작값 → W10 데모데이</span><span class="pager" id="nc-pager"><i></i><i></i><i></i></span></div>
+      </article>
+    </div>
+  </div>
+</section>
+<div class="marquee" aria-hidden="true"><div class="track" id="marquee"></div></div>
+
+<!-- ABOUT -->
+<section class="block" id="about">
+  <div class="wrap">
+    <span class="eyebrow" data-reveal>What is this</span>
+    <h2 class="h2" data-reveal style="--d:.05s">배우러 오는 곳이 아니라,<br><em>만들러</em> 오는 곳입니다.</h2>
+    <p class="lead" data-reveal style="--d:.1s">각자 이미 쓰고 있는 AI 도구로 내 일에 붙일 프로젝트 하나를 정하고, 매주 숫자를 확인하며 3개월을 함께 갑니다. 진행자도 같은 멤버로 숫자를 냅니다.</p>
+
+    <div class="stats" data-reveal>
+      <div><div class="v"><span data-count="10">0</span><small>회</small></div><div class="k">10월 17일부터 12월 19일까지 매주 토요일</div></div>
+      <div><div class="v"><span data-count="8">0</span><small>명</small></div><div class="k">서로의 작업을 깊게 볼 수 있는 인원</div></div>
+      <div><div class="v"><span data-count="1">0</span><small>개의 숫자</small></div><div class="k">3개월 동안 변화를 보여줄 핵심 숫자 하나</div></div>
+    </div>
+
+    <div class="principles">
+      <article class="card pr" data-reveal>
+        <span class="n">01</span>
+        <svg class="ico ico-share" viewBox="0 0 120 76" aria-hidden="true"><g fill="none" stroke="var(--line)" stroke-width="1.5"><line x1="30" y1="38" x2="60" y2="16"/><line x1="60" y1="16" x2="90" y2="38"/><line x1="90" y1="38" x2="60" y2="60"/><line x1="60" y1="60" x2="30" y2="38"/><line x1="30" y1="38" x2="90" y2="38"/></g><g><circle cx="30" cy="38" r="9" fill="var(--c-design)"/><circle cx="60" cy="16" r="9" fill="var(--signal)"/><circle cx="90" cy="38" r="9" fill="var(--c-prove)"/><circle cx="60" cy="60" r="9" fill="var(--ink)"/></g></svg>
+        <h3><s>강의</s> → 공유</h3>
+        <p>아무도 가르치지 않아요. 각자 해본 것을 실제 작업 화면으로 보여주고, 막힌 건 같이 풉니다.</p>
+      </article>
+      <article class="card pr" data-reveal style="--d:.1s">
+        <span class="n">02</span>
+        <svg class="ico ico-prob" viewBox="0 0 120 76" aria-hidden="true"><rect x="40" y="18" width="40" height="40" rx="8" fill="var(--ink)"/><text x="60" y="44" text-anchor="middle" fill="var(--paper)" font-family="JetBrains Mono" font-size="16" font-weight="600">?</text><g class="p"><circle cx="22" cy="20" r="6" fill="none" stroke="var(--signal)" stroke-width="2"/><circle cx="98" cy="58" r="6" fill="none" stroke="var(--c-design)" stroke-width="2"/><circle cx="100" cy="16" r="4" fill="var(--c-prove)"/></g></svg>
+        <h3><s>도구</s> → 문제</h3>
+        <p>“이 도구 써봤어요”보다 “이 문제를 이렇게 풀었어요”. ChatGPT든 Claude든 상관없이, 문제를 중심으로 모입니다.</p>
+      </article>
+      <article class="card pr" data-reveal style="--d:.2s">
+        <span class="n">03</span>
+        <svg class="ico" viewBox="0 0 120 76" aria-hidden="true"><g transform="translate(22 0)"><g class="ico-rot"><circle cx="38" cy="38" r="30" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="4 5"/><circle cx="38" cy="8" r="8" fill="var(--signal)"/><circle cx="64" cy="53" r="8" fill="var(--c-design)"/><circle cx="12" cy="53" r="8" fill="var(--c-prove)"/></g></g></svg>
+        <h3>역할은 돌아갑니다</h3>
+        <p>진행자 · 기록자 · 발표자를 매주 순번제로. 모두가 한 번씩 이끌고, 기록하고, 보여줍니다.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- TYPES -->
+<section class="block" id="numbers" style="padding-top:0">
+  <div class="wrap">
+    <span class="eyebrow" data-reveal>How we measure</span>
+    <h2 class="h2" data-reveal>성과는 수익이 아니라,<br><em>숫자 하나</em>의 변화.</h2>
+    <p class="lead" data-reveal>세 유형 중 하나를 골라 핵심 숫자 1개와 보조 숫자 1~2개를 정합니다. 3회차까지 시작값을 기록하고, 매주 토요일 체크인에서 함께 봅니다.</p>
+    <div class="types">
+      <article class="card type" data-reveal>
+        <svg class="mini" viewBox="0 0 280 120" aria-hidden="true">
+          <line class="base" x1="10" y1="22" x2="270" y2="22"/>
+          <path class="ln" stroke="var(--c-design)" d="M14 22 C 60 26, 80 40, 110 52 S 170 82, 200 88 S 250 96, 266 98"/>
+          <circle class="ar" cx="266" cy="98" r="6" fill="var(--c-design)"/>
+          <text x="14" y="14">60분</text><text class="ar" x="232" y="116">10분</text>
+        </svg>
+        <h3>절감형 <span class="arrow">↓</span></h3>
+        <p>본업의 시간·비용을 줄입니다.</p>
+        <div class="eg">숫자 예 <b>주당 절감 시간 · 건당 작업 시간</b></div>
+      </article>
+      <article class="card type" data-reveal style="--d:.1s">
+        <svg class="mini" viewBox="0 0 280 120" aria-hidden="true">
+          <line class="base" x1="10" y1="96" x2="270" y2="96"/>
+          <path class="ln" stroke="var(--c-build)" d="M14 96 L40 92 L66 94 L92 84 L118 80 L144 70 L170 62 L196 50 L222 38 L248 30 L266 20"/>
+          <circle class="ar" cx="266" cy="20" r="6" fill="var(--c-build)"/>
+          <text x="14" y="114">12건</text><text class="ar" x="226" y="12">25건</text>
+        </svg>
+        <h3>매출 증대형 <span class="arrow">↑</span></h3>
+        <p>기존 일의 홍보·판매를 키웁니다.</p>
+        <div class="eg">숫자 예 <b>유입수 · 문의 수 · 주문 건수</b></div>
+      </article>
+      <article class="card type" data-reveal style="--d:.2s">
+        <svg class="mini" viewBox="0 0 280 120" aria-hidden="true">
+          <line class="base" x1="10" y1="96" x2="270" y2="96"/>
+          <path class="ln" stroke="var(--c-prove)" d="M14 96 L120 96 L120 96 L150 80 L176 72 L202 58 L228 46 L266 26"/>
+          <g class="ar"><line x1="120" y1="102" x2="120" y2="58" stroke="var(--c-prove)" stroke-dasharray="3 3"/><rect x="92" y="38" width="56" height="18" rx="9" fill="var(--c-prove)"/><text x="120" y="51" text-anchor="middle" fill="#fff" style="fill:#fff">LAUNCH</text></g>
+          <circle class="ar" cx="266" cy="26" r="6" fill="var(--c-prove)"/>
+          <text x="14" y="114">0</text><text class="ar" x="232" y="16">첫 판매</text>
+        </svg>
+        <h3>신사업형 <span class="arrow">★</span></h3>
+        <p>AI로 새 상품·서비스를 만듭니다.</p>
+        <div class="eg">숫자 예 <b>출시 여부 · 첫 판매 · 판매 건수</b></div>
+      </article>
+    </div>
+    <div class="promise" data-reveal><span class="st">NO HYPE</span><div><b>수익을 약속하지 않습니다.</b> 이 모임은 결과를 보장하는 과정이 아니라, 내 일에 AI를 붙여 본 3개월의 <b>실험과 기록</b>입니다. 목표에 못 미쳐도 “무엇이 효과 없었는지”가 리포트의 절반입니다.</div></div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="block road" id="roadmap">
+  <div class="wrap">
+    <span class="eyebrow" data-reveal>Roadmap · 10 Saturdays</span>
+    <h2 class="h2" data-reveal>설계 → 구현 → 검증.<br><em>12월 19일</em>, 비북스 데모데이.</h2>
+    <p class="lead" data-reveal>3개월의 끝은 성탄 시즌. 선물 수요와 연말 업무를 실전 무대로 삼아, 마지막 날 외부 손님 앞에서 각자의 3개월 숫자를 발표합니다.</p>
+    <div class="phasebar" id="phasebar"></div>
+    <div class="sessions" id="sessions"></div>
+  </div>
+</section>
+
+<!-- WEEKLY -->
+<section class="block" id="weekly">
+  <div class="wrap">
+    <span class="eyebrow" data-reveal>Every Saturday · 120 min</span>
+    <h2 class="h2" data-reveal>숫자로 시작해서,<br><em>다음 주 약속</em>으로 끝나는 2시간.</h2>
+    <div class="weekly">
+      <div class="clock" data-reveal>
+        <svg viewBox="0 0 300 300" aria-hidden="true" id="clock"></svg>
+        <div class="ctr"><div><b id="clock-min">120</b><span id="clock-lbl">분 · 14:00–16:00</span></div></div>
+      </div>
+      <div>
+        <div class="wsteps" id="wsteps"></div>
+        <div class="roles" data-reveal>매주 순번제 <span class="chip"><i style="color:var(--signal)"></i>진행자</span><span class="chip"><i style="color:var(--c-design)"></i>기록자</span><span class="chip"><i style="color:var(--c-prove)"></i>발표자</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IDEAS -->
+<section class="block" style="padding-top:0">
+  <div class="wrap">
+    <span class="eyebrow" data-reveal>Project ideas</span>
+    <h2 class="h2" data-reveal>이런 프로젝트가 <em>잘 맞아요</em>.</h2>
+    <p class="lead" data-reveal>이미 하는 일에 붙이고 · 매주 숫자를 확인할 수 있고 · 혼자 결정해 실행할 수 있고 · 다른 멤버의 도구가 도움이 되는 것.</p>
+    <div class="ideas" data-reveal>
+      <div class="idea"><span class="no">01 · 절감</span><h3>업무 절감</h3><p>보고서·엑셀·이메일 반복 업무 자동화</p><span class="metric">주당 절감 시간</span></div>
+      <div class="idea"><span class="no">02 · 매출</span><h3>B2B 영업 리드</h3><p>잠재 고객 리스트 정리, 맞춤 제안 메일</p><span class="metric">발송 수 · 회신율 · 미팅 건수</span></div>
+      <div class="idea"><span class="no">03 · 신사업</span><h3>디지털 상품 출시</h3><p>전자책, 템플릿, 강의 자료 1종</p><span class="metric">출시 여부 · 판매 건수</span></div>
+      <div class="idea"><span class="no">04 · 매출</span><h3>자영업 마케팅</h3><p>가게 SNS 콘텐츠 제작 자동화</p><span class="metric">발행 빈도 · 팔로워 · 예약·문의 수</span></div>
+      <div class="idea"><span class="no">05 · 매출</span><h3>지식 채널</h3><p>블로그, 뉴스레터, 숏폼 채널 키우기</p><span class="metric">구독자 · 조회수</span></div>
+      <div class="idea"><span class="no">06 · 절감</span><h3>고객 응대 자동화</h3><p>FAQ·상담 응대 정리</p><span class="metric">응답 시간 · 처리 건수</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SAMPLE -->
+<section class="block" id="sample" style="padding-top:0">
+  <div class="wrap">
+    <span class="eyebrow" data-reveal>Operator's sample</span>
+    <h2 class="h2" data-reveal>운영자도 <em>숫자를 먼저</em> 공개합니다.</h2>
+    <p class="lead" data-reveal>“숫자를 정하고 시작한다”는 게 어떤 건지, 진행자 Hose의 프로젝트로 보여드려요. 목표치는 10/17 첫 모임에서 멤버들과 함께 확정합니다.</p>
+    <div class="sample">
+      <div class="card sample-hero" data-reveal>
+        <div class="who"><span class="av">H</span><div><b style="color:var(--paper)">Hose</b> · 비북스 운영자 · 매출 증대형</div></div>
+        <h3>기독출판 큐레이션몰</h3>
+        <p style="margin:0;color:color-mix(in srgb,var(--paper) 72%,transparent);font-size:15px">성탄 시즌의 선물 수요와 교회 단체 주문을 검증 무대로. 큐레이션 테마로 책을 고르고, AI로 소개 글과 홍보를 돌립니다.</p>
+        <div class="goal"><div class="v"><span data-count="30">0</span><small>건</small></div><p>핵심 숫자 · 12월 말까지 누적 주문 (예시 목표)</p></div>
+      </div>
+      <div class="areas">
+        <div class="card area" data-reveal>
+          <div class="h"><h4>플랫폼 판매</h4><span class="when">10월 구축 · 12월 판매</span></div>
+          <div class="goals">
+            <div class="g"><span>큐레이션 테마</span><span class="gv">0 → 10개</span><div class="track"><i></i></div></div>
+            <div class="g"><span>등록 도서</span><span class="gv">0 → 100종</span><div class="track"><i style="--d:.35s"></i></div></div>
+            <div class="g"><span>결제 연동</span><span class="gv">미완 → 완료</span><div class="track"><i style="--d:.5s"></i></div></div>
+          </div>
+        </div>
+        <div class="card area" data-reveal>
+          <div class="h"><h4>AI 홍보</h4><span class="when">11월 집중</span></div>
+          <div class="goals">
+            <div class="g"><span>채널 실험 (카드뉴스·블로그·숏폼)</span><span class="gv">3개 비교</span><div class="track"><i></i></div></div>
+            <div class="g"><span>뉴스레터 구독자</span><span class="gv">0 → 100명</span><div class="track"><i style="--d:.35s"></i></div></div>
+          </div>
+        </div>
+        <div class="card area" data-reveal>
+          <div class="h"><h4>글쓰기 자동화</h4><span class="when">10월 세팅 · 이후 유지</span></div>
+          <div class="goals">
+            <div class="g"><span>책 소개·상세페이지 1권당</span><span class="gv">60분 → 10분</span><div class="track"><i></i></div></div>
+            <div class="g"><span>콘텐츠 발행</span><span class="gv">주 3회 × 10주</span><div class="track"><i style="--d:.35s"></i></div></div>
+          </div>
+          <p class="note-s">모든 수치는 예시 목표이며 결과를 보장하지 않습니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FIT -->
+<section class="block" style="padding-top:0">
+  <div class="wrap">
+    <span class="eyebrow" data-reveal>Is this for me?</span>
+    <h2 class="h2" data-reveal>이런 분께 <em>맞아요</em>.</h2>
+    <div class="fit">
+      <div class="card" data-reveal><h3><span class="chip" style="background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)">맞아요</span></h3>
+        <ul><li>AI를 이미 일주일에 몇 번은 쓰고 있어요</li><li>붙일 일·가게·사업·채널이 이미 있어요</li><li>잘 안 된 실험도 솔직하게 공유할 수 있어요</li><li>10회 중 8회 이상, 토요일 오후에 올 수 있어요</li><li>노트북을 들고 올 수 있어요</li></ul></div>
+      <div class="card no" data-reveal style="--d:.1s"><h3><span class="chip">이런 분은 다음 기회에</span></h3>
+        <ul><li>AI를 처음부터 차근차근 배우고 싶어요 (입문 강의를 권해요)</li><li>아직 무엇을 할지 전혀 정하지 않았어요</li><li>결과물이나 수익을 보장받고 싶어요</li><li>강의를 듣는 방식이 더 편해요</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="block" id="process" style="padding-top:0">
+  <div class="wrap">
+    <span class="eyebrow" data-reveal>How to join</span>
+    <h2 class="h2" data-reveal>신청부터 <em>첫 모임</em>까지.</h2>
+    <div class="steps" id="steps" data-reveal>
+      <span class="prog"></span>
+      <div class="step"><span class="pt">1</span><div class="d">10/3(토) –</div><h4>신청서 작성</h4><p>15개 문항, 10~15분. 임시저장 돼요.</p></div>
+      <div class="step"><span class="pt">2</span><div class="d">10/16(금) 12:00</div><h4>신청 마감</h4><p>8명 초과 시 아래 기준으로 선발</p></div>
+      <div class="step"><span class="pt">3</span><div class="d">10/16(금) 20:00</div><h4>결과 안내</h4><p>문자·메일로 개별 연락</p></div>
+      <div class="step"><span class="pt">4</span><div class="d">10/17(토) 14:00</div><h4>1회차 시작</h4><p>오리엔테이션 · 툴 지도</p></div>
+    </div>
+    <div class="select">
+      <div class="card" data-reveal>
+        <h3>신청이 8명을 넘으면, 이 순서로 봅니다</h3>
+        <ol>
+          <li><div><b>목표의 구체성</b><span>붙일 일이 실제로 있고, 측정할 숫자가 명확한가</span></div></li>
+          <li><div><b>다양성</b><span>직군과 주력 도구가 겹치지 않게 8명을 구성</span></div></li>
+          <li><div><b>기여 의지</b><span>다른 멤버에게 나눌 것이 있는가</span></div></li>
+          <li><div><b>출석 확약</b><span>10회 중 8회 이상 참석 가능한가</span></div></li>
+        </ol>
+      </div>
+      <div class="card fee" data-reveal style="--d:.1s">
+        <h3>참여 조건</h3>
+        <dl>
+          <div><dt>DEPOSIT</dt><dd id="fee"></dd><p class="muted" style="font-size:13px;margin:4px 0 0">참가비 없음 · 미달 시 레시피북 제작비로 사용</p></div>
+          <div><dt>BRING</dt><dd>노트북 · 지금 쓰는 AI 도구 계정</dd></div>
+          <div><dt>SPACE</dt><dd>비북스 세미나실 — 모니터·프로젝터·와이파이</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="block" id="faq" style="padding-top:0">
+  <div class="wrap">
+    <span class="eyebrow" data-reveal>FAQ</span>
+    <h2 class="h2" data-reveal>자주 묻는 질문</h2>
+    <div class="faq" data-reveal>
+      <details><summary>AI를 얼마나 잘 써야 하나요?</summary><div class="a"><p>“가끔 질문하는 정도”여도 괜찮아요. 다만 이미 쓰고 있고, 붙여 보고 싶은 일이 있는 분을 찾습니다. 수준 차이는 오히려 서로에게 도움이 돼요 — 자동화까지 하는 사람과 매일 질문만 하는 사람이 같은 문제를 다르게 풉니다.</p></div></details>
+      <details><summary>어떤 도구를 써야 하나요? 유료 구독이 필요한가요?</summary><div class="a"><p>제한 없어요. ChatGPT, Claude, Gemini, 이미지·영상·자동화 도구 무엇이든. 유료 구독은 필수가 아닙니다. 각자 쓰는 도구가 다를수록 클리닉 회차가 풍성해져요.</p></div></details>
+      <details><summary>프로젝트를 아직 확실히 못 정했어요.</summary><div class="a"><p>“무엇을 만들거나 해결하고 싶은지” 방향만 있으면 됩니다. 정확한 한 문장과 숫자는 2~3회차에 같이 다듬어요. 다만 붙일 일(직장 업무, 가게, 사업, 채널)은 이미 있어야 해요.</p></div></details>
+      <details><summary>수익이 안 나면 실패인가요?</summary><div class="a"><p>아니요. 성과는 매출이 아니라 <b>변화를 보여주는 숫자 하나</b>예요. 시간을 줄이는 것도, 문의가 늘어나는 것도, 상품을 처음 출시하는 것도 성과입니다. 목표에 못 미친 숫자와 그 이유도 그대로 기록합니다.</p></div></details>
+      <details><summary>빠지는 날이 있으면요?</summary><div class="a"><p>10회 중 8회 이상 참석이 수료 기준이에요. 불참하는 주에도 숫자 보드에 그 주 숫자만은 입력해 주세요. 신청서에 이미 알고 있는 불참 예정일을 적어 주시면 선발 때 참고합니다.</p></div></details>
+      <details><summary>참가비가 있나요? 보증금은요?</summary><div class="a"><p id="fee-faq"></p></div></details>
+      <details><summary>모임 중 만든 결과물은 공개되나요?</summary><div class="a"><p>작업물과 숫자는 모임 안에서만 공유해요. 데모데이 발표와 레시피북(매주 기록한 프롬프트·작업 흐름 모음)에는 본인이 동의한 내용만 실립니다.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="block final">
+  <div class="glow a"></div>
+  <div class="wrap">
+    <span class="eyebrow" data-reveal>Cohort 01 · 8 seats</span>
+    <h2 data-reveal>12월 19일, 당신의 <em>숫자</em>는<br>무엇이 되어 있을까요?</h2>
+    <p class="lead" data-reveal>신청서는 10~15분이면 충분해요. 작성 중인 내용은 이 기기에 자동 저장됩니다.</p>
+    <a class="btn btn-primary" href="apply.html" data-reveal style="font-size:17px;padding:16px 28px">1기 신청서 작성하기 <span class="arr">→</span></a>
+    <div class="cd" data-countdown></div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div>부천 AI 프로젝트 클럽 1기 · 비북스 (부천 원미동)</div>
+    <div style="display:flex;gap:18px;flex-wrap:wrap"><a href="members.html">멤버 라운지</a><a href="https://www.instagram.com/bbooks_bucheon/" target="_blank" rel="noopener">Instagram</a><a href="https://moim.bbooks.co.kr/" target="_blank" rel="noopener">비모임</a><a href="admin.html">운영</a></div>
+  </div>
+</footer>
+
+<div class="sticky-cta" id="sticky"><span class="lbl">1기 모집 · 마감까지 <span class="t" id="sticky-t"></span></span><a class="btn btn-primary btn-sm" href="apply.html">신청하기 →</a></div>
+
+<script src="assets/config.js"></script>
+<script src="assets/app.js"></script>
+<script>
+(function () {
+  const C = CLUB, B = BAPC;
+  document.querySelectorAll('[data-countdown]').forEach(el => B.countdown(el, C.deadline));
+  document.getElementById('fee').textContent = C.fee;
+  document.getElementById('fee-faq').textContent = C.feeDetail;
+
+  /* marquee */
+  const mq = C.tools.map(t => `<span>${B.esc(t)}</span>`).join('') + '<span><b>무엇이든 OK</b></span>';
+  document.getElementById('marquee').innerHTML = mq + mq;
+
+  /* hero number card — 세 유형 예시를 순환 */
+  const EX = [
+    { type: '절감형', color: 'var(--c-design)', hex: '#7d8cf0', metric: '책 소개 1권 작성 시간', unit: '분', dir: 'down', vals: [60, 58, 51, 44, 40, 31, 26, 19, 14, 10] },
+    { type: '매출 증대형', color: 'var(--c-build)', hex: '#ff7a4d', metric: '월 예약·문의 수', unit: '건', dir: 'up', vals: [12, 12, 13, 15, 14, 17, 19, 21, 23, 25] },
+    { type: '신사업형', color: 'var(--c-prove)', hex: '#5fd38d', metric: '템플릿 누적 판매', unit: '건', dir: 'up', vals: [0, 0, 0, 0, 1, 2, 4, 6, 8, 11], launch: 4 }
+  ];
+  const svg = document.getElementById('nc-svg'), W = 320, H = 150, P = { l: 6, r: 10, t: 16, b: 22 };
+  let idx = 0, timer;
+  function draw(i) {
+    const e = EX[i], vs = e.vals, max = Math.max(...vs) * 1.12, min = Math.min(0, Math.min(...vs));
+    const x = k => P.l + k * (W - P.l - P.r) / (vs.length - 1);
+    const y = v => P.t + (1 - (v - min) / (max - min)) * (H - P.t - P.b);
+    const pts = vs.map((v, k) => [x(k), y(v)]);
+    const d = pts.map((p, k) => (k ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
+    const area = d + ` L${x(vs.length - 1)} ${H - P.b} L${x(0)} ${H - P.b} Z`;
+    const tgt = vs[vs.length - 1];
+    let grid = ''; for (let k = 0; k < 4; k++) { const gy = P.t + k * (H - P.t - P.b) / 3; grid += `<line class="gl" x1="0" x2="${W}" y1="${gy}" y2="${gy}"/>`; }
+    const ax = vs.map((_, k) => k % 3 === 0 || k === 9 ? `<text x="${x(k)}" y="${H - 4}" text-anchor="middle">W${k + 1}</text>` : '').join('');
+    const launch = e.launch != null ? `<g opacity="0" style="transition:opacity .4s 1s" class="lz"><line x1="${x(e.launch)}" x2="${x(e.launch)}" y1="${P.t}" y2="${H - P.b}" stroke="${e.hex}" stroke-dasharray="2 3"/><text x="${x(e.launch) + 4}" y="${P.t + 8}" class="tgt-l" style="fill:${e.hex}">LAUNCH</text></g>` : '';
+    svg.innerHTML = `<defs><linearGradient id="ga" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${e.hex}"/><stop offset="1" stop-color="${e.hex}" stop-opacity="0"/></linearGradient></defs>
+      ${grid}<line class="tgt" x1="0" x2="${W}" y1="${y(tgt)}" y2="${y(tgt)}"/><text class="tgt-l" x="2" y="${y(tgt) - 5}">TARGET ${tgt}${e.unit}</text>
+      <path class="area" d="${area}" fill="url(#ga)"/>${launch}
+      <path class="path" id="nc-path" d="${d}" stroke="${e.hex}"/>
+      ${pts.map((p, k) => `<circle class="dot" cx="${p[0]}" cy="${p[1]}" r="${k === pts.length - 1 ? 5 : 2.5}" fill="${k === pts.length - 1 ? e.hex : 'var(--night)'}" stroke="${e.hex}" stroke-width="2" opacity="0" style="transition-delay:${(k * .12).toFixed(2)}s"/>`).join('')}
+      <g class="axis">${ax}</g>`;
+    const path = svg.querySelector('#nc-path'), len = path.getTotalLength();
+    path.style.strokeDasharray = len; path.style.strokeDashoffset = len;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      path.style.transition = B.reduced() ? 'none' : 'stroke-dashoffset 1.6s cubic-bezier(.45,0,.2,1)';
+      path.style.strokeDashoffset = 0;
+      svg.querySelectorAll('.dot').forEach(c => c.setAttribute('opacity', 1));
+      const lz = svg.querySelector('.lz'); if (lz) lz.setAttribute('opacity', 1);
+    }));
+    const t = document.getElementById('nc-type'); t.lastChild.textContent = e.type; t.style.color = e.hex;
+    document.getElementById('nc-metric').textContent = e.metric;
+    document.getElementById('nc-u').textContent = e.unit;
+    const v = document.getElementById('nc-v'); v.dataset.from = vs[0]; v.textContent = vs[0]; B.countUp(v, tgt, 1600);
+    const dl = document.getElementById('nc-d'), ch = vs[0] ? Math.round((tgt - vs[0]) / vs[0] * 100) : null;
+    dl.textContent = ch == null ? '0 → ' + tgt + e.unit : (ch > 0 ? '▲ +' : '▼ ') + ch + '%';
+    dl.style.background = e.hex + '26'; dl.style.color = e.hex;
+    document.querySelectorAll('#nc-pager i').forEach((p, k) => { p.classList.remove('on'); void p.offsetWidth; if (k === i) p.classList.add('on'); });
+  }
+  function cycle() { draw(idx); clearTimeout(timer); timer = setTimeout(() => { idx = (idx + 1) % EX.length; cycle(); }, 5000); }
+  setTimeout(cycle, 700);
+  document.getElementById('ncard').addEventListener('click', () => { idx = (idx + 1) % EX.length; cycle(); });
+
+  /* roadmap */
+  document.getElementById('phasebar').innerHTML = C.phases.map((p, i) =>
+    `<div style="--pc:${p.color};--d:${i * .45}s"><div class="bar"><i></i></div><h4>${p.name} <span class="mono">${p.range}</span></h4><p>${p.desc}</p></div>`).join('');
+  const pc = Object.fromEntries(C.phases.map(p => [p.key, p.color]));
+  document.getElementById('sessions').innerHTML = C.sessions.map((s, i) => {
+    const demo = s.n === 10;
+    return `<article class="ss${demo ? ' demo' : ''}" data-reveal style="--pc:${pc[s.phase]};--d:${(i % 5) * .06}s;--d2:${.3 + (i % 5) * .06}s">
+      ${demo ? '<span class="badge">DEMO DAY</span>' : ''}
+      <div class="top"><b>${String(s.n).padStart(2, '0')}</b><span>${B.fmtDate(s.date)}</span></div>
+      <h5>${B.esc(s.title)}</h5><p>${B.esc(s.out)}</p></article>`;
+  }).join('');
+  const road = document.querySelector('.road');
+  new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { road.classList.add('in'); o.disconnect(); } }), { threshold: .2 }).observe(road);
+
+  /* weekly clock */
+  const R = 120, CIRC = 2 * Math.PI * R, colors = ['var(--signal)', 'var(--c-design)', 'var(--c-prove)', 'var(--ink)'];
+  let acc = 0, starts = [];
+  const segs = C.weekly.map((w, i) => { const frac = w.min / 120, off = acc; starts.push(off); acc += frac;
+    return `<circle class="seg" data-i="${i}" cx="150" cy="150" r="${R}" stroke="${colors[i]}" stroke-dasharray="${(frac * CIRC - 4).toFixed(1)} ${CIRC}" stroke-dashoffset="${(frac * CIRC).toFixed(1)}" style="transform:rotate(${off * 360}deg);transform-origin:150px 150px;transition-delay:${i * .25}s"/>`; }).join('');
+  const ticks = Array.from({ length: 12 }, (_, k) => { const a = k / 12 * 2 * Math.PI; return `<line x1="${150 + Math.cos(a) * 92}" y1="${150 + Math.sin(a) * 92}" x2="${150 + Math.cos(a) * 98}" y2="${150 + Math.sin(a) * 98}" stroke="var(--line)" stroke-width="2"/>`; }).join('');
+  const clock = document.getElementById('clock');
+  clock.innerHTML = `<circle cx="150" cy="150" r="${R}" fill="none" stroke="var(--rule)" stroke-width="26"/>${segs}${ticks}<g class="hand" id="hand"><line x1="150" y1="150" x2="230" y2="150" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/><circle cx="150" cy="150" r="6" fill="var(--ink)"/></g>`;
+  let t0 = 0;
+  document.getElementById('wsteps').innerHTML = C.weekly.map((w, i) => {
+    const s = 14 * 60 + t0, e = s + w.min; t0 += w.min;
+    const hm = m => Math.floor(m / 60) + ':' + String(m % 60).padStart(2, '0');
+    return `<div class="wstep" data-i="${i}" style="--wc:${colors[i]}" data-reveal><div class="t">${hm(s)}<br>${hm(e)}</div><div><h4>${w.name}</h4><p>${w.desc}</p></div><div class="m">${w.min}<small>분</small></div></div>`;
+  }).join('');
+  const steps = [...document.querySelectorAll('.wstep')];
+  let wi = -1, wtimer, clockOn = false;
+  function focusStep(i) {
+    wi = i; steps.forEach((s, k) => s.classList.toggle('on', k === i));
+    document.getElementById('hand').style.transform = `rotate(${(starts[i] + C.weekly[i].min / 240) * 360}deg)`;
+    document.getElementById('clock-min').textContent = C.weekly[i].min;
+    document.getElementById('clock-lbl').textContent = '분 · ' + C.weekly[i].name;
+  }
+  function autoClock() { clearTimeout(wtimer); focusStep((wi + 1) % 4); wtimer = setTimeout(autoClock, 2600); }
+  steps.forEach((s, i) => { s.addEventListener('mouseenter', () => { clearTimeout(wtimer); focusStep(i); }); s.addEventListener('mouseleave', () => { wtimer = setTimeout(autoClock, 2600); }); });
+  new IntersectionObserver((es) => es.forEach(e => {
+    if (e.isIntersecting && !clockOn) { clockOn = true; clock.querySelectorAll('.seg').forEach(c => c.style.strokeDashoffset = 0); setTimeout(autoClock, 900); }
+  }), { threshold: .4 }).observe(clock);
+
+  /* count-ups when visible */
+  const cio = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { B.countUp(e.target, +e.target.dataset.count, 1300); cio.unobserve(e.target); } }), { threshold: .6 });
+  document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
+
+  /* process progress: 오늘 날짜 기준 */
+  const now = B.today(), marks = ['2026-10-03T00:00:00+09:00', C.deadline, C.announce, C.firstSession].map(d => new Date(d));
+  const done = marks.filter(m => m <= now).length;
+  document.querySelectorAll('#steps .step').forEach((s, k) => { if (k < done) s.classList.add('done'); else if (k === done) s.classList.add('now'); });
+  document.getElementById('steps').style.setProperty('--p', Math.max(0, done - 1) / 3 + (done > 0 && done < 4 ? .12 : 0));
+
+  /* sticky cta */
+  const sticky = document.getElementById('sticky'), st = document.getElementById('sticky-t'), hero = document.querySelector('.hero'), fin = document.querySelector('.final');
+  const end = new Date(C.deadline).getTime();
+  const upd = () => { const d = Math.max(0, end - Date.now()); st.textContent = d ? `D-${Math.ceil(d / 864e5)}` : '마감'; };
+  upd(); setInterval(upd, 60000);
+  let heroVis = true, finVis = false;
+  const sv = () => sticky.classList.toggle('show', !heroVis && !finVis);
+  new IntersectionObserver(es => { heroVis = es[0].isIntersecting; sv(); }).observe(hero);
+  new IntersectionObserver(es => { finVis = es[0].isIntersecting; sv(); }).observe(fin);
+
+  B.reveal();
+})();
+</script>
+</body>
+</html>

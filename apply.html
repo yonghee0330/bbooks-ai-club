@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>1기 신청서 · 부천 AI 프로젝트 클럽</title>
+<meta name="description" content="부천 AI 프로젝트 클럽 1기 신청서. 10/16(금) 12:00 마감.">
+<meta name="theme-color" content="#f3ede2">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23221b16'/%3E%3Cpath d='M7 22l6-6 4 4 8-9' stroke='%23e2552b' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.page { display: grid; grid-template-columns: 1fr 340px; gap: 48px; padding: 40px 0 96px; align-items: start; }
+@media (max-width: 980px) { .page { grid-template-columns: 1fr; } .side { display: none; } }
+.head h1 { font: 800 clamp(30px, 4.6vw, 44px)/1.2 var(--sans); letter-spacing: -.04em; margin: 12px 0 10px; }
+.head p { margin: 0; color: var(--ink-2); }
+.head .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+
+.stepper { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 32px 0 8px; position: sticky; top: 60px; z-index: 5; background: var(--paper); padding: 12px 0; }
+.stepper button { all: unset; cursor: pointer; display: grid; gap: 8px; font-size: 13px; color: var(--muted); }
+.stepper button i { display: block; height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; position: relative; }
+.stepper button i::after { content: ''; position: absolute; inset: 0; background: var(--ink); transform: scaleX(var(--fill, 0)); transform-origin: left; transition: transform .5s cubic-bezier(.6,0,.2,1); }
+.stepper button[aria-current] { color: var(--ink); font-weight: 700; }
+.stepper button .mono { font-size: 11px; }
+.stepper button:focus-visible { outline: 2px solid var(--signal); outline-offset: 4px; border-radius: 4px; }
+
+.pane { display: none; animation: paneIn .5s cubic-bezier(.2,.7,.2,1); }
+.pane.on { display: grid; gap: 30px; }
+@keyframes paneIn { from { opacity: 0; transform: translateX(24px); } }
+.pane > h2 { font-size: 22px; letter-spacing: -.03em; margin: 18px 0 -10px; display: flex; gap: 12px; align-items: baseline; }
+.pane > h2 .mono { color: var(--signal); font-size: 13px; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 10px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 640px) { .grid3, .grid2 { grid-template-columns: 1fr; } }
+.sub-lab { font-size: 12px; color: var(--muted); margin-bottom: 4px; display: block; }
+.other { margin-top: 8px; display: none; } .other.on { display: block; }
+
+.tcards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+@media (max-width: 640px) { .tcards { grid-template-columns: 1fr; } }
+.tcard { position: relative; }
+.tcard input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; z-index: 1; }
+.tcard .in { border: 1.5px solid var(--line); border-radius: 14px; padding: 18px; background: var(--card); transition: .2s; height: 100%; }
+.tcard .in b { display: flex; justify-content: space-between; font-size: 16px; }
+.tcard .in b span { font: 600 13px var(--mono); color: var(--muted); }
+.tcard .in p { margin: 6px 0 0; font-size: 13px; color: var(--ink-2); }
+.tcard .in small { display: block; margin-top: 8px; font-size: 12px; color: var(--muted); }
+.tcard input:checked + .in { border-color: var(--tc); box-shadow: 0 0 0 3px color-mix(in srgb, var(--tc) 22%, transparent); }
+.tcard input:checked + .in b span { color: var(--tc); }
+.tcard input:focus-visible + .in { outline: 2px solid var(--signal); outline-offset: 2px; }
+
+.metric-box { border: 1.5px dashed var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 12px; }
+.consent { border: 1.5px solid var(--line); border-radius: 14px; padding: 18px 20px; background: var(--card); font-size: 14px; color: var(--ink-2); }
+.consent table { width: 100%; border-collapse: collapse; margin: 6px 0 14px; font-size: 13px; }
+.consent th, .consent td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.consent th { width: 84px; color: var(--muted); font-weight: 600; }
+.check { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; font-size: 15px; color: var(--ink); font-weight: 600; }
+.check input { width: 20px; height: 20px; accent-color: var(--signal); margin: 2px 0 0; flex: none; }
+.check.light { font-weight: 500; font-size: 14px; color: var(--ink-2); margin-top: 10px; }
+
+.navrow { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 36px; padding-top: 22px; border-top: 1px solid var(--line); }
+.saved { font: 500 12px var(--mono); color: var(--muted); }
+.saved.flash { color: var(--ok); }
+
+/* review */
+.review { display: grid; gap: 14px; }
+.rv { padding: 18px 20px; }
+.rv h3 { display: flex; justify-content: space-between; margin: 0 0 10px; font-size: 15px; }
+.rv h3 button { all: unset; cursor: pointer; font-size: 13px; color: var(--signal); font-weight: 600; }
+.rv dl { margin: 0; display: grid; grid-template-columns: 140px 1fr; gap: 6px 14px; font-size: 14px; }
+.rv dt { color: var(--muted); }
+.rv dd { margin: 0; white-space: pre-wrap; }
+@media (max-width: 560px) { .rv dl { grid-template-columns: 1fr; } .rv dd { margin-bottom: 6px; } }
+
+/* side preview */
+.side { position: sticky; top: 84px; }
+.pcard { padding: 22px; background: var(--ink); color: var(--paper); border: 0; }
+.pcard .lbl { font: 600 11px var(--mono); letter-spacing: .1em; color: color-mix(in srgb, var(--paper) 55%, transparent); }
+.pcard h3 { margin: 10px 0 2px; font-size: 20px; letter-spacing: -.03em; min-height: 1.4em; line-height: 1.35; }
+.pcard .who { font-size: 13px; color: color-mix(in srgb, var(--paper) 65%, transparent); min-height: 1.5em; }
+.pcard .tt { margin-top: 14px; }
+.pcard .tt .chip { background: rgba(243,237,226,.12); color: var(--paper); }
+.pcard .m { margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(243,237,226,.16); }
+.pcard .m .k { font-size: 13px; color: color-mix(in srgb, var(--paper) 65%, transparent); min-height: 1.4em; }
+.pcard .nums { display: flex; align-items: baseline; gap: 10px; margin-top: 6px; font-family: var(--display); }
+.pcard .nums .a { font-size: 30px; color: color-mix(in srgb, var(--paper) 60%, transparent); }
+.pcard .nums .b { font-size: 46px; }
+.pcard .nums .arr { font: 500 16px var(--mono); color: var(--signal); }
+.pcard .nums .u { font: 500 14px var(--sans); color: color-mix(in srgb, var(--paper) 65%, transparent); }
+.pcard svg { margin-top: 10px; width: 100%; height: 70px; }
+.pcard svg path { fill: none; stroke: var(--signal); stroke-width: 2.5; stroke-linecap: round; transition: d .6s; }
+.side .tip { margin-top: 14px; font-size: 13px; color: var(--muted); padding: 0 4px; }
+.side .tip b { color: var(--ink); }
+.progress-ring { display: flex; gap: 12px; align-items: center; margin-top: 16px; padding: 14px 16px; }
+.progress-ring svg { width: 44px; height: 44px; transform: rotate(-90deg); flex: none; }
+.progress-ring circle { fill: none; stroke-width: 5; }
+.progress-ring .fg { stroke: var(--signal); stroke-linecap: round; transition: stroke-dashoffset .5s; }
+.progress-ring b { font: 600 15px var(--mono); }
+
+/* done */
+.done { text-align: center; padding: 64px 0 40px; display: none; }
+.done.on { display: block; animation: paneIn .6s; }
+.done .seal { width: 120px; height: 120px; margin: 0 auto 24px; }
+.done .seal circle { fill: none; stroke: var(--signal); stroke-width: 3; stroke-dasharray: 380; stroke-dashoffset: 380; animation: sealDraw 1s .1s forwards cubic-bezier(.6,0,.2,1); }
+.done .seal path { fill: none; stroke: var(--signal); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 80; stroke-dashoffset: 80; animation: sealDraw .6s .9s forwards; }
+@keyframes sealDraw { to { stroke-dashoffset: 0; } }
+.done h2 { font: 800 clamp(28px, 4vw, 40px)/1.25 var(--sans); letter-spacing: -.04em; margin: 0 0 12px; }
+.done .rid { display: inline-block; font: 600 22px var(--mono); padding: 10px 18px; border: 1.5px dashed var(--ink); border-radius: 10px; margin: 18px 0; }
+.done ol { text-align: left; max-width: 460px; margin: 24px auto; color: var(--ink-2); font-size: 15px; }
+.closed { padding: 40px; text-align: center; margin-top: 32px; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="./"><span class="brand-mark">AI</span>부천 AI 프로젝트 클럽 <small>1기 신청서</small></a>
+    <nav class="nav"><a href="./">← 모집 안내</a><span class="demo-flag" id="demo" hidden>DEMO · 이 브라우저에만 저장</span></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="page" id="page">
+    <div>
+      <div class="head">
+        <span class="eyebrow">Application · Cohort 01</span>
+        <h1>1기 신청서</h1>
+        <p>15개 문항, 10~15분이면 충분해요. 작성 중인 내용은 이 기기에 자동 저장됩니다. 정답은 없어요 — 지금 있는 그대로 적어 주세요.</p>
+        <div class="meta"><span class="chip"><i style="color:var(--signal)"></i>마감 10/16(금) 12:00</span><span class="chip">결과 안내 10/16(금) 20:00</span><span class="chip">정원 8명</span></div>
+      </div>
+
+      <form id="form" novalidate autocomplete="on">
+        <div class="stepper" role="tablist" id="stepper"></div>
+
+        <!-- STEP 1 -->
+        <section class="pane" data-step="0">
+          <h2><span class="mono">01</span>나에 대해</h2>
+          <div class="field" data-q="contact">
+            <div class="lab"><span class="num">Q1</span>이름 · 연락처 · 이메일 <span class="req">필수</span></div>
+            <div class="grid3">
+              <div><label class="sub-lab" for="name">이름</label><input class="input" id="name" name="name" autocomplete="name" placeholder="홍길동"></div>
+              <div><label class="sub-lab" for="phone">연락처</label><input class="input" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000"></div>
+              <div><label class="sub-lab" for="email">이메일</label><input class="input" id="email" name="email" type="email" autocomplete="email" placeholder="name@example.com"></div>
+            </div>
+            <span class="err">이름, 연락처(휴대폰 번호), 이메일을 모두 확인해 주세요.</span>
+          </div>
+          <div class="field" data-q="role">
+            <div class="lab"><span class="num">Q2</span>하는 일 <span class="req">필수</span></div>
+            <div class="opts" id="opt-role"></div>
+            <input class="input other" name="roleOther" placeholder="어떤 일을 하시나요?">
+            <span class="err">하나를 골라 주세요.</span>
+          </div>
+          <div class="field" data-q="job">
+            <label class="lab" for="job"><span class="num">Q3</span>하는 일 간단 소개 <span class="req">필수</span></label>
+            <p class="help">한두 줄이면 돼요. 예) 원미동에서 8년째 꽃집 운영, 웨딩·기업 정기 배송이 주력</p>
+            <input class="input" id="job" name="job" maxlength="120">
+            <span class="err">간단히 소개해 주세요.</span>
+          </div>
+        </section>
+
+        <!-- STEP 2 -->
+        <section class="pane" data-step="1">
+          <h2><span class="mono">02</span>AI 사용</h2>
+          <div class="field" data-q="tools">
+            <div class="lab"><span class="num">Q4</span>주로 쓰는 AI 도구 <span class="req">필수</span><span class="opt">여러 개 선택</span></div>
+            <div class="opts" id="opt-tools"></div>
+            <input class="input other" name="toolsOther" placeholder="그 밖에 쓰는 도구 (쉼표로 구분)">
+            <span class="err">하나 이상 골라 주세요.</span>
+          </div>
+          <div class="field" data-q="level">
+            <div class="lab"><span class="num">Q5</span>사용 범위 <span class="req">필수</span></div>
+            <div class="opts" id="opt-level"></div>
+            <span class="err">하나를 골라 주세요.</span>
+          </div>
+          <div class="field" data-q="paid">
+            <label class="lab" for="paid"><span class="num">Q6</span>유료 구독 중인 도구 <span class="opt">선택</span></label>
+            <input class="input" id="paid" name="paid" placeholder="예) ChatGPT Plus, Canva Pro — 없으면 비워 두세요">
+          </div>
+          <div class="field" data-q="case">
+            <label class="lab" for="case"><span class="num">Q7</span>AI로 해본 대표 사례 1개 <span class="req">필수</span></label>
+            <p class="help">무엇을 하려고 · 어떤 도구로 · 어떻게 했고 · 결과가 어땠는지. 거창하지 않아도 돼요.</p>
+            <textarea class="input" id="case" name="case" maxlength="800"></textarea>
+            <div class="count" data-for="case"></div>
+            <span class="err">한두 문장 이상 적어 주세요 (20자 이상).</span>
+          </div>
+        </section>
+
+        <!-- STEP 3 -->
+        <section class="pane" data-step="2">
+          <h2><span class="mono">03</span>3개월 프로젝트</h2>
+          <div class="field" data-q="goal">
+            <label class="lab" for="goal"><span class="num">Q8</span>3개월 동안 AI로 만들거나 해결하고 싶은 것 <span class="req">필수</span></label>
+            <p class="help">누구에게 무엇을 팔거나, 무엇을 아끼고 싶은지. 예) 단골 고객 대상 꽃 정기구독 안내를 인스타·문자로 자동화해 신규 구독을 늘리고 싶다</p>
+            <textarea class="input" id="goal" name="goal" maxlength="800"></textarea>
+            <div class="count" data-for="goal"></div>
+            <span class="err">조금 더 구체적으로 적어 주세요 (20자 이상).</span>
+          </div>
+          <div class="field" data-q="ptype">
+            <div class="lab"><span class="num">Q9</span>프로젝트 유형 <span class="req">필수</span></div>
+            <div class="tcards" id="opt-ptype"></div>
+            <span class="err">유형을 골라 주세요. 애매하면 가장 가까운 쪽으로.</span>
+          </div>
+          <div class="field" data-q="metric">
+            <div class="lab"><span class="num">Q10</span>3개월 뒤 보여주고 싶은 숫자와 현재 값 <span class="req">필수</span></div>
+            <p class="help">매주 셀 수 있는 숫자가 좋아요. 현재 값을 모르면 “모름”이라고 적고 3회차까지 같이 재요.</p>
+            <div class="metric-box">
+              <div><label class="sub-lab" for="mName">숫자 이름</label><input class="input" id="mName" name="mName" placeholder="예) 월 정기구독 신규 신청 수"></div>
+              <div class="grid3">
+                <div><label class="sub-lab" for="mNow">현재 값</label><input class="input" id="mNow" name="mNow" placeholder="예) 3"></div>
+                <div><label class="sub-lab" for="mGoal">3개월 뒤 목표</label><input class="input" id="mGoal" name="mGoal" placeholder="예) 15"></div>
+                <div><label class="sub-lab" for="mUnit">단위</label><input class="input" id="mUnit" name="mUnit" placeholder="건 / 분 / 명 / 회"></div>
+              </div>
+              <div><label class="sub-lab" for="mNote">덧붙일 말 <span class="opt">선택</span></label><input class="input" id="mNote" name="mNote" placeholder="보조 숫자, 측정 방법 등"></div>
+            </div>
+            <span class="err">숫자 이름과 현재 값(또는 “모름”), 목표를 적어 주세요.</span>
+          </div>
+          <div class="field" data-q="give">
+            <label class="lab" for="give"><span class="num">Q11</span>다른 멤버에게 나눠줄 수 있는 것 <span class="req">필수</span></label>
+            <p class="help">도구 노하우, 업계 경험, 디자인·글쓰기·촬영, 네트워크, 공간… 무엇이든.</p>
+            <textarea class="input" id="give" name="give" maxlength="500" style="min-height:90px"></textarea>
+            <span class="err">한 가지라도 적어 주세요.</span>
+          </div>
+        </section>
+
+        <!-- STEP 4 -->
+        <section class="pane" data-step="3">
+          <h2><span class="mono">04</span>참여 조건</h2>
+          <div class="field" data-q="hours">
+            <div class="lab"><span class="num">Q12</span>모임 외에 주당 투입 가능한 시간 <span class="req">필수</span></div>
+            <div class="opts" id="opt-hours"></div>
+            <span class="err">하나를 골라 주세요.</span>
+          </div>
+          <div class="field" data-q="attend">
+            <div class="lab"><span class="num">Q13</span>10회 출석 가능 여부 <span class="req">필수</span></div>
+            <p class="help"><b>출석 보증금 5만 원</b> — 선발 시 안내, 8회 이상 출석하면 12/19에 전액 환급돼요.<br>10/17 · 10/24 · 10/31 · 11/7 · 11/14 · 11/21 · 11/28 · 12/5 · 12/12 · 12/19 (토 14–16시). 수료 기준은 8회 이상.</p>
+            <div class="opts" id="opt-attend"></div>
+            <input class="input other" name="absent" placeholder="불참 예정일 (예: 11/21, 12/5)">
+            <span class="err">하나를 고르고, 불참 예정일이 있으면 적어 주세요.</span>
+          </div>
+          <div class="field" data-q="laptop">
+            <div class="lab"><span class="num">Q14</span>노트북 지참 가능 여부 <span class="req">필수</span></div>
+            <div class="opts" id="opt-laptop"></div>
+            <span class="err">하나를 골라 주세요.</span>
+          </div>
+          <div class="field" data-q="source">
+            <div class="lab"><span class="num">+</span>어떻게 알게 되셨나요? <span class="opt">선택</span></div>
+            <div class="opts" id="opt-source"></div>
+          </div>
+          <div class="field" data-q="consent">
+            <div class="lab"><span class="num">Q15</span>개인정보 수집·이용 동의 <span class="req">필수</span></div>
+            <div class="consent">
+              <table>
+                <tr><th>수집 항목</th><td>이름, 연락처, 이메일, 신청서 응답 내용</td></tr>
+                <tr><th>목적</th><td>1기 선발 및 결과 안내, 모임 운영 연락</td></tr>
+                <tr><th>보관 기간</th><td>선발 멤버: 1기 종료(2026-12-19) 후 3개월 뒤 파기<br>미선발: 결과 안내 후 1개월 내 파기</td></tr>
+              </table>
+              <p style="margin:0 0 12px;font-size:13px">동의를 거부할 수 있으며, 거부 시 신청이 어렵습니다.</p>
+              <label class="check"><input type="checkbox" name="consent" value="Y">위 내용에 동의합니다</label>
+              <label class="check light"><input type="checkbox" name="consentNext" value="Y">(선택) 이번에 함께하지 못하면 2기 모집 소식을 받을게요</label>
+            </div>
+            <span class="err">개인정보 수집·이용에 동의해 주세요.</span>
+          </div>
+        </section>
+
+        <!-- REVIEW -->
+        <section class="pane" data-step="4">
+          <h2><span class="mono">✓</span>마지막 확인</h2>
+          <p style="margin:-8px 0 0;color:var(--ink-2)">제출 후에는 수정이 어려워요. 고칠 곳이 있으면 ‘수정’을 눌러 주세요.</p>
+          <div class="review" id="review"></div>
+        </section>
+
+        <div class="navrow">
+          <button type="button" class="btn btn-ghost" id="prev">← 이전</button>
+          <span class="saved" id="saved"></span>
+          <button type="button" class="btn btn-primary" id="next">다음 <span class="arr">→</span></button>
+        </div>
+      </form>
+
+      <div class="done" id="done">
+        <svg class="seal" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="56"/><path d="M38 62 L54 77 L84 44"/></svg>
+        <span class="eyebrow">Received</span>
+        <h2 style="margin-top:14px">신청이 접수되었어요.</h2>
+        <p style="color:var(--ink-2);margin:0">접수번호를 캡처해 두시면 문의할 때 편해요.</p>
+        <div class="rid" id="rid"></div>
+        <ol>
+          <li><b>10/16(금) 12:00</b> 신청 마감</li>
+          <li><b>10/16(금) 20:00</b> 결과를 문자·메일로 안내드려요 (선발 시 보증금 5만 원 입금 안내 포함)</li>
+          <li><b>10/17(토) 14:00</b> 비북스에서 1회차 — 노트북 챙겨 오세요</li>
+        </ol>
+        <a class="btn btn-dark" href="./">모집 안내로 돌아가기</a>
+      </div>
+    </div>
+
+    <aside class="side" aria-label="내 프로젝트 미리보기">
+      <div class="card pcard">
+        <div class="lbl">MY PROJECT CARD · 미리보기</div>
+        <h3 id="pv-goal">어떤 프로젝트를 하게 될까요?</h3>
+        <div class="who" id="pv-who"></div>
+        <div class="tt" id="pv-type"></div>
+        <div class="m">
+          <div class="k" id="pv-metric">핵심 숫자</div>
+          <div class="nums"><span class="a" id="pv-a">—</span><span class="arr">→</span><span class="b" id="pv-b">?</span><span class="u" id="pv-u"></span></div>
+          <svg viewBox="0 0 280 70" preserveAspectRatio="none"><path id="pv-path" d="M4 50 L276 50"/></svg>
+        </div>
+      </div>
+      <div class="card progress-ring">
+        <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" stroke="var(--rule)"/><circle class="fg" id="ring" cx="22" cy="22" r="18" stroke-dasharray="113.1" stroke-dashoffset="113.1"/></svg>
+        <div><b id="ring-t">0 / 14</b><div style="font-size:13px;color:var(--muted)">필수 문항 작성</div></div>
+      </div>
+      <p class="tip">입력하는 대로 위 카드가 채워져요. 선발 때 가장 먼저 보는 건 <b>Q8 · Q10</b> — 붙일 일과 숫자가 구체적일수록 좋아요.</p>
+    </aside>
+  </div>
+</main>
+
+<footer class="foot"><div class="wrap"><div>부천 AI 프로젝트 클럽 1기 · 비북스</div><div>문의 · <a href="https://www.instagram.com/bbooks_bucheon/" target="_blank" rel="noopener">@bbooks_bucheon</a></div></div></footer>
+
+<script src="assets/config.js"></script>
+<script src="assets/app.js"></script>
+<script>
+(function () {
+  const C = CLUB, B = BAPC, form = document.getElementById('form');
+  if (B.demoMode) document.getElementById('demo').hidden = false;
+
+  const OPTS = {
+    role: [...C.roles, '기타'],
+    tools: [...C.tools, '기타'],
+    level: ['가끔 질문', '업무에 자주 활용', '결과물 제작', '자동화·연동까지'],
+    hours: ['2시간 미만', '2–4시간', '4–6시간', '6시간 이상'],
+    attend: ['10회 모두 가능', '8–9회 가능 (불참 예정일 있음)', '7회 이하'],
+    laptop: ['예, 가져올 수 있어요', '아니요'],
+    source: ['인스타그램', '비모임', '비북스 매장', '지인 추천', '기타']
+  };
+  const pill = (name, v, multi) => `<label class="opt-pill"><input type="${multi ? 'checkbox' : 'radio'}" name="${name}" value="${B.esc(v)}"><span>${B.esc(v)}</span></label>`;
+  Object.entries(OPTS).forEach(([k, arr]) => { document.getElementById('opt-' + k).innerHTML = arr.map(v => pill(k, v, k === 'tools')).join(''); });
+  const TC = { save: 'var(--c-design)', grow: 'var(--c-build)', new: 'var(--c-prove)' };
+  document.getElementById('opt-ptype').innerHTML = Object.entries(C.types).map(([k, t]) =>
+    `<label class="tcard" style="--tc:${TC[k]}"><input type="radio" name="ptype" value="${k}"><div class="in"><b>${t.name}<span>${t.dir === 'down' ? '↓' : '↑'}</span></b><p>${t.desc}</p><small>${t.ex}</small></div></label>`).join('');
+
+  /* --- stepper --- */
+  const STEPS = ['나에 대해', 'AI 사용', '프로젝트', '참여 조건'];
+  const panes = [...document.querySelectorAll('.pane')];
+  document.getElementById('stepper').innerHTML = STEPS.map((s, i) => `<button type="button" role="tab" data-go="${i}"><i></i><span><span class="mono">0${i + 1}</span> ${s}</span></button>`).join('');
+  let cur = 0, maxReached = 0;
+  function show(i) {
+    cur = i; maxReached = Math.max(maxReached, i);
+    panes.forEach((p, k) => p.classList.toggle('on', k === i));
+    document.querySelectorAll('#stepper button').forEach((b, k) => {
+      b.toggleAttribute('aria-current', k === Math.min(i, 3));
+      b.querySelector('i').style.setProperty('--fill', k < i ? 1 : k === i ? .5 : 0);
+    });
+    document.getElementById('prev').style.visibility = i === 0 ? 'hidden' : 'visible';
+    const nx = document.getElementById('next');
+    nx.innerHTML = i === 3 ? '검토하기 <span class="arr">→</span>' : i === 4 ? '신청서 제출하기' : '다음 <span class="arr">→</span>';
+    if (i === 4) renderReview();
+    const top = document.querySelector('.head').getBoundingClientRect().bottom + scrollY - 40;
+    if (scrollY > top) scrollTo({ top, behavior: B.reduced() ? 'auto' : 'smooth' });
+  }
+  document.getElementById('stepper').addEventListener('click', e => {
+    const b = e.target.closest('[data-go]'); if (!b) return; const g = +b.dataset.go;
+    if (g <= cur || validate(cur, true)) show(g <= maxReached || g === cur + 1 ? g : cur);
+  });
+  document.getElementById('prev').onclick = () => show(Math.max(0, cur - 1));
+  document.getElementById('next').onclick = () => {
+    if (cur < 4) { if (validate(cur)) show(cur + 1); }
+    else submit();
+  };
+
+  /* --- data --- */
+  const val = n => { const els = form.elements[n]; if (!els) return ''; if (els instanceof RadioNodeList || els.length > 1 && els[0] && els[0].type) {
+    const arr = [...els]; if (arr[0].type === 'checkbox') return arr.filter(x => x.checked).map(x => x.value); return (arr.find(x => x.checked) || {}).value || ''; }
+    if (els.type === 'checkbox') return els.checked ? els.value : ''; return els.value.trim(); };
+  function collect() {
+    const names = ['name', 'phone', 'email', 'role', 'roleOther', 'job', 'tools', 'toolsOther', 'level', 'paid', 'case', 'goal', 'ptype', 'mName', 'mNow', 'mGoal', 'mUnit', 'mNote', 'give', 'hours', 'attend', 'absent', 'laptop', 'source', 'consent', 'consentNext'];
+    return Object.fromEntries(names.map(n => [n, val(n)]));
+  }
+  const RULES = {
+    contact: d => d.name.length >= 2 && /^0\d{1,2}-?\d{3,4}-?\d{4}$/.test(d.phone.replace(/\s/g, '')) && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email),
+    role: d => d.role && (d.role !== '기타' || d.roleOther),
+    job: d => d.job.length >= 2,
+    tools: d => d.tools.length > 0 && (!d.tools.includes('기타') || d.toolsOther),
+    level: d => !!d.level,
+    case: d => d.case.length >= 20,
+    goal: d => d.goal.length >= 20,
+    ptype: d => !!d.ptype,
+    metric: d => d.mName.length >= 2 && d.mNow && d.mGoal,
+    give: d => d.give.length >= 2,
+    hours: d => !!d.hours,
+    attend: d => d.attend && (d.attend === '10회 모두 가능' || d.absent),
+    laptop: d => !!d.laptop,
+    consent: d => d.consent === 'Y'
+  };
+  function validate(step, quiet) {
+    const d = collect(); let ok = true, first;
+    panes[step].querySelectorAll('.field[data-q]').forEach(f => {
+      const r = RULES[f.dataset.q]; if (!r) return;
+      const good = r(d); if (!quiet) f.classList.toggle('bad', !good);
+      if (!good) { ok = false; first = first || f; }
+    });
+    if (!ok && !quiet) { first.scrollIntoView({ behavior: B.reduced() ? 'auto' : 'smooth', block: 'center' }); B.toast('빠진 항목을 확인해 주세요', 'err'); }
+    return ok;
+  }
+
+  /* --- draft autosave + live preview --- */
+  const DKEY = 'draft';
+  function restore() {
+    const d = B.store.get(DKEY); if (!d) return;
+    Object.entries(d).forEach(([n, v]) => {
+      const els = form.elements[n]; if (!els) return;
+      if (els instanceof RadioNodeList || (els.length && els[0] && els[0].type)) [...els].forEach(x => { x.checked = Array.isArray(v) ? v.includes(x.value) : x.value === v; });
+      else if (els.type === 'checkbox') els.checked = v === 'Y'; else els.value = v;
+    });
+  }
+  let st;
+  form.addEventListener('input', e => {
+    const f = e.target.closest('.field'); if (f && f.classList.contains('bad') && RULES[f.dataset.q] && RULES[f.dataset.q](collect())) f.classList.remove('bad');
+    sync(); clearTimeout(st); st = setTimeout(() => { B.store.set(DKEY, collect()); const s = document.getElementById('saved'); s.textContent = '✓ 임시저장 ' + new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' }); s.classList.add('flash'); setTimeout(() => s.classList.remove('flash'), 900); }, 500);
+  });
+  form.addEventListener('change', () => form.dispatchEvent(new Event('input')));
+  function sync() {
+    const d = collect();
+    form.querySelector('[name=roleOther]').classList.toggle('on', d.role === '기타');
+    form.querySelector('[name=toolsOther]').classList.toggle('on', d.tools.includes('기타'));
+    form.querySelector('[name=absent]').classList.toggle('on', !!d.attend && d.attend !== '10회 모두 가능');
+    document.querySelectorAll('.count').forEach(c => { const n = form.elements[c.dataset.for]; c.textContent = n.value.length + ' / ' + n.maxLength; });
+    // preview
+    document.getElementById('pv-goal').textContent = d.goal ? (d.goal.length > 54 ? d.goal.slice(0, 54) + '…' : d.goal) : '어떤 프로젝트를 하게 될까요?';
+    document.getElementById('pv-who').textContent = [d.name, d.role === '기타' ? d.roleOther : d.role].filter(Boolean).join(' · ');
+    const t = C.types[d.ptype];
+    document.getElementById('pv-type').innerHTML = t ? `<span class="chip"><i style="color:${TC[d.ptype]}"></i>${t.name}</span>` : '';
+    document.getElementById('pv-metric').textContent = d.mName || '핵심 숫자';
+    document.getElementById('pv-a').textContent = d.mNow || '—';
+    document.getElementById('pv-b').textContent = d.mGoal || '?';
+    document.getElementById('pv-u').textContent = d.mUnit;
+    const a = parseFloat(d.mNow), b = parseFloat(d.mGoal), down = t && t.dir === 'down' || (!isNaN(a) && !isNaN(b) && b < a);
+    const y0 = 50, y1 = isNaN(b) ? 50 : (down ? 62 : 10);
+    document.getElementById('pv-path').setAttribute('d', `M4 ${down ? 12 : y0} C 90 ${down ? 14 : y0}, 150 ${(y0 + y1) / 2}, 276 ${down ? 62 : y1}`);
+    // progress
+    const keys = Object.keys(RULES), done = keys.filter(k => RULES[k](d)).length;
+    document.getElementById('ring').style.strokeDashoffset = 113.1 * (1 - done / keys.length);
+    document.getElementById('ring-t').textContent = done + ' / ' + keys.length;
+  }
+
+  /* --- review + submit --- */
+  function renderReview() {
+    const d = collect(), t = C.types[d.ptype] || {};
+    const sec = (title, step, rows) => `<div class="card rv"><h3>${title}<button type="button" data-edit="${step}">수정</button></h3><dl>${rows.map(([k, v]) => `<dt>${k}</dt><dd>${B.esc(v || '—')}</dd>`).join('')}</dl></div>`;
+    document.getElementById('review').innerHTML =
+      sec('나에 대해', 0, [['이름', d.name], ['연락처', d.phone], ['이메일', d.email], ['하는 일', d.role === '기타' ? '기타 · ' + d.roleOther : d.role], ['소개', d.job]]) +
+      sec('AI 사용', 1, [['도구', d.tools.filter(x => x !== '기타').concat(d.toolsOther ? [d.toolsOther] : []).join(', ')], ['사용 범위', d.level], ['유료 구독', d.paid], ['대표 사례', d.case]]) +
+      sec('3개월 프로젝트', 2, [['하고 싶은 것', d.goal], ['유형', t.name], ['핵심 숫자', `${d.mName} : ${d.mNow} → ${d.mGoal} ${d.mUnit}`], ['덧붙임', d.mNote], ['나눌 수 있는 것', d.give]]) +
+      sec('참여 조건', 3, [['주당 시간', d.hours], ['출석', d.attend + (d.absent ? ' · 불참: ' + d.absent : '')], ['노트북', d.laptop], ['알게 된 경로', d.source], ['2기 소식', d.consentNext ? '받음' : '받지 않음']]);
+    document.querySelectorAll('[data-edit]').forEach(b => b.onclick = () => show(+b.dataset.edit));
+  }
+  let sending = false;
+  async function submit() {
+    if (sending) return;
+    for (let s = 0; s < 4; s++) if (!validate(s, true)) { show(s); validate(s); return; }
+    if (Date.now() > new Date(C.deadline).getTime() && !/[?&]late=1/.test(location.search)) { B.toast('모집이 마감되었어요', 'err'); return; }
+    sending = true; const nx = document.getElementById('next'); nx.disabled = true; nx.textContent = '제출 중…';
+    try {
+      const d = collect(); d.ua = navigator.userAgent.slice(0, 120);
+      const r = await B.api('apply', { data: d });
+      if (!r.ok) throw new Error(r.error || '접수 실패');
+      B.store.set(DKEY, null); B.store.set('lastApply', { id: r.id, at: new Date().toISOString() });
+      form.hidden = true; document.querySelector('.head').hidden = true; document.querySelector('.side').hidden = true;
+      document.getElementById('page').style.gridTemplateColumns = '1fr';
+      document.getElementById('rid').textContent = r.id; document.getElementById('done').classList.add('on'); scrollTo(0, 0);
+    } catch (e) {
+      B.toast('제출하지 못했어요: ' + e.message + ' — 잠시 후 다시 시도해 주세요', 'err');
+      nx.disabled = false; nx.textContent = '신청서 제출하기';
+    } finally { sending = false; }
+  }
+
+  restore(); sync(); show(0);
+  if (B.store.get(DKEY)) { const s = document.getElementById('saved'); s.textContent = '✓ 작성하던 내용을 불러왔어요'; }
+  if (Date.now() > new Date(C.deadline).getTime() && !/[?&]late=1/.test(location.search)) {
+    form.innerHTML = '<div class="card closed"><h2 style="margin:0 0 8px">1기 모집이 마감되었어요</h2><p class="muted" style="margin:0">2기 소식은 인스타그램 @bbooks_bucheon 에서 알려드릴게요.</p></div>';
+  }
+})();
+</script>
+</body>
+</html>
