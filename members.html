@@ -323,7 +323,7 @@
   const fmtN = v => v == null || v === '' || isNaN(v) ? '—' : (+v).toLocaleString('ko-KR', { maximumFractionDigits: 1 });
   const agendaOf = s => s.n === 10
     ? ['데모데이 14:00–16:00 · 지인 초대', '멤버별 5분 발표 + 질문', '수료 · 2기 안내']
-    : [`<b>미니 특강 15분</b> · ${B.esc(s.lecture)}`, `<b>지난주 AI 활용 나누기 60분</b> · ${B.esc(s.share)}`, '<b>질의응답 15분</b> · 서로 묻고 답하기'];
+    : [`<b>미니 특강 15분</b> · ${B.esc(s.lecture)}${s.doc ? ` · <a href="${B.esc(s.doc)}" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">강의안 보기</a>` : ''}`, `<b>지난주 AI 활용 나누기 60분</b> · ${B.esc(s.share)}`, '<b>질의응답 15분</b> · 서로 묻고 답하기'];
   const roleFor = n => { // 회차 n의 진행자·기록자: 멤버 순서대로 순환 (1회차는 운영자)
     const ms = S.members; if (!ms.length) return {};
     if (n === 1) return { lead: ms[0], note: ms[0], show: ms[0] };
