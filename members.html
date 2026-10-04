@@ -216,7 +216,7 @@
 
   <section class="tab" id="t-board">
     <div class="sec-h"><h2>숫자 보드 <span class="muted" style="font-size:14px;font-weight:500">· 매주 금요일 자정까지 입력</span></h2>
-      <div style="display:flex;gap:8px"><button class="btn btn-ghost btn-sm" id="edit-mine">내 숫자 입력</button><button class="btn btn-dark btn-sm" id="ci-open">▶ 체크인 화면</button></div></div>
+      <div style="display:flex;gap:8px"><button class="btn btn-ghost btn-sm" id="edit-mine">내 숫자 입력</button><button class="btn btn-dark btn-sm" id="ci-open">▶ 나눔 화면</button></div></div>
     <div class="board" id="board"></div>
   </section>
 
@@ -244,7 +244,7 @@
 <div class="modal" id="rmodal" role="dialog" aria-modal="true"><div class="card">
   <div class="sec-h" style="margin:0"><h2>레시피 기록</h2><button class="btn btn-ghost btn-sm" data-close-modal>닫기</button></div>
   <form id="rform">
-    <div class="field"><label>제목</label><input class="input" name="title" required placeholder="예) 30일 쓰기 프롬프트 한 번에 설계"></div>
+    <div class="field"><label>제목</label><input class="input" name="title" required placeholder="예) 여행 메모를 장 구성으로"></div>
     <div class="field"><label>어떤 문제였나</label><input class="input" name="problem" placeholder="예) 책 소개 쓰는 데 1권 60분"></div>
     <div class="field"><label>도구</label><input class="input" name="tool" placeholder="예) Claude + 네이버 책 API"></div>
     <div class="field"><label>프롬프트 · 작업 흐름 <span class="opt">복붙 가능한 원문</span></label><textarea class="input" name="flow" required></textarea></div>
@@ -256,12 +256,12 @@
 </div></div>
 
 <!-- check-in mode -->
-<div class="ci" id="ci" role="dialog" aria-modal="true" aria-label="숫자 체크인 화면">
+<div class="ci" id="ci" role="dialog" aria-modal="true" aria-label="나눔 화면">
   <div class="ci-top"><span id="ci-wk"></span><span>← → 이동 · Space 타이머 · Esc 닫기</span><button class="btn btn-ghost btn-sm" id="ci-close">닫기</button></div>
   <div class="ci-body" id="ci-body"></div>
   <div class="ci-foot">
     <div class="dots" id="ci-dots"></div>
-    <div class="timer" id="timer"><svg viewBox="0 0 54 54"><circle cx="27" cy="27" r="22" stroke="rgba(243,237,226,.12)"/><circle id="tring" cx="27" cy="27" r="22" stroke="#ff7a4d" stroke-dasharray="138.2" stroke-dashoffset="0" stroke-linecap="round"/></svg><b id="tval">3:00</b><button class="btn btn-ghost btn-sm" id="tbtn">시작</button></div>
+    <div class="timer" id="timer"><svg viewBox="0 0 54 54"><circle cx="27" cy="27" r="22" stroke="rgba(243,237,226,.12)"/><circle id="tring" cx="27" cy="27" r="22" stroke="#ff7a4d" stroke-dasharray="138.2" stroke-dashoffset="0" stroke-linecap="round"/></svg><b id="tval">7:00</b><button class="btn btn-ghost btn-sm" id="tbtn">시작</button></div>
   </div>
 </div>
 
@@ -321,7 +321,10 @@
   const cur = m => { const w = latestWeek(m); return w ? m.values[w].v : m.base; };
   const pct = m => { const b = +m.base, t = +m.target, c = +cur(m); if (t === b || isNaN(t) || isNaN(b)) return 0; return Math.max(0, Math.min(1, (c - b) / (t - b))); };
   const fmtN = v => v == null || v === '' || isNaN(v) ? '—' : (+v).toLocaleString('ko-KR', { maximumFractionDigits: 1 });
-  const roleFor = n => { // 회차 n의 진행자·기록자·발표자: 멤버 순서대로 순환 (1회차는 운영자)
+  const agendaOf = s => s.n === 10
+    ? ['데모데이 14:00–16:00 · 지인 초대', '멤버별 5분 발표 + 질문', '수료 · 2기 안내']
+    : [`<b>미니 특강 15분</b> · ${B.esc(s.lecture)}`, `<b>지난주 AI 활용 나누기 60분</b> · ${B.esc(s.share)}`, '<b>질의응답 15분</b> · 서로 묻고 답하기'];
+  const roleFor = n => { // 회차 n의 진행자·기록자: 멤버 순서대로 순환 (1회차는 운영자)
     const ms = S.members; if (!ms.length) return {};
     if (n === 1) return { lead: ms[0], note: ms[0], show: ms[0] };
     const k = n - 2; return { lead: ms[k % ms.length], note: ms[(k + 1) % ms.length], show: ms[(k + 2) % ms.length] };
@@ -354,14 +357,14 @@
         <article class="card next" style="--pc:${PC[s.phase]}">
           <div class="row"><span class="n">${String(s.n).padStart(2, '0')}<span style="font-size:20px">/10</span></span><span class="dd">${next ? (days > 0 ? 'D-' + days : days === 0 ? 'TODAY' : '진행 중') : '1기 종료'}</span></div>
           <h3>${B.esc(s.title)}</h3>
-          <div class="when">${B.fmtDate(s.date, { year: 'numeric' })} 14:00–16:00 · ${C.phases.find(p => p.key === s.phase).name} 단계</div>
-          <ol>${s.agenda.map(a => `<li>${B.esc(a)}</li>`).join('')}</ol>
+          <div class="when">${B.fmtDate(s.date, { year: 'numeric' })} 14:00–${s.end || '15:30'} · ${C.phases.find(p => p.key === s.phase).name} 단계</div>
+          <ol>${agendaOf(s).map(a => `<li>${a}</li>`).join('')}</ol>
           <div class="out">끝나면 남는 것 · <b>${B.esc(s.out)}</b></div>
         </article>
         <div class="stack">
           <div class="card mini-card"><h3>이번 주 역할</h3><div class="roles-l">
-            ${[['진행자', r.lead, 'var(--signal)'], ['기록자', r.note, 'var(--c-design)'], ['발표자', r.show, 'var(--c-prove)']].map(([k, m, c]) => `<div><span class="chip"><i style="color:${c}"></i>${k}</span><b>${m ? B.esc(m.name) : '—'}${m && m.id === mine.id ? ' (나)' : ''}</b></div>`).join('')}
-          </div><p class="muted" style="font-size:12px;margin:12px 0 0">멤버 순서대로 자동 순환해요. 서로 바꾸는 건 자유.</p></div>
+            ${[['진행자', r.lead, 'var(--signal)'], ['기록자', r.note, 'var(--c-design)']].map(([k, m, c]) => `<div><span class="chip"><i style="color:${c}"></i>${k}</span><b>${m ? B.esc(m.name) : '—'}${m && m.id === mine.id ? ' (나)' : ''}</b></div>`).join('')}
+          </div><p class="muted" style="font-size:12px;margin:12px 0 0">특강은 운영자가 준비해요. 진행자(나눔 시간 관리)와 기록자는 멤버 순서대로 자동 순환, 서로 바꾸는 건 자유.</p></div>
           <div class="card mini-card"><h3>내 숫자 · W${wk}</h3>
             <form class="quick" id="quick">
               <div class="muted" style="font-size:13px">${B.esc(mine.metric || '핵심 숫자 미정')} · 시작 ${fmtN(mine.base)} → 목표 ${fmtN(mine.target)}${B.esc(mine.unit || '')}</div>
@@ -450,12 +453,12 @@
   $('#drawer').addEventListener('click', e => { if (e.target.closest('[data-close]')) closeDrawer(); });
 
   /* ---------- check-in mode ---------- */
-  let ciI = 0, tLeft = 180, tRun = null;
+  const TSEC = (C.shareMinPerPerson || 7) * 60; let ciI = 0, tLeft = TSEC, tRun = null;
   const ciWeek = () => { const { next } = B.currentSession(); return next ? next.n : 10; };
   function ciRender() {
     const m = S.members[ciI], wk = ciWeek(), s = series(m), v = s[wk - 1], prevArr = s.slice(0, wk - 1).filter(x => x != null), prev = prevArr.length ? prevArr[prevArr.length - 1] : +m.base;
     const col = TH[m.type] || '#ff7a4d', good = v != null && (m.dir === 'down' ? v < prev : v > prev), d = v != null ? v - prev : null;
-    $('#ci-wk').textContent = `W${wk} 숫자 체크인 · ${ciI + 1}/${S.members.length}`;
+    $('#ci-wk').textContent = `W${wk} 지난주 AI 활용 나누기 · ${ciI + 1}/${S.members.length}`;
     $('#ci-body').innerHTML = `<div class="ci-anim"><div class="who">${B.esc(m.name)}</div><div class="pj">${B.esc(m.project || '')}</div>
       <div class="metric">${B.esc(m.metric || '')} · 목표 ${fmtN(m.target)}${B.esc(m.unit || '')}</div>
       <div class="now">${v != null ? fmtN(v) : '<span style="opacity:.35">—</span>'}<small>${B.esc(m.unit || '')}</small></div>
@@ -465,9 +468,9 @@
     $('#ci-dots').innerHTML = S.members.map((x, i) => `<button class="${i === ciI ? 'on' : ''}" data-i="${i}">${B.esc(x.name)}</button>`).join('');
     resetTimer();
   }
-  function resetTimer() { clearInterval(tRun); tRun = null; tLeft = 180; drawTimer(); $('#tbtn').textContent = '시작'; }
+  function resetTimer() { clearInterval(tRun); tRun = null; tLeft = TSEC; drawTimer(); $('#tbtn').textContent = '시작'; }
   function drawTimer() { const a = Math.abs(tLeft); $('#tval').textContent = (tLeft < 0 ? '+' : '') + Math.floor(a / 60) + ':' + String(a % 60).padStart(2, '0');
-    $('#tring').style.strokeDashoffset = 138.2 * (1 - Math.max(0, tLeft) / 180); $('#timer').classList.toggle('over', tLeft < 0); }
+    $('#tring').style.strokeDashoffset = 138.2 * (1 - Math.max(0, tLeft) / TSEC); $('#timer').classList.toggle('over', tLeft < 0); }
   function toggleTimer() { if (tRun) { clearInterval(tRun); tRun = null; $('#tbtn').textContent = '계속'; } else { tRun = setInterval(() => { tLeft--; drawTimer(); }, 1000); $('#tbtn').textContent = '멈춤'; } }
   $('#tbtn').onclick = toggleTimer;
   $('#ci-open').onclick = () => { if (!S.members.length) return; ciI = 0; $('#ci').classList.add('on'); document.body.style.overflow = 'hidden'; ciRender(); document.documentElement.requestFullscreen && document.documentElement.requestFullscreen().catch(() => {}); };
@@ -493,9 +496,9 @@
       return `<details class="card log" style="--pc:${PC[s.phase]}" ${!upcoming && i === done - 1 ? 'open' : ''}>
         <summary><span class="n">${String(s.n).padStart(2, '0')}</span><span class="t"><b>${B.esc(s.title)}</b><span>${B.fmtDate(s.date)} · 기록자 ${r.note ? B.esc(r.note.name) : '—'}</span></span><span class="st ${l ? 'has' : ''}">${l ? '기록 있음' : upcoming ? '예정' : '기록 대기'}</span></summary>
         <div class="body">
-          ${l ? `<h4>숫자 체크인</h4><p>${B.esc(l.checkin || '—')}</p><h4>쇼앤텔 · 클리닉</h4><p>${B.esc(l.show || '—')}</p><h4>다음 주 약속</h4><p>${B.esc(l.promise || '—')}</p>${l.links ? `<h4>사진 · 링크</h4><p>${linkify(l.links)}</p>` : ''}<p class="muted" style="font-size:12px;margin-top:14px">${by ? B.esc(by.name) : ''} · ${new Date(l.at).toLocaleString('ko-KR')}</p>` : `<p class="muted">${upcoming ? '아직 진행 전이에요. 이 회차 계획: ' + s.agenda.map(B.esc).join(' · ') : '아직 기록이 없어요. 기록자가 아니어도 먼저 남길 수 있어요.'}</p>`}
+          ${l ? `<h4>지난주 나눔</h4><p>${B.esc(l.checkin || '—')}</p><h4>특강 · 질의응답</h4><p>${B.esc(l.show || '—')}</p><h4>다음 주 약속</h4><p>${B.esc(l.promise || '—')}</p>${l.links ? `<h4>사진 · 링크</h4><p>${linkify(l.links)}</p>` : ''}<p class="muted" style="font-size:12px;margin-top:14px">${by ? B.esc(by.name) : ''} · ${new Date(l.at).toLocaleString('ko-KR')}</p>` : `<p class="muted">${upcoming ? '아직 진행 전이에요. 이 회차 계획: 특강 「' + B.esc(s.title) + '」 · 나눔 · 질의응답' : '아직 기록이 없어요. 기록자가 아니어도 먼저 남길 수 있어요.'}</p>`}
           ${!upcoming ? `<details style="margin-top:14px"><summary style="cursor:pointer;font-weight:600;font-size:14px;color:var(--signal)">${l ? '기록 수정' : '기록 남기기'}</summary>
-            <form data-n="${s.n}" class="logform">${fld('checkin', '숫자 체크인 요약', '멤버별 한 줄')}${fld('show', '쇼앤텔 · 클리닉', '다룬 문제 → 시도한 도구 → 결과')}${fld('promise', '다음 주 약속', '멤버별 한 줄')}${fld('links', '사진 · 링크', '구글 드라이브·사진 링크 등')}<button class="btn btn-dark" type="submit">기록 저장</button></form></details>` : ''}
+            <form data-n="${s.n}" class="logform">${fld('checkin', '지난주 AI 활용 나눔 요약', '멤버별 한 줄 — 숫자 · 해 본 것 · 배운 것')}${fld('show', '특강 · 질의응답 메모', '다룬 문제 → 시도한 도구 → 결과')}${fld('promise', '다음 주 약속', '멤버별 한 줄')}${fld('links', '사진 · 링크', '구글 드라이브·사진 링크 등')}<button class="btn btn-dark" type="submit">기록 저장</button></form></details>` : ''}
         </div></details>`;
     }).join('');
     document.querySelectorAll('.logform').forEach(f => f.addEventListener('submit', async e => {
@@ -541,7 +544,7 @@
     const { done } = B.currentSession();
     $('#sched').innerHTML = C.sessions.map((s, i) => { const r = roleFor(s.n), ph = C.phases.find(p => p.key === s.phase);
       return `<div class="srow ${i < done ? 'done' : i === done ? 'next' : ''}" style="--pc:${PC[s.phase]}"><span class="n">${String(s.n).padStart(2, '0')}</span><span class="d">${B.fmtDate(s.date)}</span>
-        <div><h4>${B.esc(s.title)}</h4><p>진행 ${r.lead ? B.esc(r.lead.name) : '—'} · 기록 ${r.note ? B.esc(r.note.name) : '—'} · 발표 ${r.show ? B.esc(r.show.name) : '—'}</p></div>
+        <div><h4>${B.esc(s.title)}</h4><p>진행 ${r.lead ? B.esc(r.lead.name) : '—'} · 기록 ${r.note ? B.esc(r.note.name) : '—'} · 특강 ${B.esc(s.title)}</p></div>
         <span class="chip"><i style="color:${PC[s.phase]}"></i>${ph.name}</span></div>`; }).join('');
   }
 

@@ -15,8 +15,8 @@
   function demoSeed() {
     if (store.get('seeded')) return;
     const members = [
-      { id: 'M-HOSE', name: 'Hose', code: 'demo', role: '운영자', project: '완독탱고 × 기록탱고', type: 'new',
-        metric: '평균 완독률', unit: '%', dir: 'up', base: 0, target: 75, values: {}, intro: '부천리딩파티 × 비북스. 『사탄탱고』 30일 읽기쓰기 탱고를 AI로 설계·모집·운영.', sample: true },
+      { id: 'M-HOSE', name: 'Hose', code: 'demo', role: '운영자', project: '여행기 전자책 출간 프로젝트', type: 'new',
+        metric: '누적 판매', unit: '부', dir: 'up', base: 0, target: 10, values: {}, intro: '비북스 운영자. 여행기를 써서 epub로 출간하고 홍보·판매까지 AI와 함께.', sample: true },
       { id: 'M-EX1', name: '예시 멤버 A', code: 'demo-a', role: '직장인', project: '주간 보고서 자동화', type: 'save',
         metric: '보고서 1건 작성 시간', unit: '분', dir: 'down', base: 90, target: 20, values: {}, intro: '데모용 예시 데이터', sample: true },
       { id: 'M-EX2', name: '예시 멤버 B', code: 'demo-b', role: '자영업', project: '카페 인스타 콘텐츠 자동화', type: 'grow',
@@ -25,7 +25,7 @@
     store.set('members', members);
     store.set('logs', []);
     store.set('recipes', [
-      { id: 'R-EX1', by: 'M-HOSE', week: 1, title: '30일 쓰기 프롬프트 한 번에 설계 (예시)', problem: '책 구간마다 맞는 쓰기 질문 30개를 혼자 만들기 막막함', tool: 'Claude', flow: '1) 책을 하루 15쪽씩 나눈 구간 표(Day · 쪽 구간 · 그 구간의 핵심 장면 한 줄)를 붙여 넣기\n2) “각 구간의 장면에서 출발하되 내 삶으로 건너오는 질문을 하루 하나씩. 15분 안에 500자 이내로 쓸 수 있게. 키워드 한 단어 붙이기” 프롬프트\n3) 표로 받아 노션 트래커에 붙이고 08시 미션 문구로 재사용', result: '캘린더 30일 설계 4시간 → 40분', caution: '줄거리를 미리 알려 주는 질문은 빼기', tags: ['신사업형', '글쓰기'], at: now() }
+      { id: 'R-EX1', by: 'M-HOSE', week: 2, title: '여행 메모를 장 구성으로 (예시)', problem: '사진과 메모가 흩어져 있어 책의 순서를 못 잡음', tool: 'Claude', flow: '1) 날짜별 여행 메모와 사진 설명을 한 파일로 붙여 넣기\n2) “이 기록을 독자가 따라가기 좋은 12개 장으로 묶어 줘. 장마다 제목 후보 2개, 들어갈 날짜, 빠진 이야기가 있으면 질문으로 알려 줘” 프롬프트\n3) 제안을 그대로 쓰지 않고 내가 순서를 고쳐 목차 확정', result: '목차 정리 이틀 → 한나절', caution: '지명·날짜·고유명사는 반드시 내 기록과 대조', tags: ['신사업형', '글쓰기'], at: now() }
     ]);
     store.set('apps', []);
     store.set('seeded', true);
