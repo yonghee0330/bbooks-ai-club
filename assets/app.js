@@ -85,8 +85,8 @@
       if (a.status === '선발' && !a.memberCode) {
         demoSeed();
         const ms = store.get('members', []); const code = Math.random().toString(36).slice(2, 8);
-        ms.push({ id: 'M-' + a.id, name: a.name, code, role: a.role, project: (a.goal || '').slice(0, 40), type: a.ptype, metric: a.mName, unit: a.mUnit,
-          dir: (C.types[a.ptype] || {}).dir || 'up', base: isNaN(+a.mNow) ? '' : +a.mNow, target: isNaN(+a.mGoal) ? '' : +a.mGoal, values: {}, intro: a.job });
+        ms.push({ id: 'M-' + a.id, name: a.name, code, role: a.role, project: (a.goal || '').slice(0, 40), type: '', metric: '', unit: '',
+          dir: 'up', base: '', target: '', values: {}, intro: '' });
         store.set('members', ms); a.memberCode = code;
       }
       store.set('apps', apps); return { ok: true, memberCode: a.memberCode };

@@ -15,7 +15,7 @@
 .head p { margin: 0; color: var(--ink-2); }
 .head .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
 
-.stepper { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 32px 0 8px; position: sticky; top: 60px; z-index: 5; background: var(--paper); padding: 12px 0; }
+.stepper { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 32px 0 8px; position: sticky; top: 60px; z-index: 5; background: var(--paper); padding: 12px 0; }
 .stepper button { all: unset; cursor: pointer; display: grid; gap: 8px; font-size: 13px; color: var(--muted); }
 .stepper button i { display: block; height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; position: relative; }
 .stepper button i::after { content: ''; position: absolute; inset: 0; background: var(--ink); transform: scaleX(var(--fill, 0)); transform-origin: left; transition: transform .5s cubic-bezier(.6,0,.2,1); }
@@ -87,6 +87,10 @@
 .pcard .nums .u { font: 500 14px var(--sans); color: color-mix(in srgb, var(--paper) 65%, transparent); }
 .pcard svg { margin-top: 10px; width: 100%; height: 70px; }
 .pcard svg path { fill: none; stroke: var(--signal); stroke-width: 2.5; stroke-linecap: round; transition: d .6s; }
+.pcard .rows { display: grid; gap: 10px; margin-top: 4px; }
+.pcard .rows div { display: grid; grid-template-columns: 56px 1fr; gap: 10px; font-size: 13px; align-items: baseline; }
+.pcard .rows span { color: color-mix(in srgb, var(--paper) 55%, transparent); font: 500 11px var(--mono); }
+.pcard .rows b { font-weight: 500; line-height: 1.5; }
 .side .tip { margin-top: 14px; font-size: 13px; color: var(--muted); padding: 0 4px; }
 .side .tip b { color: var(--ink); }
 .progress-ring { display: flex; gap: 12px; align-items: center; margin-top: 16px; padding: 14px 16px; }
@@ -122,8 +126,8 @@
       <div class="head">
         <span class="eyebrow">Application · Cohort 01</span>
         <h1>1기 신청서</h1>
-        <p>15개 문항, 10~15분이면 충분해요. 작성 중인 내용은 이 기기에 자동 저장됩니다. 정답은 없어요 — 지금 있는 그대로 적어 주세요.</p>
-        <div class="meta"><span class="chip"><i style="color:var(--signal)"></i>마감 10/16(금) 12:00</span><span class="chip">결과 안내 10/16(금) 20:00</span><span class="chip">정원 8명</span></div>
+        <p>10문항, 3~5분이면 충분해요. 대부분 고르기예요. 작성 중인 내용은 이 기기에 자동 저장됩니다. 정답은 없어요 — 지금 있는 그대로 골라 주세요.</p>
+        <div class="meta"><span class="chip"><i style="color:var(--signal)"></i>마감 10/16(금) 12:00</span><span class="chip">결과 안내 10/16(금) 20:00</span><span class="chip">정원 8명</span><span class="chip">모임 외 주 1~2시간</span></div>
       </div>
 
       <form id="form" novalidate autocomplete="on">
@@ -144,14 +148,8 @@
           <div class="field" data-q="role">
             <div class="lab"><span class="num">Q2</span>하는 일 <span class="req">필수</span></div>
             <div class="opts" id="opt-role"></div>
-            <input class="input other" name="roleOther" placeholder="어떤 일을 하시나요?">
+            <input class="input other" name="roleOther" maxlength="30" placeholder="어떤 일을 하시나요? (짧게)">
             <span class="err">하나를 골라 주세요.</span>
-          </div>
-          <div class="field" data-q="job">
-            <label class="lab" for="job"><span class="num">Q3</span>하는 일 간단 소개 <span class="req">필수</span></label>
-            <p class="help">한두 줄이면 돼요. 예) 원미동에서 8년째 꽃집 운영, 웨딩·기업 정기 배송이 주력</p>
-            <input class="input" id="job" name="job" maxlength="120">
-            <span class="err">간단히 소개해 주세요.</span>
           </div>
         </section>
 
@@ -159,93 +157,53 @@
         <section class="pane" data-step="1">
           <h2><span class="mono">02</span>AI 사용</h2>
           <div class="field" data-q="tools">
-            <div class="lab"><span class="num">Q4</span>주로 쓰는 AI 도구 <span class="req">필수</span><span class="opt">여러 개 선택</span></div>
+            <div class="lab"><span class="num">Q3</span>주로 쓰는 AI 도구 <span class="req">필수</span><span class="opt">여러 개 선택</span></div>
             <div class="opts" id="opt-tools"></div>
-            <input class="input other" name="toolsOther" placeholder="그 밖에 쓰는 도구 (쉼표로 구분)">
+            <input class="input other" name="toolsOther" maxlength="40" placeholder="그 밖에 쓰는 도구 (짧게)">
             <span class="err">하나 이상 골라 주세요.</span>
           </div>
           <div class="field" data-q="level">
-            <div class="lab"><span class="num">Q5</span>사용 범위 <span class="req">필수</span></div>
+            <div class="lab"><span class="num">Q4</span>AI를 어디까지 써 봤나요 <span class="req">필수</span></div>
             <div class="opts" id="opt-level"></div>
             <span class="err">하나를 골라 주세요.</span>
           </div>
-          <div class="field" data-q="paid">
-            <label class="lab" for="paid"><span class="num">Q6</span>유료 구독 중인 도구 <span class="opt">선택</span></label>
-            <input class="input" id="paid" name="paid" placeholder="예) ChatGPT Plus, Canva Pro — 없으면 비워 두세요">
-          </div>
-          <div class="field" data-q="case">
-            <label class="lab" for="case"><span class="num">Q7</span>AI로 해본 대표 사례 1개 <span class="req">필수</span></label>
-            <p class="help">무엇을 하려고 · 어떤 도구로 · 어떻게 했고 · 결과가 어땠는지. 거창하지 않아도 돼요.</p>
-            <textarea class="input" id="case" name="case" maxlength="800"></textarea>
-            <div class="count" data-for="case"></div>
-            <span class="err">한두 문장 이상 적어 주세요 (20자 이상).</span>
+          <div class="field" data-q="coding">
+            <div class="lab"><span class="num">Q5</span>코딩 경험 <span class="req">필수</span></div>
+            <p class="help">바이브코딩(말로 설명해서 만들기)을 다루기 때문에 물어봐요. 경험이 없어도 괜찮아요.</p>
+            <div class="opts" id="opt-coding"></div>
+            <span class="err">하나를 골라 주세요.</span>
           </div>
         </section>
 
         <!-- STEP 3 -->
         <section class="pane" data-step="2">
-          <h2><span class="mono">03</span>3개월 프로젝트</h2>
+          <h2><span class="mono">03</span>기대와 참여</h2>
+          <div class="field" data-q="hope">
+            <div class="lab"><span class="num">Q6</span>이번 모임에서 가장 기대하는 것 <span class="req">필수</span><span class="opt">최대 2개</span></div>
+            <div class="opts" id="opt-hope"></div>
+            <span class="err">1~2개를 골라 주세요.</span>
+          </div>
           <div class="field" data-q="goal">
-            <label class="lab" for="goal"><span class="num">Q8</span>3개월 동안 AI로 만들거나 해결하고 싶은 것 <span class="req">필수</span></label>
-            <p class="help">누구에게 무엇을 팔거나, 무엇을 아끼고 싶은지. 예) 단골 고객 대상 꽃 정기구독 안내를 인스타·문자로 자동화해 신규 구독을 늘리고 싶다</p>
-            <textarea class="input" id="goal" name="goal" maxlength="800"></textarea>
+            <label class="lab" for="goal"><span class="num">Q7</span>AI로 바꿔 보고 싶은 내 일 한 줄 <span class="req">필수</span></label>
+            <p class="help">짧게 한 줄이면 돼요. 예) 주간 보고서 쓰는 시간 줄이기 · 가게 인스타 문구 만들기 · 여행기 전자책 내기</p>
+            <input class="input" id="goal" name="goal" maxlength="60">
             <div class="count" data-for="goal"></div>
-            <span class="err">조금 더 구체적으로 적어 주세요 (20자 이상).</span>
-          </div>
-          <div class="field" data-q="ptype">
-            <div class="lab"><span class="num">Q9</span>프로젝트 유형 <span class="req">필수</span></div>
-            <div class="tcards" id="opt-ptype"></div>
-            <span class="err">유형을 골라 주세요. 애매하면 가장 가까운 쪽으로.</span>
-          </div>
-          <div class="field" data-q="metric">
-            <div class="lab"><span class="num">Q10</span>3개월 뒤 보여주고 싶은 숫자와 현재 값 <span class="req">필수</span></div>
-            <p class="help">매주 셀 수 있는 숫자가 좋아요. 현재 값을 모르면 “모름”이라고 적고 3회차까지 같이 재요.</p>
-            <div class="metric-box">
-              <div><label class="sub-lab" for="mName">숫자 이름</label><input class="input" id="mName" name="mName" placeholder="예) 월 정기구독 신규 신청 수"></div>
-              <div class="grid3">
-                <div><label class="sub-lab" for="mNow">현재 값</label><input class="input" id="mNow" name="mNow" placeholder="예) 3"></div>
-                <div><label class="sub-lab" for="mGoal">3개월 뒤 목표</label><input class="input" id="mGoal" name="mGoal" placeholder="예) 15"></div>
-                <div><label class="sub-lab" for="mUnit">단위</label><input class="input" id="mUnit" name="mUnit" placeholder="건 / 분 / 명 / 회"></div>
-              </div>
-              <div><label class="sub-lab" for="mNote">덧붙일 말 <span class="opt">선택</span></label><input class="input" id="mNote" name="mNote" placeholder="보조 숫자, 측정 방법 등"></div>
-            </div>
-            <span class="err">숫자 이름과 현재 값(또는 “모름”), 목표를 적어 주세요.</span>
-          </div>
-          <div class="field" data-q="give">
-            <label class="lab" for="give"><span class="num">Q11</span>다른 멤버에게 나눠줄 수 있는 것 <span class="req">필수</span></label>
-            <p class="help">도구 노하우, 업계 경험, 디자인·글쓰기·촬영, 네트워크, 공간… 무엇이든.</p>
-            <textarea class="input" id="give" name="give" maxlength="500" style="min-height:90px"></textarea>
-            <span class="err">한 가지라도 적어 주세요.</span>
-          </div>
-        </section>
-
-        <!-- STEP 4 -->
-        <section class="pane" data-step="3">
-          <h2><span class="mono">04</span>참여 조건</h2>
-          <div class="field" data-q="hours">
-            <div class="lab"><span class="num">Q12</span>모임 외에 주당 투입 가능한 시간 <span class="req">필수</span></div>
-            <p class="help">주 1~2시간이면 충분해요. 가능한 만큼 솔직하게 골라 주세요.</p>
-            <div class="opts" id="opt-hours"></div>
-            <span class="err">하나를 골라 주세요.</span>
+            <span class="err">한 줄로 적어 주세요 (4자 이상).</span>
           </div>
           <div class="field" data-q="attend">
-            <div class="lab"><span class="num">Q13</span>10회 출석 가능 여부 <span class="req">필수</span></div>
+            <div class="lab"><span class="num">Q8</span>10회 출석 가능 여부 <span class="req">필수</span></div>
             <p class="help"><b>출석 보증금 5만 원</b> — 선발 시 안내, 8회 이상 출석하면 12/19에 전액 환급돼요.<br>10/17 · 10/24 · 10/31 · 11/7 · 11/14 · 11/21 · 11/28 · 12/5 · 12/12 · 12/19 (토 14:00–15:30, 마지막 12/19 데모데이만 16:00까지). 수료 기준은 8회 이상.</p>
             <div class="opts" id="opt-attend"></div>
-            <input class="input other" name="absent" placeholder="불참 예정일 (예: 11/21, 12/5)">
+            <input class="input other" name="absent" maxlength="40" placeholder="불참 예정일 (예: 11/21, 12/5)">
             <span class="err">하나를 고르고, 불참 예정일이 있으면 적어 주세요.</span>
           </div>
           <div class="field" data-q="laptop">
-            <div class="lab"><span class="num">Q14</span>노트북 지참 가능 여부 <span class="req">필수</span></div>
+            <div class="lab"><span class="num">Q9</span>노트북 지참 가능 여부 <span class="req">필수</span></div>
             <div class="opts" id="opt-laptop"></div>
             <span class="err">하나를 골라 주세요.</span>
           </div>
-          <div class="field" data-q="source">
-            <div class="lab"><span class="num">+</span>어떻게 알게 되셨나요? <span class="opt">선택</span></div>
-            <div class="opts" id="opt-source"></div>
-          </div>
           <div class="field" data-q="consent">
-            <div class="lab"><span class="num">Q15</span>개인정보 수집·이용 동의 <span class="req">필수</span></div>
+            <div class="lab"><span class="num">Q10</span>개인정보 수집·이용 동의 <span class="req">필수</span></div>
             <div class="consent">
               <table>
                 <tr><th>수집 항목</th><td>이름, 연락처, 이메일, 신청서 응답 내용</td></tr>
@@ -261,7 +219,7 @@
         </section>
 
         <!-- REVIEW -->
-        <section class="pane" data-step="4">
+        <section class="pane" data-step="3">
           <h2><span class="mono">✓</span>마지막 확인</h2>
           <p style="margin:-8px 0 0;color:var(--ink-2)">제출 후에는 수정이 어려워요. 고칠 곳이 있으면 ‘수정’을 눌러 주세요.</p>
           <div class="review" id="review"></div>
@@ -289,23 +247,25 @@
       </div>
     </div>
 
-    <aside class="side" aria-label="내 프로젝트 미리보기">
+    <aside class="side" aria-label="내 신청 미리보기">
       <div class="card pcard">
-        <div class="lbl">MY PROJECT CARD · 미리보기</div>
-        <h3 id="pv-goal">어떤 프로젝트를 하게 될까요?</h3>
+        <div class="lbl">MY APPLICATION · 미리보기</div>
+        <h3 id="pv-goal">AI로 바꿔 보고 싶은 일은?</h3>
         <div class="who" id="pv-who"></div>
-        <div class="tt" id="pv-type"></div>
+        <div class="tt" id="pv-tools"></div>
         <div class="m">
-          <div class="k" id="pv-metric">핵심 숫자</div>
-          <div class="nums"><span class="a" id="pv-a">—</span><span class="arr">→</span><span class="b" id="pv-b">?</span><span class="u" id="pv-u"></span></div>
-          <svg viewBox="0 0 280 70" preserveAspectRatio="none"><path id="pv-path" d="M4 50 L276 50"/></svg>
+          <div class="rows">
+            <div><span>AI 사용</span><b id="pv-level">—</b></div>
+            <div><span>코딩</span><b id="pv-coding">—</b></div>
+            <div><span>기대</span><b id="pv-hope">—</b></div>
+          </div>
         </div>
       </div>
       <div class="card progress-ring">
         <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" stroke="var(--rule)"/><circle class="fg" id="ring" cx="22" cy="22" r="18" stroke-dasharray="113.1" stroke-dashoffset="113.1"/></svg>
-        <div><b id="ring-t">0 / 14</b><div style="font-size:13px;color:var(--muted)">필수 문항 작성</div></div>
+        <div><b id="ring-t">0 / 10</b><div style="font-size:13px;color:var(--muted)">문항 작성</div></div>
       </div>
-      <p class="tip">입력하는 대로 위 카드가 채워져요. 선발 때 가장 먼저 보는 건 <b>Q8 · Q10</b> — 붙일 일과 숫자가 구체적일수록 좋아요.</p>
+      <p class="tip">입력하는 대로 위 카드가 채워져요. 선발 때 가장 먼저 보는 건 <b>Q7</b> — 바꿔 보고 싶은 일이 구체적일수록 좋아요. 숫자는 모임 2회차에 같이 정해요.</p>
     </aside>
   </div>
 </main>
@@ -320,22 +280,20 @@
   if (B.demoMode) document.getElementById('demo').hidden = false;
 
   const OPTS = {
-    role: [...C.roles, '기타'],
-    tools: [...C.tools, '기타'],
-    level: ['가끔 질문', '업무에 자주 활용', '결과물 제작', '자동화·연동까지'],
-    hours: ['2시간 미만', '2–4시간', '4–6시간', '6시간 이상'],
+    role: ['직장인', '자영업', '프리랜서', '창업 준비', '학생·취준', '기타'],
+    tools: ['ChatGPT', 'Claude', 'Gemini', 'Perplexity', 'Copilot', 'NotebookLM', '코딩 도구 (Cursor·Claude Code 등)', '이미지·영상 생성', '아직 거의 안 써 봤어요', '기타'],
+    level: ['거의 안 써 봤어요', '가끔 질문해요', '업무에 자주 써요', '결과물(글·이미지 등)을 만들어요', '자동화·연동까지 해 봤어요'],
+    coding: ['코딩 경험 없음', '따라 해 본 적 있음', '가끔 직접 만들어 봄', '개발 일을 해요(했어요)'],
+    hope: ['AI 기초 제대로 이해하기', '바이브코딩으로 작은 도구 만들기', '내 일의 반복 업무 줄이기', '콘텐츠·홍보에 AI 쓰기', '새 상품·서비스 만들기', '같이 공부할 사람 만나기'],
     attend: ['10회 모두 가능', '8–9회 가능 (불참 예정일 있음)', '7회 이하'],
-    laptop: ['예, 가져올 수 있어요', '아니요'],
-    source: ['인스타그램', '비모임', '비북스 매장', '지인 추천', '기타']
+    laptop: ['예, 가져올 수 있어요', '아니요']
   };
-  const pill = (name, v, multi) => `<label class="opt-pill"><input type="${multi ? 'checkbox' : 'radio'}" name="${name}" value="${B.esc(v)}"><span>${B.esc(v)}</span></label>`;
-  Object.entries(OPTS).forEach(([k, arr]) => { document.getElementById('opt-' + k).innerHTML = arr.map(v => pill(k, v, k === 'tools')).join(''); });
-  const TC = { save: 'var(--c-design)', grow: 'var(--c-build)', new: 'var(--c-prove)' };
-  document.getElementById('opt-ptype').innerHTML = Object.entries(C.types).map(([k, t]) =>
-    `<label class="tcard" style="--tc:${TC[k]}"><input type="radio" name="ptype" value="${k}"><div class="in"><b>${t.name}<span>${t.dir === 'down' ? '↓' : '↑'}</span></b><p>${t.desc}</p><small>${t.ex}</small></div></label>`).join('');
+  const MULTI = { tools: 1, hope: 1 };
+  const pill = (name, v) => `<label class="opt-pill"><input type="${MULTI[name] ? 'checkbox' : 'radio'}" name="${name}" value="${B.esc(v)}"><span>${B.esc(v)}</span></label>`;
+  Object.entries(OPTS).forEach(([k, arr]) => { document.getElementById('opt-' + k).innerHTML = arr.map(v => pill(k, v)).join(''); });
 
   /* --- stepper --- */
-  const STEPS = ['나에 대해', 'AI 사용', '프로젝트', '참여 조건'];
+  const STEPS = ['나에 대해', 'AI 사용', '기대와 참여'], N = STEPS.length;
   const panes = [...document.querySelectorAll('.pane')];
   document.getElementById('stepper').innerHTML = STEPS.map((s, i) => `<button type="button" role="tab" data-go="${i}"><i></i><span><span class="mono">0${i + 1}</span> ${s}</span></button>`).join('');
   let cur = 0, maxReached = 0;
@@ -343,13 +301,12 @@
     cur = i; maxReached = Math.max(maxReached, i);
     panes.forEach((p, k) => p.classList.toggle('on', k === i));
     document.querySelectorAll('#stepper button').forEach((b, k) => {
-      b.toggleAttribute('aria-current', k === Math.min(i, 3));
+      b.toggleAttribute('aria-current', k === Math.min(i, N - 1));
       b.querySelector('i').style.setProperty('--fill', k < i ? 1 : k === i ? .5 : 0);
     });
     document.getElementById('prev').style.visibility = i === 0 ? 'hidden' : 'visible';
-    const nx = document.getElementById('next');
-    nx.innerHTML = i === 3 ? '검토하기 <span class="arr">→</span>' : i === 4 ? '신청서 제출하기' : '다음 <span class="arr">→</span>';
-    if (i === 4) renderReview();
+    document.getElementById('next').innerHTML = i === N - 1 ? '검토하기 <span class="arr">→</span>' : i === N ? '신청서 제출하기' : '다음 <span class="arr">→</span>';
+    if (i === N) renderReview();
     const top = document.querySelector('.head').getBoundingClientRect().bottom + scrollY - 40;
     if (scrollY > top) scrollTo({ top, behavior: B.reduced() ? 'auto' : 'smooth' });
   }
@@ -358,31 +315,22 @@
     if (g <= cur || validate(cur, true)) show(g <= maxReached || g === cur + 1 ? g : cur);
   });
   document.getElementById('prev').onclick = () => show(Math.max(0, cur - 1));
-  document.getElementById('next').onclick = () => {
-    if (cur < 4) { if (validate(cur)) show(cur + 1); }
-    else submit();
-  };
+  document.getElementById('next').onclick = () => { if (cur < N) { if (validate(cur)) show(cur + 1); } else submit(); };
 
   /* --- data --- */
   const val = n => { const els = form.elements[n]; if (!els) return ''; if (els instanceof RadioNodeList || els.length > 1 && els[0] && els[0].type) {
     const arr = [...els]; if (arr[0].type === 'checkbox') return arr.filter(x => x.checked).map(x => x.value); return (arr.find(x => x.checked) || {}).value || ''; }
     if (els.type === 'checkbox') return els.checked ? els.value : ''; return els.value.trim(); };
-  function collect() {
-    const names = ['name', 'phone', 'email', 'role', 'roleOther', 'job', 'tools', 'toolsOther', 'level', 'paid', 'case', 'goal', 'ptype', 'mName', 'mNow', 'mGoal', 'mUnit', 'mNote', 'give', 'hours', 'attend', 'absent', 'laptop', 'source', 'consent', 'consentNext'];
-    return Object.fromEntries(names.map(n => [n, val(n)]));
-  }
+  const NAMES = ['name', 'phone', 'email', 'role', 'roleOther', 'tools', 'toolsOther', 'level', 'coding', 'hope', 'goal', 'attend', 'absent', 'laptop', 'consent', 'consentNext'];
+  const collect = () => Object.fromEntries(NAMES.map(n => [n, val(n)]));
   const RULES = {
     contact: d => d.name.length >= 2 && /^0\d{1,2}-?\d{3,4}-?\d{4}$/.test(d.phone.replace(/\s/g, '')) && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email),
     role: d => d.role && (d.role !== '기타' || d.roleOther),
-    job: d => d.job.length >= 2,
     tools: d => d.tools.length > 0 && (!d.tools.includes('기타') || d.toolsOther),
     level: d => !!d.level,
-    case: d => d.case.length >= 20,
-    goal: d => d.goal.length >= 20,
-    ptype: d => !!d.ptype,
-    metric: d => d.mName.length >= 2 && d.mNow && d.mGoal,
-    give: d => d.give.length >= 2,
-    hours: d => !!d.hours,
+    coding: d => !!d.coding,
+    hope: d => d.hope.length >= 1 && d.hope.length <= 2,
+    goal: d => d.goal.length >= 4,
     attend: d => d.attend && (d.attend === '10회 모두 가능' || d.absent),
     laptop: d => !!d.laptop,
     consent: d => d.consent === 'Y'
@@ -403,12 +351,16 @@
   function restore() {
     const d = B.store.get(DKEY); if (!d) return;
     Object.entries(d).forEach(([n, v]) => {
+      if (!NAMES.includes(n)) return;
       const els = form.elements[n]; if (!els) return;
       if (els instanceof RadioNodeList || (els.length && els[0] && els[0].type)) [...els].forEach(x => { x.checked = Array.isArray(v) ? v.includes(x.value) : x.value === v; });
       else if (els.type === 'checkbox') els.checked = v === 'Y'; else els.value = v;
     });
   }
   let st;
+  form.addEventListener('change', e => {
+    if (e.target.name === 'hope' && val('hope').length > 2) { e.target.checked = false; B.toast('최대 2개까지 고를 수 있어요'); }
+  });
   form.addEventListener('input', e => {
     const f = e.target.closest('.field'); if (f && f.classList.contains('bad') && RULES[f.dataset.q] && RULES[f.dataset.q](collect())) f.classList.remove('bad');
     sync(); clearTimeout(st); st = setTimeout(() => { B.store.set(DKEY, collect()); const s = document.getElementById('saved'); s.textContent = '✓ 임시저장 ' + new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' }); s.classList.add('flash'); setTimeout(() => s.classList.remove('flash'), 900); }, 500);
@@ -420,19 +372,13 @@
     form.querySelector('[name=toolsOther]').classList.toggle('on', d.tools.includes('기타'));
     form.querySelector('[name=absent]').classList.toggle('on', !!d.attend && d.attend !== '10회 모두 가능');
     document.querySelectorAll('.count').forEach(c => { const n = form.elements[c.dataset.for]; c.textContent = n.value.length + ' / ' + n.maxLength; });
-    // preview
-    document.getElementById('pv-goal').textContent = d.goal ? (d.goal.length > 54 ? d.goal.slice(0, 54) + '…' : d.goal) : '어떤 프로젝트를 하게 될까요?';
+    document.getElementById('pv-goal').textContent = d.goal || 'AI로 바꿔 보고 싶은 일은?';
     document.getElementById('pv-who').textContent = [d.name, d.role === '기타' ? d.roleOther : d.role].filter(Boolean).join(' · ');
-    const t = C.types[d.ptype];
-    document.getElementById('pv-type').innerHTML = t ? `<span class="chip"><i style="color:${TC[d.ptype]}"></i>${t.name}</span>` : '';
-    document.getElementById('pv-metric').textContent = d.mName || '핵심 숫자';
-    document.getElementById('pv-a').textContent = d.mNow || '—';
-    document.getElementById('pv-b').textContent = d.mGoal || '?';
-    document.getElementById('pv-u').textContent = d.mUnit;
-    const a = parseFloat(d.mNow), b = parseFloat(d.mGoal), down = t && t.dir === 'down' || (!isNaN(a) && !isNaN(b) && b < a);
-    const y0 = 50, y1 = isNaN(b) ? 50 : (down ? 62 : 10);
-    document.getElementById('pv-path').setAttribute('d', `M4 ${down ? 12 : y0} C 90 ${down ? 14 : y0}, 150 ${(y0 + y1) / 2}, 276 ${down ? 62 : y1}`);
-    // progress
+    const tl = d.tools.filter(x => x !== '기타').concat(d.toolsOther ? [d.toolsOther] : []);
+    document.getElementById('pv-tools').innerHTML = tl.slice(0, 4).map(t => `<span class="chip">${B.esc(t.replace(/ \(.*\)/, ''))}</span>`).join(' ');
+    document.getElementById('pv-level').textContent = d.level || '—';
+    document.getElementById('pv-coding').textContent = d.coding || '—';
+    document.getElementById('pv-hope').textContent = d.hope.length ? d.hope.join(' · ') : '—';
     const keys = Object.keys(RULES), done = keys.filter(k => RULES[k](d)).length;
     document.getElementById('ring').style.strokeDashoffset = 113.1 * (1 - done / keys.length);
     document.getElementById('ring-t').textContent = done + ' / ' + keys.length;
@@ -440,19 +386,18 @@
 
   /* --- review + submit --- */
   function renderReview() {
-    const d = collect(), t = C.types[d.ptype] || {};
+    const d = collect();
     const sec = (title, step, rows) => `<div class="card rv"><h3>${title}<button type="button" data-edit="${step}">수정</button></h3><dl>${rows.map(([k, v]) => `<dt>${k}</dt><dd>${B.esc(v || '—')}</dd>`).join('')}</dl></div>`;
     document.getElementById('review').innerHTML =
-      sec('나에 대해', 0, [['이름', d.name], ['연락처', d.phone], ['이메일', d.email], ['하는 일', d.role === '기타' ? '기타 · ' + d.roleOther : d.role], ['소개', d.job]]) +
-      sec('AI 사용', 1, [['도구', d.tools.filter(x => x !== '기타').concat(d.toolsOther ? [d.toolsOther] : []).join(', ')], ['사용 범위', d.level], ['유료 구독', d.paid], ['대표 사례', d.case]]) +
-      sec('3개월 프로젝트', 2, [['하고 싶은 것', d.goal], ['유형', t.name], ['핵심 숫자', `${d.mName} : ${d.mNow} → ${d.mGoal} ${d.mUnit}`], ['덧붙임', d.mNote], ['나눌 수 있는 것', d.give]]) +
-      sec('참여 조건', 3, [['주당 시간', d.hours], ['출석', d.attend + (d.absent ? ' · 불참: ' + d.absent : '')], ['노트북', d.laptop], ['알게 된 경로', d.source], ['2기 소식', d.consentNext ? '받음' : '받지 않음']]);
+      sec('나에 대해', 0, [['이름', d.name], ['연락처', d.phone], ['이메일', d.email], ['하는 일', d.role === '기타' ? '기타 · ' + d.roleOther : d.role]]) +
+      sec('AI 사용', 1, [['도구', d.tools.filter(x => x !== '기타').concat(d.toolsOther ? [d.toolsOther] : []).join(', ')], ['AI 사용 범위', d.level], ['코딩 경험', d.coding]]) +
+      sec('기대와 참여', 2, [['기대하는 것', d.hope.join(' · ')], ['바꿔 보고 싶은 일', d.goal], ['출석', d.attend + (d.absent ? ' · 불참: ' + d.absent : '')], ['노트북', d.laptop], ['2기 소식', d.consentNext ? '받음' : '받지 않음']]);
     document.querySelectorAll('[data-edit]').forEach(b => b.onclick = () => show(+b.dataset.edit));
   }
   let sending = false;
   async function submit() {
     if (sending) return;
-    for (let s = 0; s < 4; s++) if (!validate(s, true)) { show(s); validate(s); return; }
+    for (let s = 0; s < N; s++) if (!validate(s, true)) { show(s); validate(s); return; }
     if (Date.now() > new Date(C.deadline).getTime() && !/[?&]late=1/.test(location.search)) { B.toast('모집이 마감되었어요', 'err'); return; }
     sending = true; const nx = document.getElementById('next'); nx.disabled = true; nx.textContent = '제출 중…';
     try {

@@ -66,9 +66,9 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
   <div class="toolbar"><span class="muted" style="font-size:13px">정렬</span>
     <select id="sort"><option value="total">총점 높은 순 (①→③→④)</option><option value="at">신청 순</option></select>
     <select id="filter"><option value="">전체 상태</option><option>접수</option><option>선발</option><option>대기</option><option>미선발</option></select>
-    <span class="muted" style="font-size:12px;margin-left:auto">① 구체성 · ③ 기여 · ④ 출석 = 3/2/1점 · ② 다양성은 위 분포를 보며 조정 · 선발로 바꾸면 멤버 코드가 발급돼요</span></div>
+    <span class="muted" style="font-size:12px;margin-left:auto">① 구체성(Q7) · ③ 코스 적합도(Q6) · ④ 출석(Q8) = 3/2/1점 · ② 다양성은 위 분포를 보며 조정 · 선발로 바꾸면 멤버 코드가 발급돼요</span></div>
   <div class="tbl-wrap"><table class="t"><thead><tr>
-    <th>#</th><th>이름 · 연락</th><th><span class="c">②</span>하는 일</th><th><span class="c">②</span>도구 · 범위</th><th><span class="c">①</span>Q8 하고 싶은 것</th><th><span class="c">①</span>Q10 숫자</th><th><span class="c">③</span>Q11 나눌 것</th><th><span class="c">④</span>Q13 출석</th>
+    <th>#</th><th>이름 · 연락</th><th><span class="c">②</span>하는 일</th><th><span class="c">②</span>도구 · 사용 범위 · 코딩</th><th><span class="c">①</span>Q7 바꿔 볼 일</th><th><span class="c">③</span>Q6 기대</th><th><span class="c">④</span>Q8 출석</th>
     <th>① 점</th><th>③ 점</th><th>④ 점</th><th>합</th><th>상태</th><th>메모</th></tr></thead><tbody id="rows"></tbody></table></div>
 </main>
 
@@ -84,10 +84,11 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
 
   // 신청서 응답으로 자동 추천 점수 (운영자가 바꿀 수 있음)
   function auto(a) {
-    const numOk = v => v && !/모름|미정/.test(v);
-    const s1 = a.mName && numOk(a.mNow) && numOk(a.mGoal) ? 3 : a.mName && a.mGoal ? 2 : 1;
-    const s3 = (a.give || '').length >= 30 ? 3 : (a.give || '').length >= 5 && !/^없/.test(a.give) ? 2 : 1;
-    const s4 = /^10회/.test(a.attend) ? 3 : /^8/.test(a.attend) ? 2 : 1;
+    const hope = [].concat(a.hope || []), n = hope.filter(h => h !== '같이 공부할 사람 만나기').length;
+    const len = (a.goal || '').length;
+    const s1 = len >= 14 ? 3 : len >= 6 ? 2 : 1;           // ① 바꿔 볼 일의 구체성 (Q7)
+    const s3 = n >= 2 ? 3 : n === 1 ? 2 : 1;               // ③ 코스 적합도: 학습·적용 의지 (Q6)
+    const s4 = /^10회/.test(a.attend) ? 3 : /^8/.test(a.attend) ? 2 : 1; // ④ 출석 (Q8)
     return { s1, s3, s4 };
   }
   const sc = a => Object.assign(auto(a), a.scores || {});
@@ -112,8 +113,8 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
     $('#kpis').innerHTML = [['신청', APPS.length], ['선발', sel.length + ' / ' + C.seats], ['대기', APPS.filter(a => a.status === '대기').length], ['마감까지', Math.max(0, Math.ceil((new Date(C.deadline) - Date.now()) / 864e5)) + '일']]
       .map(([k, v]) => `<div class="card kpi"><b>${v}</b><span>${k}</span></div>`).join('');
     const cnt = (list, f) => list.reduce((o, a) => { [].concat(f(a)).filter(Boolean).forEach(k => o[k] = (o[k] || 0) + 1); return o; }, {});
-    const role = a => a.role === '기타' ? '기타:' + a.roleOther : a.role, tools = a => (a.tools || []).filter(t => t !== '기타'), ptype = a => (C.types[a.ptype] || {}).name;
-    $('#dist').innerHTML = bars('② 직군', cnt(APPS, role), cnt(sel, role)) + bars('② 주력 도구', cnt(APPS, tools), cnt(sel, tools)) + bars('프로젝트 유형 · 사용 범위', Object.assign(cnt(APPS, ptype), cnt(APPS, a => a.level)), Object.assign(cnt(sel, ptype), cnt(sel, a => a.level)));
+    const role = a => a.role === '기타' ? '기타:' + a.roleOther : a.role, tools = a => (a.tools || []).filter(t => t !== '기타');
+    $('#dist').innerHTML = bars('② 직군', cnt(APPS, role), cnt(sel, role)) + bars('② 주력 도구', cnt(APPS, tools), cnt(sel, tools)) + bars('② 사용 범위 · 코딩 경험', Object.assign(cnt(APPS, a => a.level), cnt(APPS, a => a.coding)), Object.assign(cnt(sel, a => a.level), cnt(sel, a => a.coding)));
     let list = APPS.slice(); const f = $('#filter').value; if (f) list = list.filter(a => (a.status || '접수') === f);
     if ($('#sort').value === 'total') list.sort((a, b) => total(b) - total(a) || a.at.localeCompare(b.at)); else list.sort((a, b) => a.at.localeCompare(b.at));
     const opt = (n, v) => [3, 2, 1].map(x => `<option ${x === v ? 'selected' : ''}>${x}</option>`).join('');
@@ -121,16 +122,15 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
       return `<tr class="st-${st}" data-id="${a.id}">
         <td class="mono">${i + 1}<br><button class="more" data-more>전체</button></td>
         <td><b>${B.esc(a.name)}</b><br><span class="muted">${B.esc(a.phone)}<br>${B.esc(a.email)}</span>${a.memberCode ? `<br><span class="code" title="멤버 라운지 코드">${B.esc(a.memberCode)}</span>` : ''}</td>
-        <td>${B.esc(role(a))}<br><span class="muted">${B.esc(a.job)}</span></td>
-        <td>${B.esc(tools(a).concat(a.toolsOther ? [a.toolsOther] : []).join(', '))}<br><span class="chip" style="margin-top:4px">${B.esc(a.level)}</span></td>
-        <td class="long"><div>${B.esc(a.goal)}</div><span class="chip" style="margin-top:4px">${B.esc(ptype(a) || '')}</span></td>
-        <td class="long"><b>${B.esc(a.mName)}</b><br>${B.esc(a.mNow)} → ${B.esc(a.mGoal)} ${B.esc(a.mUnit)}</td>
-        <td class="long"><div>${B.esc(a.give)}</div></td>
-        <td>${B.esc(a.attend)}${a.absent ? '<br><span class="muted">불참 ' + B.esc(a.absent) + '</span>' : ''}<br><span class="muted">${B.esc(a.hours)} · 노트북 ${/^예/.test(a.laptop) ? 'O' : 'X'}</span></td>
+        <td>${B.esc(role(a))}</td>
+        <td>${B.esc(tools(a).concat(a.toolsOther ? [a.toolsOther] : []).join(', '))}<br><span class="chip" style="margin-top:4px">${B.esc(a.level)}</span> <span class="chip" style="margin-top:4px">${B.esc(a.coding || '')}</span></td>
+        <td class="long"><div>${B.esc(a.goal)}</div></td>
+        <td class="long"><div>${B.esc([].concat(a.hope || []).join(' · '))}</div></td>
+        <td>${B.esc(a.attend)}${a.absent ? '<br><span class="muted">불참 ' + B.esc(a.absent) + '</span>' : ''}<br><span class="muted">노트북 ${/^예/.test(a.laptop) ? 'O' : 'X'}</span></td>
         <td><select data-s="s1">${opt('s1', s.s1)}</select></td><td><select data-s="s3">${opt('s3', s.s3)}</select></td><td><select data-s="s4">${opt('s4', s.s4)}</select></td>
         <td class="tot">${sum(a)}</td>
         <td><select data-status>${['접수', '선발', '대기', '미선발'].map(x => `<option ${x === st ? 'selected' : ''}>${x}</option>`).join('')}</select></td>
-        <td><input class="memo" data-memo value="${B.esc(a.memo || '')}" placeholder="메모"></td></tr>`; }).join('') || '<tr><td colspan="14" style="padding:40px;text-align:center" class="muted">아직 신청이 없어요.</td></tr>';
+        <td><input class="memo" data-memo value="${B.esc(a.memo || '')}" placeholder="메모"></td></tr>`; }).join('') || '<tr><td colspan="13" style="padding:40px;text-align:center" class="muted">아직 신청이 없어요.</td></tr>';
   }
   $('#sort').onchange = render; $('#filter').onchange = render;
   $('#rows').addEventListener('change', async e => {
@@ -145,13 +145,13 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
   });
   $('#rows').addEventListener('click', e => { if (!e.target.closest('[data-more]')) return;
     const a = APPS.find(x => x.id === e.target.closest('tr').dataset.id);
-    const L = { id: '접수번호', at: '접수 시각', name: '이름', phone: '연락처', email: '이메일', role: 'Q2 하는 일', roleOther: 'Q2 기타', job: 'Q3 소개', tools: 'Q4 도구', toolsOther: 'Q4 기타', level: 'Q5 사용 범위', paid: 'Q6 유료 구독', case: 'Q7 대표 사례', goal: 'Q8 하고 싶은 것', ptype: 'Q9 유형', mName: 'Q10 숫자', mNow: 'Q10 현재', mGoal: 'Q10 목표', mUnit: 'Q10 단위', mNote: 'Q10 덧붙임', give: 'Q11 나눌 것', hours: 'Q12 주당 시간', attend: 'Q13 출석', absent: 'Q13 불참일', laptop: 'Q14 노트북', source: '알게 된 경로', consent: 'Q15 동의', consentNext: '2기 소식 동의' };
-    $('#dcard').innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">${B.esc(a.name)}</h2><button class="btn btn-ghost btn-sm" data-x>닫기</button></div><dl style="margin-top:16px">${Object.entries(L).map(([k, l]) => `<dt>${l}</dt><dd>${B.esc(k === 'ptype' ? (C.types[a[k]] || {}).name : [].concat(a[k] || '').join(', '))}</dd>`).join('')}</dl>`;
+    const L = { id: '접수번호', at: '접수 시각', name: '이름', phone: '연락처', email: '이메일', role: 'Q2 하는 일', roleOther: 'Q2 기타', tools: 'Q3 도구', toolsOther: 'Q3 기타', level: 'Q4 AI 사용 범위', coding: 'Q5 코딩 경험', hope: 'Q6 기대하는 것', goal: 'Q7 바꿔 보고 싶은 일', attend: 'Q8 출석', absent: 'Q8 불참일', laptop: 'Q9 노트북', consent: 'Q10 동의', consentNext: '2기 소식 동의' };
+    $('#dcard').innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">${B.esc(a.name)}</h2><button class="btn btn-ghost btn-sm" data-x>닫기</button></div><dl style="margin-top:16px">${Object.entries(L).map(([k, l]) => `<dt>${l}</dt><dd>${B.esc([].concat(a[k] || '').join(', '))}</dd>`).join('')}</dl>`;
     $('#detail').classList.add('on');
   });
   $('#detail').addEventListener('click', e => { if (e.target.id === 'detail' || e.target.closest('[data-x]')) $('#detail').classList.remove('on'); });
   $('#csv').onclick = () => {
-    const cols = ['id', 'at', 'status', 'name', 'phone', 'email', 'role', 'roleOther', 'job', 'tools', 'toolsOther', 'level', 'paid', 'case', 'goal', 'ptype', 'mName', 'mNow', 'mGoal', 'mUnit', 'mNote', 'give', 'hours', 'attend', 'absent', 'laptop', 'source', 'consentNext', 's1', 's3', 's4', 'sum', 'memo', 'memberCode'];
+    const cols = ['id', 'at', 'status', 'name', 'phone', 'email', 'role', 'roleOther', 'tools', 'toolsOther', 'level', 'coding', 'hope', 'goal', 'attend', 'absent', 'laptop', 'consentNext', 's1', 's3', 's4', 'sum', 'memo', 'memberCode'];
     const q = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
     const rows = APPS.map(a => { const s = sc(a); return cols.map(c => q(c in s ? s[c] : c === 'sum' ? sum(a) : Array.isArray(a[c]) ? a[c].join(', ') : a[c])).join(','); });
     const blob = new Blob(['﻿' + cols.join(',') + '\n' + rows.join('\n')], { type: 'text/csv' });

@@ -6,7 +6,7 @@
 <title>부천 AI 프로젝트 클럽 1기</title>
 <meta name="description" content="3개월, 내 일에 AI를 붙여 숫자로 증명하기. 비북스에서 매주 토요일, 8명이 각자의 숫자를 들고 모이는 AI 작업실. 10/16 모집 마감.">
 <meta property="og:title" content="부천 AI 프로젝트 클럽 1기 · 멤버 모집">
-<meta property="og:description" content="15분 특강 + 60분 나눔 + 15분 질의응답. 매주 토요일 비북스, 10회, 8명. 배운 AI를 내 일에 붙여 3개월 뒤 숫자로 보여주기.">
+<meta property="og:description" content="AI 기초와 바이브코딩을 핵심만 정리해 함께 공부하고, 내 일에 붙여 3개월 뒤 숫자로 보여주는 스터디. 매주 토요일 비북스, 10회, 8명.">
 <meta name="theme-color" content="#f8efe3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0d0a08" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23221b16'/%3E%3Cpath d='M7 22l6-6 4 4 8-9' stroke='%23e2552b' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
@@ -157,7 +157,7 @@
 .road { background: var(--road); color: var(--night-ink); overflow: hidden; }
 .road .lead { color: var(--night-muted); }
 .road .eyebrow { color: var(--hl); }
-.phasebar { display: grid; grid-template-columns: 3fr 4fr 3fr; gap: 6px; margin: 56px 0 12px; }
+.phasebar { display: grid; grid-template-columns: 4fr 4fr 2fr; gap: 6px; margin: 56px 0 12px; }
 .phasebar > div { position: relative; }
 .phasebar .bar { height: 8px; border-radius: 4px; background: color-mix(in srgb, var(--night-ink) 10%, transparent); overflow: hidden; }
 .phasebar .bar i { display: block; height: 100%; background: var(--pc); transform: scaleX(0); transform-origin: left; transition: transform 1.2s cubic-bezier(.6,0,.2,1); transition-delay: var(--d); }
@@ -169,6 +169,28 @@
 .phasebar .deliv { margin-top: 8px; font: 600 12px/1.4 var(--mono); color: var(--night-ink); }
 .note-road { margin: 28px 0 0; padding: 14px 18px; border-radius: 12px; border: 1.5px dashed color-mix(in srgb, var(--night-ink) 22%, transparent); font-size: 14px; color: var(--night-muted); }
 .note-road b { color: var(--night-ink); }
+.host { display: grid; grid-template-columns: 120px 1fr; gap: clamp(20px, 4vw, 48px); align-items: start; margin-top: 8px; }
+@media (max-width: 640px) { .host { grid-template-columns: 1fr; } }
+.host-av { width: 120px; height: 120px; border-radius: 50%; background: var(--ink); color: var(--paper); display: grid; place-items: center; font: 700 44px var(--serif); box-shadow: var(--shadow); }
+.host-facts { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
+.host-facts li { display: grid; grid-template-columns: 110px 1fr; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; color: var(--ink-2); }
+.host-facts li b { font: 600 12px/1.8 var(--mono); color: var(--signal); letter-spacing: .04em; }
+@media (max-width: 520px) { .host-facts li { grid-template-columns: 1fr; gap: 2px; } }
+.host-note { margin: 16px 0 0; font-size: 13px; color: var(--muted); }
+.space-grid { display: grid; grid-template-columns: 1.5fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; margin-top: 40px; }
+.space-grid figure { margin: 0; position: relative; border-radius: var(--r); overflow: hidden; background: var(--line); }
+.space-grid figure:first-child { grid-row: 1 / 3; }
+.space-grid img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4 / 3; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.space-grid figure:hover img { transform: scale(1.04); }
+.space-grid figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 26px 16px 12px; font-size: 13px; color: #fff; background: linear-gradient(transparent, rgba(0,0,0,.6)); }
+@media (max-width: 720px) { .space-grid { grid-template-columns: 1fr; grid-template-rows: auto; } .space-grid figure:first-child { grid-row: auto; } }
+.space-info { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 18px; border-top: 1px solid var(--ink); }
+.space-info > div { padding: 18px 18px 6px 0; }
+.space-info > div + div { padding-left: 18px; border-left: 1px solid var(--line); }
+.space-info dt { font: 600 11px/1 var(--mono); letter-spacing: .1em; color: var(--muted); margin-bottom: 8px; }
+.space-info dd { margin: 0; font-size: 15px; color: var(--ink-2); }
+.space-info a { color: var(--signal); font-weight: 600; text-decoration: none; }
+@media (max-width: 720px) { .space-info { grid-template-columns: 1fr; } .space-info > div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); } }
 .sessions { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 40px; }
 @media (max-width: 980px) { .sessions { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 460px) { .sessions { grid-template-columns: 1fr; } }
@@ -346,7 +368,7 @@
         <span class="line"><span style="--i:1">내 일에 AI를 붙여</span></span>
         <span class="line"><span style="--i:2"><span class="num-word">숫자</span>로 증명하기</span></span>
       </h1>
-      <p class="sub">짧은 특강으로 이론을 더하고, 내 일에 바로 써 보는 AI 작업 모임. <b>매주 토요일 비북스</b>에서 8명이 각자의 프로젝트와 숫자 하나를 들고 모입니다. 3개월 뒤, 무엇이 달라졌는지 <b>숫자로</b> 보여줍니다.</p>
+      <p class="sub">AI 기초부터 바이브코딩까지, 핵심만 정리해 함께 공부하고 내 일에 바로 써 보는 스터디. <b>매주 토요일 비북스</b>에서 8명이 각자의 숫자 하나를 들고 모입니다. 3개월 뒤, 무엇이 달라졌는지 <b>숫자로</b> 보여줍니다.</p>
       <dl class="meta">
         <div><dt>When</dt><dd>토 14:00–15:30</dd></div>
         <div><dt>Period</dt><dd>10.17 – 12.19<br><span class="muted" style="color:var(--night-muted);font-weight:500">총 10회</span></dd></div>
@@ -379,7 +401,7 @@
   <div class="wrap">
     <span class="eyebrow" data-reveal>What is this</span>
     <h2 class="h2" data-reveal style="--d:.05s">배우러 오는 곳이 아니라,<br><em>만들러</em> 오는 곳입니다.</h2>
-    <p class="lead" data-reveal style="--d:.1s">AI를 배우는 데서 멈추지 않고, 내 일에 붙여 숫자로 확인하는 3개월. 매주 15분 특강으로 필요한 이론만 더하고, 각자 써 본 결과를 나눕니다. 진행자도 같은 멤버로 자기 프로젝트의 숫자를 냅니다.</p>
+    <p class="lead" data-reveal style="--d:.1s">AI 기초와 바이브코딩을 배우는 데서 멈추지 않고, 내 일에 붙여 숫자로 확인하는 3개월. 매주 15분, 핵심만 정리한 내용을 함께 보고, 각자 써 본 결과를 나눕니다. 진행자 호세도 같은 멤버로 자기 프로젝트의 숫자를 냅니다.</p>
 
     <div class="stats" data-reveal>
       <div><div class="v"><span data-count="10">0</span><small>회</small></div><div class="k">10월 17일부터 12월 19일까지 매주 토요일</div></div>
@@ -391,8 +413,8 @@
       <article class="card pr" data-reveal>
         <span class="n">01</span>
         <svg class="ico ico-share" viewBox="0 0 120 76" aria-hidden="true"><g fill="none" stroke="var(--line)" stroke-width="1.5"><line x1="30" y1="38" x2="60" y2="16"/><line x1="60" y1="16" x2="90" y2="38"/><line x1="90" y1="38" x2="60" y2="60"/><line x1="60" y1="60" x2="30" y2="38"/><line x1="30" y1="38" x2="90" y2="38"/></g><g><circle cx="30" cy="38" r="9" fill="var(--c-design)"/><circle cx="60" cy="16" r="9" fill="var(--signal)"/><circle cx="90" cy="38" r="9" fill="var(--c-prove)"/><circle cx="60" cy="60" r="9" fill="var(--ink)"/></g></svg>
-        <h3><s>긴 강의</s> → 짧은 특강 + 나눔</h3>
-        <p>이론은 매주 15분, 바로 써 볼 수 있는 것만. 나머지 75분은 각자 해 본 것을 나누고 서로 묻고 답해요.</p>
+        <h3><s>강의</s> → 핵심 정리 + 나눔</h3>
+        <p>가르치는 수업이 아니에요. 공개된 학습 자료의 핵심을 매주 15분 정리해 공유하고, 나머지는 각자 해 본 것을 나누고 서로 묻고 답해요.</p>
       </article>
       <article class="card pr" data-reveal style="--d:.1s">
         <span class="n">02</span>
@@ -404,8 +426,28 @@
         <span class="n">03</span>
         <svg class="ico" viewBox="0 0 120 76" aria-hidden="true"><g transform="translate(22 0)"><g class="ico-rot"><circle cx="38" cy="38" r="30" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="4 5"/><circle cx="38" cy="8" r="8" fill="var(--signal)"/><circle cx="64" cy="53" r="8" fill="var(--c-design)"/><circle cx="12" cy="53" r="8" fill="var(--c-prove)"/></g></g></svg>
         <h3>역할은 돌아갑니다</h3>
-        <p>특강은 운영자가 준비하고, 진행자와 기록자는 매주 순번제로 맡아요. 모두가 한 번씩 이끌고 기록합니다.</p>
+        <p>핵심 정리는 호세가 준비하고, 진행자와 기록자는 멤버가 매주 순번제로 맡아요. 모두가 한 번씩 이끌고 기록합니다.</p>
       </article>
+    </div>
+  </div>
+</section>
+
+<!-- HOST -->
+<section class="block" id="host" style="padding-top:0">
+  <div class="wrap">
+    <span class="eyebrow" data-reveal>Your host</span>
+    <div class="host" data-reveal>
+      <div class="host-av" aria-hidden="true">호</div>
+      <div>
+        <h2 class="h2" style="margin:10px 0 14px">가르치는 사람이 아니라,<br><em>먼저 공부한 사람</em>입니다.</h2>
+        <p class="lead">호세는 비북스 매니저예요. 컴퓨터공학을 전공했지만 오랫동안 책과 관련된 일만 해 왔고, AI 시대가 되어 다시 공부를 시작했어요. 먼저 공부한 것 중 핵심만 정리해 함께 나누고, 모르는 건 같이 찾아봅니다.</p>
+        <ul class="host-facts">
+          <li><b>공부 자료</b>클로드 아카데미에 공개된 학습 자료를 보고 핵심만 정리해 공유해요. 출처는 매주 밝힙니다.</li>
+          <li><b>다루는 내용</b>AI 기초 4회 · 바이브코딩과 AI 활용 꿀팁 6회.</li>
+          <li><b>같은 멤버로</b>호세도 자기 프로젝트(여행기 전자책 출간)의 숫자를 공개하고 함께 냅니다.</li>
+        </ul>
+        <p class="host-note">비공식 스터디입니다. Anthropic의 공식 프로그램이 아니며, 공개된 학습 자료를 개인이 정리해 공유하는 모임이에요.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -460,11 +502,11 @@
 <section class="block road" id="roadmap">
   <div class="wrap">
     <span class="eyebrow" data-reveal>Roadmap · 10 Saturdays</span>
-    <h2 class="h2" data-reveal>들여다보기 → 써보고 고치기 → 정리하기.<br><em>12월 19일</em>, 비북스 데모데이.</h2>
-    <p class="lead" data-reveal>모두가 같은 코스를 걷고, 결과는 각자의 일에서 나옵니다. 같은 이론, 같은 틀(숫자 보드 · 레시피 카드 · 한 장 리포트)에 내 일을 채워 넣어요. 마지막 날은 지인을 초대해 3개월의 숫자를 5분씩 발표합니다.</p>
+    <h2 class="h2" data-reveal>AI 기초에서 바이브코딩까지.<br><em>12월 19일</em>, 비북스 데모데이.</h2>
+    <p class="lead" data-reveal>앞 4회는 AI 기초, 뒤 6회는 바이브코딩과 AI 활용 꿀팁. 모두가 같은 코스를 걷고, 결과는 각자의 일에서 나옵니다. 같은 틀(숫자 보드 · 레시피 카드 · 한 장 리포트)에 내 일을 채워 넣고, 마지막 날은 지인을 초대해 3개월의 숫자를 5분씩 발표해요.</p>
     <div class="phasebar" id="phasebar"></div>
     <div class="sessions" id="sessions"></div>
-    <p class="note-road" data-reveal>카드 제목이 그 주 <b>15분 특강</b>의 주제예요. 주당 부담은 <b>1~2시간</b>이면 충분해요 — 숫자 1개 입력, 시도 1개.</p>
+    <p class="note-road" data-reveal>카드 제목이 그 주 <b>15분 핵심 정리</b>의 주제예요. 주당 부담은 <b>1~2시간</b>이면 충분해요 — 숫자 1개 입력, 시도 1개.</p>
   </div>
 </section>
 
@@ -480,7 +522,7 @@
       </div>
       <div>
         <div class="wsteps" id="wsteps"></div>
-        <div class="roles" data-reveal>특강은 운영자가, 매주 순번제로 <span class="chip"><i style="color:var(--signal)"></i>진행자(시간 관리)</span><span class="chip"><i style="color:var(--c-design)"></i>기록자</span></div>
+        <div class="roles" data-reveal>핵심 정리는 호세가, 매주 순번제로 <span class="chip"><i style="color:var(--signal)"></i>진행자(시간 관리)</span><span class="chip"><i style="color:var(--c-design)"></i>기록자</span></div>
       </div>
     </div>
   </div>
@@ -527,7 +569,7 @@
       <div class="idea"><span class="no">03 · 신사업</span><h3>디지털 상품 출시</h3><p>전자책, 템플릿, 강의 자료 1종</p><span class="metric">출시 여부 · 판매 건수</span></div>
       <div class="idea"><span class="no">04 · 매출</span><h3>자영업 마케팅</h3><p>가게 SNS 콘텐츠 제작 자동화</p><span class="metric">발행 빈도 · 팔로워 · 예약·문의 수</span></div>
       <div class="idea"><span class="no">05 · 매출</span><h3>지식 채널</h3><p>블로그, 뉴스레터, 숏폼 채널 키우기</p><span class="metric">구독자 · 조회수</span></div>
-      <div class="idea"><span class="no">06 · 절감</span><h3>고객 응대 자동화</h3><p>FAQ·상담 응대 정리</p><span class="metric">응답 시간 · 처리 건수</span></div>
+      <div class="idea"><span class="no">06 · 바이브코딩</span><h3>내 일에 쓰는 작은 도구</h3><p>견적 계산기, 예약 문의 폼, 재고 정리표 — 말로 설명해 만들기</p><span class="metric">사용 횟수 · 절감 시간</span></div>
     </div>
   </div>
 </section>
@@ -535,12 +577,12 @@
 <!-- SAMPLE -->
 <section class="block" id="sample" style="padding-top:0">
   <div class="wrap">
-    <span class="eyebrow" data-reveal>Operator's sample</span>
-    <h2 class="h2" data-reveal>운영자도 <em>숫자를 먼저</em> 공개합니다.</h2>
-    <p class="lead" data-reveal>“숫자를 정하고 시작한다”는 게 어떤 건지, 진행자 Hose의 프로젝트로 보여드려요. 목표치는 10/17 첫 모임에서 멤버들과 함께 확정합니다.</p>
+    <span class="eyebrow" data-reveal>Host's sample</span>
+    <h2 class="h2" data-reveal>진행자 호세도 <em>숫자를 먼저</em> 공개합니다.</h2>
+    <p class="lead" data-reveal>“숫자를 정하고 시작한다”는 게 어떤 건지, 호세의 프로젝트로 보여드려요. 목표치는 10/17 첫 모임에서 멤버들과 함께 확정합니다.</p>
     <div class="sample">
       <div class="card sample-hero" data-reveal>
-        <div class="who"><span class="av">H</span><div><b style="color:var(--paper)">Hose</b> · 비북스 운영자 · 신사업형</div></div>
+        <div class="who"><span class="av">호</span><div><b style="color:var(--paper)">호세</b> · 비북스 매니저 · 신사업형</div></div>
         <h3>여행기 전자책 출간 프로젝트<br><span class="sub-t">쓰고, epub로 만들고, 알리고 팔기까지</span></h3>
         <p style="margin:0;color:color-mix(in srgb,var(--paper) 72%,transparent);font-size:15px">내 여행 기록으로 책 한 권을 써서 epub로 출간하고, 홍보와 판매까지 AI와 함께 3개월 안에 끝까지 해 봅니다. AI는 정리 · 구성 · 교열 · 제작 · 홍보를 돕습니다.</p>
         <div class="gantt" id="gantt" aria-label="10주 일정: 쓰기 1–5주, 만들고 출간 5–7주, 알리고 팔기 7–10주"></div>
@@ -585,10 +627,29 @@
     <h2 class="h2" data-reveal>이런 분께 <em>맞아요</em>.</h2>
     <div class="fit">
       <div class="card" data-reveal><h3><span class="chip" style="background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)">맞아요</span></h3>
-        <ul><li>AI를 몇 번이라도 써 봤고, 이제 내 일에 제대로 붙여 보고 싶어요</li><li>배운 걸 바로 써 보고 숫자로 확인하고 싶어요</li><li>붙일 일·가게·사업·채널이 이미 있어요</li><li>잘 안 된 시도도 솔직하게 나눌 수 있어요</li><li>10회 중 8회 이상, 토요일 오후에 올 수 있어요</li></ul></div>
+        <ul><li>AI를 몇 번이라도 써 봤고, 이제 내 일에 제대로 붙여 보고 싶어요</li><li>배운 걸 바로 써 보고 숫자로 확인하고 싶어요</li><li>붙일 일·가게·사업·채널이 이미 있어요</li><li>코딩을 몰라도 괜찮아요 — 바이브코딩은 말로 설명해서 만들어요</li><li>잘 안 된 시도도 솔직하게 나눌 수 있어요</li><li>10회 중 8회 이상, 토요일 오후에 올 수 있어요</li></ul></div>
       <div class="card no" data-reveal style="--d:.1s"><h3><span class="chip">이런 분은 다음 기회에</span></h3>
         <ul><li>AI를 한 번도 써 본 적 없어요 (입문 강의를 먼저 권해요)</li><li>아직 무엇에 붙일지 전혀 정하지 않았어요</li><li>결과물이나 수익을 보장받고 싶어요</li><li>나눌 것 없이 듣기만 하고 싶어요</li></ul></div>
     </div>
+  </div>
+</section>
+
+<!-- SPACE -->
+<section class="block" id="space" style="padding-top:0">
+  <div class="wrap">
+    <span class="eyebrow" data-reveal>Where we meet</span>
+    <h2 class="h2" data-reveal>책장에 둘러싸인<br><em>비북스 세미나실</em>에서.</h2>
+    <p class="lead" data-reveal>양쪽 벽이 서가인 작은 모임방이에요. 8명이 둘러앉기 딱 좋은 테이블과 모니터가 있어서, 화면을 같이 보며 이야기하기 좋아요.</p>
+    <div class="space-grid" data-reveal>
+      <figure><img src="images/space/seminar-2.jpg" width="1200" height="674" loading="lazy" alt="화이트보드와 모니터, 테이블이 있는 비북스 세미나실"><figcaption>화이트보드와 모니터가 있는 세미나실</figcaption></figure>
+      <figure><img src="images/space/seminar-3.jpg" width="1200" height="674" loading="lazy" alt="서가 앞에 놓인 긴 테이블"><figcaption>여덟 명이 둘러앉기 딱 좋은 테이블</figcaption></figure>
+      <figure><img src="images/space/seminar-4.jpg" width="1200" height="674" loading="lazy" alt="모니터와 콘센트, 프린터"><figcaption>노트북 충전 걱정 없는 자리</figcaption></figure>
+    </div>
+    <dl class="space-info" data-reveal>
+      <div><dt>ADDRESS</dt><dd>부천시 원미구 부천로 136번길 24, B02호<br><span class="muted" style="font-size:13px">원미구청 맞은편</span></dd></div>
+      <div><dt>PROVIDED</dt><dd>와이파이 · 모니터 · 프로젝터 · 콘센트 · 프린트<br><span class="muted" style="font-size:13px">개인 노트북은 챙겨 오세요</span></dd></div>
+      <div><dt>MAP</dt><dd><a href="https://naver.me/5Ollmubn" target="_blank" rel="noopener">네이버 지도에서 보기 →</a><br><span class="muted" style="font-size:13px">매주 토 13:45부터 입실</span></dd></div>
+    </dl>
   </div>
 </section>
 
@@ -599,18 +660,18 @@
     <h2 class="h2" data-reveal>신청부터 <em>첫 모임</em>까지.</h2>
     <div class="steps" id="steps" data-reveal>
       <span class="prog"></span>
-      <div class="step"><span class="pt">1</span><div class="d">10/3(토) –</div><h4>신청서 작성</h4><p>15개 문항, 10~15분. 임시저장 돼요.</p></div>
+      <div class="step"><span class="pt">1</span><div class="d">10/3(토) –</div><h4>신청서 작성</h4><p>10문항, 3~5분. 대부분 고르기예요.</p></div>
       <div class="step"><span class="pt">2</span><div class="d">10/16(금) 12:00</div><h4>신청 마감</h4><p>8명 초과 시 아래 기준으로 선발</p></div>
       <div class="step"><span class="pt">3</span><div class="d">10/16(금) 20:00</div><h4>결과 안내</h4><p>문자·메일로 개별 연락</p></div>
-      <div class="step"><span class="pt">4</span><div class="d">10/17(토) 14:00</div><h4>1회차 시작</h4><p>특강 「숫자로 말하기」 + 자기소개</p></div>
+      <div class="step"><span class="pt">4</span><div class="d">10/17(토) 14:00</div><h4>1회차 시작</h4><p>「AI 기초 ① AI는 어떻게 답하나」 + 자기소개</p></div>
     </div>
     <div class="select">
       <div class="card" data-reveal>
         <h3>신청이 8명을 넘으면, 이 순서로 봅니다</h3>
         <ol>
-          <li><div><b>목표의 구체성</b><span>붙일 일이 실제로 있고, 측정할 숫자가 명확한가</span></div></li>
-          <li><div><b>다양성</b><span>직군과 주력 도구가 겹치지 않게 8명을 구성</span></div></li>
-          <li><div><b>기여 의지</b><span>다른 멤버에게 나눌 것이 있는가</span></div></li>
+          <li><div><b>붙여 볼 일의 구체성</b><span>AI로 바꿔 보고 싶은 일이 실제로 있고 구체적인가 (신청서 7번)</span></div></li>
+          <li><div><b>다양성</b><span>직군 · 쓰는 도구 · 사용 범위 · 코딩 경험이 겹치지 않게 8명을 구성</span></div></li>
+          <li><div><b>코스 적합도</b><span>기대하는 것이 AI 기초 · 바이브코딩 · 활용과 맞는가 (신청서 6번)</span></div></li>
           <li><div><b>출석 확약</b><span>10회 중 8회 이상 참석 가능한가</span></div></li>
         </ol>
       </div>
@@ -633,7 +694,8 @@
     <h2 class="h2" data-reveal>자주 묻는 질문</h2>
     <div class="faq" data-reveal>
       <details><summary>AI를 얼마나 잘 써야 하나요?</summary><div class="a"><p>“가끔 질문하는 정도”여도 괜찮아요. 다만 한 번도 안 써 본 분보다는, 몇 번이라도 써 보고 내 일에 붙이고 싶은 마음이 생긴 분을 찾습니다. 수준 차이는 오히려 서로에게 도움이 돼요 — 자동화까지 하는 사람과 매일 질문만 하는 사람이 같은 문제를 다르게 풉니다.</p></div></details>
-      <details><summary>특강은 어떤 내용이에요? 어렵지 않나요?</summary><div class="a"><p>매주 15분, 그 주에 바로 써 볼 수 있는 이론 하나만 다뤄요. 예를 들면 숫자로 성과 재는 법, 좋은 요청의 구조, 결과를 믿어도 되는지 확인하는 법, 잘 된 요청을 레시피로 저장하는 법이에요. 전문 용어 없이 설명하고, 이어지는 나눔 시간에 각자 써 본 걸 이야기하며 몸에 익혀요. 10회 주제는 위 로드맵 카드에서 볼 수 있어요.</p></div></details>
+      <details><summary>누가 가르치나요? 어떤 내용이에요?</summary><div class="a"><p>강사가 가르치는 수업은 아니에요. 진행자 호세(비북스 매니저)가 클로드 아카데미에 공개된 학습 자료를 보고 핵심만 정리해 매주 15분 공유해요. 1–4회는 AI 기초(AI가 답하는 방식, 좋은 요청, 검증, 협업), 5–10회는 바이브코딩과 AI 활용 꿀팁(문서 정리, 콘텐츠·홍보, 자동화 맛보기)이에요. 호세도 같이 공부하는 중이라, 모르는 건 함께 찾아봅니다.</p></div></details>
+      <details><summary>바이브코딩이 뭐예요? 코딩을 못 해도 되나요?</summary><div class="a"><p>코드를 직접 짜는 대신 AI에게 만들고 싶은 걸 말로 설명하고, 결과를 보며 고쳐 가는 방식이에요. 코딩 경험이 없어도 괜찮아요. 있으면 더 빨리 가고요. 신청서에서는 경험 정도만 물어봅니다.</p></div></details>
       <details><summary>일주일에 시간이 얼마나 드나요?</summary><div class="a"><p>모임 1시간 30분 외에 1~2시간이면 충분해요. 숫자 하나 입력하고, 그 주에 시도할 것 하나만 해 보면 됩니다. 바쁜 주에는 “이번 주는 시도를 못 했어요”도 괜찮은 나눔이에요.</p></div></details>
       <details><summary>어떤 도구를 써야 하나요? 유료 구독이 필요한가요?</summary><div class="a"><p>제한 없어요. ChatGPT, Claude, Gemini, 이미지·영상·자동화 도구 무엇이든. 유료 구독은 필수가 아닙니다. 각자 쓰는 도구가 다를수록 나눔 시간이 풍성해져요.</p></div></details>
       <details><summary>프로젝트를 아직 확실히 못 정했어요.</summary><div class="a"><p>“무엇을 만들거나 해결하고 싶은지” 방향만 있으면 됩니다. 정확한 한 문장과 숫자는 2~3회차에 같이 다듬어요. 다만 붙일 일(직장 업무, 가게, 사업, 채널)은 이미 있어야 해요.</p></div></details>
@@ -651,7 +713,7 @@
   <div class="wrap">
     <span class="eyebrow" data-reveal>Cohort 01 · 8 seats</span>
     <h2 data-reveal>12월 19일, 당신의 <em>숫자</em>는<br>무엇이 되어 있을까요?</h2>
-    <p class="lead" data-reveal>신청서는 10~15분이면 충분해요. 작성 중인 내용은 이 기기에 자동 저장됩니다.</p>
+    <p class="lead" data-reveal>신청서는 10문항, 3~5분이면 충분해요. 작성 중인 내용은 이 기기에 자동 저장됩니다.</p>
     <a class="btn btn-primary" href="apply.html" data-reveal style="font-size:17px;padding:16px 28px">1기 신청서 작성하기 <span class="arr">→</span></a>
     <div class="cd" data-countdown></div>
   </div>

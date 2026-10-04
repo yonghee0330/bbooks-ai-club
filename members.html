@@ -418,7 +418,7 @@
       ${mine ? `<details style="margin-top:20px" ${m.metric ? '' : 'open'}><summary style="cursor:pointer;font-weight:600">프로젝트·숫자 설정</summary>
         <form id="pform" class="edit-grid">
           <div class="field full"><label>프로젝트명</label><input class="input" name="project" value="${B.esc(m.project || '')}"></div>
-          <div class="field"><label>유형</label><select class="input" name="type">${Object.entries(C.types).map(([k, v]) => `<option value="${k}" ${k === m.type ? 'selected' : ''}>${v.name}</option>`).join('')}</select></div>
+          <div class="field"><label>유형</label><select class="input" name="type"><option value="">유형 선택</option>${Object.entries(C.types).map(([k, v]) => `<option value="${k}" ${k === m.type ? 'selected' : ''}>${v.name}</option>`).join('')}</select></div>
           <div class="field"><label>방향</label><select class="input" name="dir"><option value="up" ${m.dir !== 'down' ? 'selected' : ''}>↑ 올라가야 좋음</option><option value="down" ${m.dir === 'down' ? 'selected' : ''}>↓ 내려가야 좋음</option></select></div>
           <div class="field full"><label>핵심 숫자</label><input class="input" name="metric" value="${B.esc(m.metric || '')}"></div>
           <div class="field"><label>시작값</label><input class="input" name="base" inputmode="decimal" value="${m.base ?? ''}"></div>
