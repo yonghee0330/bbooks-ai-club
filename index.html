@@ -223,8 +223,11 @@
 .sample-hero .days { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; margin-top: 24px; }
 .sample-hero .days i { aspect-ratio: 1; border-radius: 4px; background: rgba(243,237,226,.1); transform: scale(.6); opacity: 0; transition: transform .35s cubic-bezier(.3,1.6,.5,1), opacity .3s, background .3s; transition-delay: calc(var(--k) * 45ms + .3s); }
 .sample-hero.in .days i { transform: none; opacity: 1; }
-.sample-hero.in .days i.on { background: var(--signal); }
-.sample-hero .days i.goal-line { box-shadow: inset 0 0 0 1.5px #f5c445; }
+.sample-hero.in .days i.on { background: #c1272d; }
+.sample-hero .days i.goal-line { box-shadow: inset 0 0 0 2px #f5c445; }
+.sample-hero .days i.off::after { content: ''; position: absolute; inset: 28%; border-radius: 50%; border: 2px solid var(--paper); }
+.sample-hero .days i { position: relative; }
+.sample-hero h3 .sub-t { font-size: 16px; font-weight: 500; color: color-mix(in srgb, var(--paper) 65%, transparent); letter-spacing: -.01em; }
 .sample-hero .days-cap { display: flex; justify-content: space-between; font: 500 10px var(--mono); color: color-mix(in srgb, var(--paper) 55%, transparent); margin-top: 8px; letter-spacing: .04em; }
 .sample-hero h3 { font-size: 26px; letter-spacing: -.03em; margin: 22px 0 6px; }
 .sample-hero .goal { margin-top: 26px; padding-top: 22px; border-top: 1px solid color-mix(in srgb, var(--night-ink) 18%, transparent); }
@@ -503,35 +506,36 @@
     <p class="lead" data-reveal>“숫자를 정하고 시작한다”는 게 어떤 건지, 진행자 Hose의 프로젝트로 보여드려요. 목표치는 10/17 첫 모임에서 멤버들과 함께 확정합니다.</p>
     <div class="sample">
       <div class="card sample-hero" data-reveal>
-        <div class="who"><span class="av">H</span><div><b style="color:var(--paper)">Hose</b> · 비북스 운영자 · 신사업형</div></div>
-        <h3>30일 읽고 쓰기 챌린지</h3>
-        <p style="margin:0;color:color-mix(in srgb,var(--paper) 72%,transparent);font-size:15px">하루 10페이지 읽고, 한 줄 쓰기. 혼자서는 이어 가기 어려운 읽고 쓰는 습관을 30일 동안 함께 만드는 프로그램을 AI로 설계하고, 모집하고, 운영합니다.</p>
-        <div class="days" id="days" aria-label="30일 중 21일 인증하면 완주"></div>
-        <div class="days-cap"><span>DAY 1</span><span>21일 인증 = 완주</span><span>DAY 30</span></div>
-        <div class="goal"><div class="v"><span data-count="40">0</span><small>명</small></div><p>핵심 숫자 · 12월 말까지 누적 참여자 (11월·12월 두 기수, 예시 목표)</p></div>
+        <div class="who"><span class="av">H</span><div><b style="color:var(--paper)">Hose</b> · 부천리딩파티 × 비북스 · 신사업형</div></div>
+        <h3>완독탱고 × 기록탱고<br><span class="sub-t">30일 읽기쓰기 탱고</span></h3>
+        <p style="margin:0;color:color-mix(in srgb,var(--paper) 72%,transparent);font-size:15px">300쪽짜리 『사탄탱고』를 30일 동안, 하루 10쪽 읽고 15분 씁니다. 12명이 함께 ‘진흙’을 헤쳐 나가는 읽기쓰기 프로그램을 AI로 설계하고, 모집하고, 하루 15분으로 운영합니다.</p>
+        <div class="days" id="days" aria-label="30일 중 25일 인증하면 완독, 1·15·30일은 오프라인 모임"></div>
+        <div class="days-cap"><span>DAY 1</span><span>25일 인증 = 완독 · ◎ 오프라인</span><span>DAY 30</span></div>
+        <div class="goal"><div class="v"><span data-count="75">0</span><small>%</small></div><p>핵심 숫자 · 평균 완독률 (정원 12명, 30일 중 25일 인증, 예시 목표)</p></div>
       </div>
       <div class="areas">
         <div class="card area" data-reveal>
-          <div class="h"><h4>프로그램 구축</h4><span class="when">10월 설계 · 11/1 1기 시작</span></div>
+          <div class="h"><h4>프로그램 설계</h4><span class="when">10월 · AI로 구축</span></div>
           <div class="goals">
-            <div class="g"><span>30일 읽기·쓰기 데일리 미션 (AI로 질문 설계)</span><span class="gv">0 → 30개</span><div class="track"><i></i></div></div>
-            <div class="g"><span>인증 페이지 (읽은 쪽수 + 한 줄 쓰기)</span><span class="gv">미완 → 오픈</span><div class="track"><i style="--d:.35s"></i></div></div>
-            <div class="g"><span>이달의 추천도서 큐레이션</span><span class="gv">매월 10권</span><div class="track"><i style="--d:.5s"></i></div></div>
+            <div class="g"><span>30일 캘린더 (쪽 구간 + 쓰기 프롬프트 + 키워드)</span><span class="gv">0 → 30일</span><div class="track"><i></i></div></div>
+            <div class="g"><span>인증 템플릿 (스토리·피드·인증실패용)</span><span class="gv">0 → 3종</span><div class="track"><i style="--d:.35s"></i></div></div>
+            <div class="g"><span>노션 트래커 (진행률·갤러리 자동)</span><span class="gv">미완 → 오픈</span><div class="track"><i style="--d:.5s"></i></div></div>
           </div>
         </div>
         <div class="card area" data-reveal>
-          <div class="h"><h4>모집</h4><span class="when">10월 말 · 11월 말 집중</span></div>
+          <div class="h"><h4>모집</h4><span class="when">11월 · 정원 12명</span></div>
           <div class="goals">
-            <div class="g"><span>모집 페이지·카드뉴스 AI 제작, 채널 3개 유입 비교</span><span class="gv">3개 비교</span><div class="track"><i></i></div></div>
-            <div class="g"><span>기수당 신청자</span><span class="gv">15 → 25명</span><div class="track"><i style="--d:.35s"></i></div></div>
+            <div class="g"><span>신청 (참가비 3만 원 · 완독 시 1만 원 환급)</span><span class="gv">0 → 12명</span><div class="track"><i></i></div></div>
+            <div class="g"><span>모집글·카드뉴스 AI 제작, 채널별 신청 비교</span><span class="gv">채널 3개</span><div class="track"><i style="--d:.35s"></i></div></div>
+            <div class="g"><span>『사탄탱고』 공동구매 (부천 독립서점 연대)</span><span class="gv">12권</span><div class="track"><i style="--d:.5s"></i></div></div>
           </div>
         </div>
         <div class="card area" data-reveal>
-          <div class="h"><h4>운영 자동화</h4><span class="when">11–12월 · 기수 운영</span></div>
+          <div class="h"><h4>운영 · 결과</h4><span class="when">30일 운영 → 12/19 발표</span></div>
           <div class="goals">
-            <div class="g"><span>완주율 (30일 중 21일 인증)</span><span class="gv">목표 70%</span><div class="track"><i></i></div></div>
-            <div class="g"><span>운영 시간 (리마인드·인증 집계·피드백)</span><span class="gv">주 5시간 → 1시간</span><div class="track"><i style="--d:.35s"></i></div></div>
-            <div class="g"><span>참여자 글 모음 문집</span><span class="gv">기수당 1권</span><div class="track"><i style="--d:.5s"></i></div></div>
+            <div class="g"><span>운영 시간 (08시 미션 발송 + 22시 하이라이트)</span><span class="gv">하루 15분</span><div class="track"><i></i></div></div>
+            <div class="g"><span>멤버별 글 포트폴리오 (15분 × 30일)</span><span class="gv">1인 30편</span><div class="track"><i style="--d:.35s"></i></div></div>
+            <div class="g"><span>북스타그램 인증 콘텐츠 (12명 × 30일)</span><span class="gv">0 → 360개</span><div class="track"><i style="--d:.5s"></i></div></div>
           </div>
           <p class="note-s">모든 수치는 예시 목표이며 결과를 보장하지 않습니다.</p>
         </div>
@@ -687,9 +691,13 @@
   setTimeout(cycle, 700);
   document.getElementById('ncard').addEventListener('click', () => { idx = (idx + 1) % EX.length; cycle(); });
 
-  /* sample: 30일 도장판 — 21일 인증이면 완주 (빠진 날도 괜찮다는 걸 보여주는 예시 패턴) */
-  const miss = [4, 9, 13, 17, 22, 26, 28, 29, 30];
-  document.getElementById('days').innerHTML = Array.from({ length: 30 }, (_, k) => `<i style="--k:${k}" class="${miss.includes(k + 1) ? '' : 'on'}${k + 1 === 21 ? ' goal-line' : ''}" title="DAY ${k + 1}"></i>`).join('');
+  /* sample: 30일 도장판 — 25일 인증이면 완독, 1·15·30일은 오프라인 모임 (빠진 날 예시 패턴) */
+  const miss = [6, 11, 19, 23, 27], offline = [1, 15, 30];
+  let stamped = 0;
+  document.getElementById('days').innerHTML = Array.from({ length: 30 }, (_, k) => {
+    const d = k + 1, on = !miss.includes(d); if (on) stamped++;
+    return `<i style="--k:${k}" class="${on ? 'on' : ''}${on && stamped === 25 ? ' goal-line' : ''}${offline.includes(d) ? ' off' : ''}" title="DAY ${d}${offline.includes(d) ? ' · 오프라인' : ''}"></i>`;
+  }).join('');
 
   /* roadmap */
   document.getElementById('phasebar').innerHTML = C.phases.map((p, i) =>
