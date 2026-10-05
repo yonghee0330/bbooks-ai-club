@@ -1,6 +1,6 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
 
-/* 디자인 토큰 — 차분한 슬레이트 + 파란 포인트. 글꼴은 Pretendard 하나만 쓴다. */
+/* 디자인 토큰 — 차분한 슬레이트 + 딜 그린(#4E6813) 포인트. 글꼴은 Pretendard 하나만 쓴다. */
 :root {
   --paper: #f8fafc;      /* 페이지 배경 */
   --card: #ffffff;       /* 카드·헤더 */
@@ -9,18 +9,18 @@
   --muted: #64748b;
   --line: #e2e8f0;
   --rule: #f1f5f9;
-  --signal: #2563eb;     /* 포인트(링크·강조) */
+  --signal: #4e6813;     /* 포인트(링크·강조) — Pinterest 2025 Dill Green */
   --signal-ink: #ffffff;
-  --signal-soft: #eff6ff;
-  --c-design: #2563eb;
-  --c-build: #0891b2;
-  --c-prove: #1e293b;
+  --signal-soft: #f1f5e4;
+  --c-design: #4e6813;
+  --c-build: #7c9a22;
+  --c-prove: #1f4d3a;
   --ok: #059669;
   --err: #dc2626;
-  --night: #0b1220;      /* 어두운 밴드(마무리 CTA·푸터·나눔 화면) */
-  --night-2: #111a2e;
-  --night-ink: #e2e8f0;
-  --night-muted: #94a3b8;
+  --night: #0f1a12;      /* 어두운 밴드(마무리 CTA·푸터·나눔 화면) */
+  --night-2: #16241a;
+  --night-ink: #e5ece6;
+  --night-muted: #9aa89d;
   --sans: 'Pretendard Variable', Pretendard, -apple-system, 'Apple SD Gothic Neo', system-ui, sans-serif;
   --serif: var(--sans);
   --display: var(--sans);
@@ -32,16 +32,16 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #0b1220; --card: #111a2e; --ink: #e2e8f0; --ink-2: #cbd5e1; --muted: #94a3b8; --line: #1e293b; --rule: #162036;
-    --signal: #60a5fa; --signal-ink: #0b1220; --signal-soft: #14213d; --c-design: #60a5fa; --c-build: #22d3ee; --c-prove: #cbd5e1;
-    --ok: #34d399; --err: #f87171; --night: #070c17; --night-2: #0f1830; --shadow: none;
+    --paper: #0d1411; --card: #131c17; --ink: #e6ece7; --ink-2: #c5cfc7; --muted: #8fa094; --line: #1f2b24; --rule: #17211c;
+    --signal: #a3c85a; --signal-ink: #0d1411; --signal-soft: #1b2713; --c-design: #a3c85a; --c-build: #c9e07a; --c-prove: #6ccfa0;
+    --ok: #34d399; --err: #f87171; --night: #08110b; --night-2: #101c14; --shadow: none;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #0b1220; --card: #111a2e; --ink: #e2e8f0; --ink-2: #cbd5e1; --muted: #94a3b8; --line: #1e293b; --rule: #162036;
-  --signal: #60a5fa; --signal-ink: #0b1220; --signal-soft: #14213d; --c-design: #60a5fa; --c-build: #22d3ee; --c-prove: #cbd5e1;
-  --ok: #34d399; --err: #f87171; --night: #070c17; --night-2: #0f1830; --shadow: none;
+  --paper: #0d1411; --card: #131c17; --ink: #e6ece7; --ink-2: #c5cfc7; --muted: #8fa094; --line: #1f2b24; --rule: #17211c;
+  --signal: #a3c85a; --signal-ink: #0d1411; --signal-soft: #1b2713; --c-design: #a3c85a; --c-build: #c9e07a; --c-prove: #6ccfa0;
+  --ok: #34d399; --err: #f87171; --night: #08110b; --night-2: #101c14; --shadow: none;
   color-scheme: dark;
 }
 
@@ -68,18 +68,18 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .nav a { text-decoration: none; padding: 8px 12px; border-radius: 6px; font-size: 14px; font-weight: 500; color: var(--ink-2); }
 .nav a:hover, .nav a[aria-current] { background: var(--rule); color: var(--ink); }
 .nav .btn { margin-left: 8px; }
-.nav a.btn-primary { background: var(--ink); color: var(--paper); }
-.nav a.btn-primary:hover { background: var(--ink-2); color: var(--paper); }
+.nav a.btn-primary { background: var(--signal); color: var(--signal-ink); }
+.nav a.btn-primary:hover { background: color-mix(in srgb, var(--signal) 82%, #000); color: var(--signal-ink); }
 @media (max-width: 720px) { .nav a:not(.btn) { display: none; } .brand small { display: none; } }
 
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid transparent; cursor: pointer; text-decoration: none;
   padding: 12px 20px; border-radius: 6px; font-weight: 600; font-size: 15px; transition: background .15s, border-color .15s, color .15s; white-space: nowrap; }
-.btn-primary { background: var(--ink); color: var(--paper); }
-.btn-primary:hover { background: var(--ink-2); }
+.btn-primary { background: var(--signal); color: var(--signal-ink); }
+.btn-primary:hover { background: color-mix(in srgb, var(--signal) 82%, #000); }
 .btn-ghost { background: var(--card); color: var(--ink-2); border-color: var(--line); }
 .btn-ghost:hover { border-color: var(--muted); color: var(--ink); }
-.btn-dark { background: var(--ink); color: var(--paper); }
-.btn-dark:hover { background: var(--ink-2); }
+.btn-dark { background: var(--signal); color: var(--signal-ink); }
+.btn-dark:hover { background: color-mix(in srgb, var(--signal) 82%, #000); }
 .btn-sm { padding: 8px 14px; font-size: 13px; }
 .btn[disabled] { opacity: .45; cursor: not-allowed; }
 .btn .arr { transition: transform .15s; }

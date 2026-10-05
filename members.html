@@ -6,7 +6,7 @@
 <title>멤버 라운지 · 부천 AI 프로젝트 클럽</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#f8fafc">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M7 22l6-6 4 4 8-9' stroke='%23ffffff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234e6813'/%3E%3Cpath d='M7 22l6-6 4 4 8-9' stroke='%23ffffff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/style.css">
 <style>
 /* login */
@@ -35,15 +35,15 @@
 /* this week */
 .week { display: grid; grid-template-columns: 1.25fr 1fr; gap: 16px; }
 @media (max-width: 900px) { .week { grid-template-columns: 1fr; } }
-.next { padding: 28px; background: var(--ink); color: var(--paper); border: 0; position: relative; overflow: hidden; }
+.next { padding: 28px; background: var(--night); color: var(--night-ink); border: 0; position: relative; overflow: hidden; }
 .next .row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; position: relative; z-index: 1; }
 .next .n { font: 800 56px/1 var(--display); letter-spacing: -.04em; }
-.next .dd { font: 700 12px var(--sans); background: color-mix(in srgb, var(--paper) 14%, transparent); padding: 5px 9px; border-radius: 4px; }
+.next .dd { font: 700 12px var(--sans); background: color-mix(in srgb, var(--night-ink) 14%, transparent); padding: 5px 9px; border-radius: 4px; }
 .next h3 { font-size: 24px; letter-spacing: -.03em; margin: 18px 0 4px; position: relative; z-index: 1; }
-.next .when { color: color-mix(in srgb, var(--paper) 65%, transparent); font-size: 14px; position: relative; z-index: 1; }
-.next ol { margin: 20px 0 0; padding: 18px 0 0 20px; border-top: 1px solid color-mix(in srgb, var(--paper) 16%, transparent); display: grid; gap: 6px; position: relative; z-index: 1; font-size: 15px; }
-.next .out { margin-top: 18px; font-size: 13px; color: color-mix(in srgb, var(--paper) 65%, transparent); position: relative; z-index: 1; }
-.next .out b { color: var(--paper); }
+.next .when { color: color-mix(in srgb, var(--night-ink) 65%, transparent); font-size: 14px; position: relative; z-index: 1; }
+.next ol { margin: 20px 0 0; padding: 18px 0 0 20px; border-top: 1px solid color-mix(in srgb, var(--night-ink) 16%, transparent); display: grid; gap: 6px; position: relative; z-index: 1; font-size: 15px; }
+.next .out { margin-top: 18px; font-size: 13px; color: color-mix(in srgb, var(--night-ink) 65%, transparent); position: relative; z-index: 1; }
+.next .out b { color: var(--night-ink); }
 .stack { display: grid; gap: 16px; }
 .mini-card { padding: 22px; }
 .mini-card h3 { margin: 0 0 12px; font-size: 16px; }
@@ -260,7 +260,7 @@
   <div class="ci-body" id="ci-body"></div>
   <div class="ci-foot">
     <div class="dots" id="ci-dots"></div>
-    <div class="timer" id="timer"><svg viewBox="0 0 54 54"><circle cx="27" cy="27" r="22" stroke="rgba(255,255,255,.12)"/><circle id="tring" cx="27" cy="27" r="22" stroke="#60a5fa" stroke-dasharray="138.2" stroke-dashoffset="0" stroke-linecap="round"/></svg><b id="tval">7:00</b><button class="btn btn-ghost btn-sm" id="tbtn">시작</button></div>
+    <div class="timer" id="timer"><svg viewBox="0 0 54 54"><circle cx="27" cy="27" r="22" stroke="rgba(255,255,255,.12)"/><circle id="tring" cx="27" cy="27" r="22" stroke="#a3c85a" stroke-dasharray="138.2" stroke-dashoffset="0" stroke-linecap="round"/></svg><b id="tval">7:00</b><button class="btn btn-ghost btn-sm" id="tbtn">시작</button></div>
   </div>
 </div>
 
@@ -270,7 +270,7 @@
 (function () {
   const C = CLUB, B = BAPC, $ = s => document.querySelector(s);
   const TC = { save: 'var(--c-design)', grow: 'var(--c-build)', new: 'var(--c-prove)' };
-  const TH = { save: '#60a5fa', grow: '#22d3ee', new: '#818cf8' };
+  const TH = { save: '#a3c85a', grow: '#c9e07a', new: '#6ccfa0' };
   const PC = Object.fromEntries(C.phases.map(p => [p.key, p.color]));
   let S = { code: null, me: null, members: [], logs: [], recipes: [] };
   if (B.demoMode) { $('#demo').hidden = false; $('#demo-hint').hidden = false; }
@@ -320,9 +320,7 @@
   const cur = m => { const w = latestWeek(m); return w ? m.values[w].v : m.base; };
   const pct = m => { const b = +m.base, t = +m.target, c = +cur(m); if (t === b || isNaN(t) || isNaN(b)) return 0; return Math.max(0, Math.min(1, (c - b) / (t - b))); };
   const fmtN = v => v == null || v === '' || isNaN(v) ? '—' : (+v).toLocaleString('ko-KR', { maximumFractionDigits: 1 });
-  const agendaOf = s => s.n === 10
-    ? ['데모데이 14:00–16:00 · 지인 초대', '멤버별 5분 발표 + 질문', '수료 · 2기 안내']
-    : [`<b>미니 특강 15분</b> · ${B.esc(s.lecture)}${s.doc ? ` · <a href="${B.esc(s.doc)}" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">강의안 보기</a>` : ''}`, `<b>지난주 AI 활용 나누기 60분</b> · ${B.esc(s.share)}`, '<b>질의응답 15분</b> · 서로 묻고 답하기'];
+  const agendaOf = s => [`<b>${B.esc(C.weekly[0].name)} ${C.weekly[0].min}분</b> · 새로 발견한 것 나누기 + Hose의 미니특강${s.doc ? ` · <a href="${B.esc(s.doc)}" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">자료 보기</a>` : ''}`, `<b>${B.esc(C.weekly[1].name)} ${C.weekly[1].min}분</b> · ${B.esc(s.focus)}`, `<b>${B.esc(C.weekly[2].name)} ${C.weekly[2].min}분</b> · 서로 묻고 답하기`];
   const roleFor = n => { // 회차 n의 진행자·기록자: 멤버 순서대로 순환 (1회차는 운영자)
     const ms = S.members; if (!ms.length) return {};
     if (n === 1) return { lead: ms[0], note: ms[0], show: ms[0] };
@@ -363,7 +361,7 @@
         <div class="stack">
           <div class="card mini-card"><h3>이번 주 역할</h3><div class="roles-l">
             ${[['진행자', r.lead, 'var(--signal)'], ['기록자', r.note, 'var(--c-design)']].map(([k, m, c]) => `<div><span class="chip"><i style="color:${c}"></i>${k}</span><b>${m ? B.esc(m.name) : '—'}${m && m.id === mine.id ? ' (나)' : ''}</b></div>`).join('')}
-          </div><p class="muted" style="font-size:12px;margin:12px 0 0">특강은 운영자가 준비해요. 진행자(나눔 시간 관리)와 기록자는 멤버 순서대로 자동 순환, 서로 바꾸는 건 자유.</p></div>
+          </div><p class="muted" style="font-size:12px;margin:12px 0 0">미니특강은 Hose가 준비해요. 진행자(시간 관리)와 기록자는 멤버 순서대로 자동 순환, 서로 바꾸는 건 자유.</p></div>
           <div class="card mini-card"><h3>내 숫자 · W${wk}</h3>
             <form class="quick" id="quick">
               <div class="muted" style="font-size:13px">${B.esc(mine.metric || '핵심 숫자 미정')} · 시작 ${fmtN(mine.base)} → 목표 ${fmtN(mine.target)}${B.esc(mine.unit || '')}</div>
@@ -456,8 +454,8 @@
   const ciWeek = () => { const { next } = B.currentSession(); return next ? next.n : 10; };
   function ciRender() {
     const m = S.members[ciI], wk = ciWeek(), s = series(m), v = s[wk - 1], prevArr = s.slice(0, wk - 1).filter(x => x != null), prev = prevArr.length ? prevArr[prevArr.length - 1] : +m.base;
-    const col = TH[m.type] || '#60a5fa', good = v != null && (m.dir === 'down' ? v < prev : v > prev), d = v != null ? v - prev : null;
-    $('#ci-wk').textContent = `W${wk} 지난주 AI 활용 나누기 · ${ciI + 1}/${S.members.length}`;
+    const col = TH[m.type] || '#a3c85a', good = v != null && (m.dir === 'down' ? v < prev : v > prev), d = v != null ? v - prev : null;
+    $('#ci-wk').textContent = `W${wk} 프로젝트 진행현황 · ${ciI + 1}/${S.members.length}`;
     $('#ci-body').innerHTML = `<div class="ci-anim"><div class="who">${B.esc(m.name)}</div><div class="pj">${B.esc(m.project || '')}</div>
       <div class="metric">${B.esc(m.metric || '')} · 목표 ${fmtN(m.target)}${B.esc(m.unit || '')}</div>
       <div class="now">${v != null ? fmtN(v) : '<span style="opacity:.35">—</span>'}<small>${B.esc(m.unit || '')}</small></div>
@@ -495,9 +493,9 @@
       return `<details class="card log" style="--pc:${PC[s.phase]}" ${!upcoming && i === done - 1 ? 'open' : ''}>
         <summary><span class="n">${String(s.n).padStart(2, '0')}</span><span class="t"><b>${B.esc(s.title)}</b><span>${B.fmtDate(s.date)} · 기록자 ${r.note ? B.esc(r.note.name) : '—'}</span></span><span class="st ${l ? 'has' : ''}">${l ? '기록 있음' : upcoming ? '예정' : '기록 대기'}</span></summary>
         <div class="body">
-          ${l ? `<h4>지난주 나눔</h4><p>${B.esc(l.checkin || '—')}</p><h4>특강 · 질의응답</h4><p>${B.esc(l.show || '—')}</p><h4>다음 주 약속</h4><p>${B.esc(l.promise || '—')}</p>${l.links ? `<h4>사진 · 링크</h4><p>${linkify(l.links)}</p>` : ''}<p class="muted" style="font-size:12px;margin-top:14px">${by ? B.esc(by.name) : ''} · ${new Date(l.at).toLocaleString('ko-KR')}</p>` : `<p class="muted">${upcoming ? '아직 진행 전이에요. 이 회차 계획: 특강 「' + B.esc(s.title) + '」 · 나눔 · 질의응답' : '아직 기록이 없어요. 기록자가 아니어도 먼저 남길 수 있어요.'}</p>`}
+          ${l ? `<h4>새로운 정보 공유</h4><p>${B.esc(l.checkin || '—')}</p><h4>프로젝트 진행현황 · Q&A</h4><p>${B.esc(l.show || '—')}</p><h4>다음 주 약속</h4><p>${B.esc(l.promise || '—')}</p>${l.links ? `<h4>사진 · 링크</h4><p>${linkify(l.links)}</p>` : ''}<p class="muted" style="font-size:12px;margin-top:14px">${by ? B.esc(by.name) : ''} · ${new Date(l.at).toLocaleString('ko-KR')}</p>` : `<p class="muted">${upcoming ? '아직 진행 전이에요. 이 회차 계획: ' + B.esc(s.title) + ' — ' + B.esc(s.focus) : '아직 기록이 없어요. 기록자가 아니어도 먼저 남길 수 있어요.'}</p>`}
           ${!upcoming ? `<details style="margin-top:14px"><summary style="cursor:pointer;font-weight:600;font-size:14px;color:var(--signal)">${l ? '기록 수정' : '기록 남기기'}</summary>
-            <form data-n="${s.n}" class="logform">${fld('checkin', '지난주 AI 활용 나눔 요약', '멤버별 한 줄 — 숫자 · 해 본 것 · 배운 것')}${fld('show', '특강 · 질의응답 메모', '다룬 문제 → 시도한 도구 → 결과')}${fld('promise', '다음 주 약속', '멤버별 한 줄')}${fld('links', '사진 · 링크', '구글 드라이브·사진 링크 등')}<button class="btn btn-dark" type="submit">기록 저장</button></form></details>` : ''}
+            <form data-n="${s.n}" class="logform">${fld('checkin', '새로운 정보 공유 요약', '새로 발견한 것 · 미니특강 핵심')}${fld('show', '프로젝트 진행현황 · Q&A 메모', '다룬 문제 → 시도한 도구 → 결과')}${fld('promise', '다음 주 약속', '멤버별 한 줄')}${fld('links', '사진 · 링크', '구글 드라이브·사진 링크 등')}<button class="btn btn-dark" type="submit">기록 저장</button></form></details>` : ''}
         </div></details>`;
     }).join('');
     document.querySelectorAll('.logform').forEach(f => f.addEventListener('submit', async e => {

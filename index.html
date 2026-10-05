@@ -4,21 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>부천 AI 프로젝트 클럽 1기</title>
-<meta name="description" content="3개월, 내 일에 AI를 붙여 숫자로 증명하기. 비북스에서 매주 토요일, 8명이 각자의 숫자를 들고 모이는 AI 작업실. 10/16 모집 마감.">
-<meta property="og:title" content="부천 AI 프로젝트 클럽 1기 · 멤버 모집">
-<meta property="og:description" content="AI 기초와 바이브코딩을 핵심만 정리해 함께 공부하고, 내 일에 붙여 3개월 뒤 숫자로 보여주는 스터디. 매주 토요일 비북스, 10회, 8명.">
+<meta name="description" content="동네에서 함께 공부하고 실천해보는 AI 스터디 모임. 막연한 공부에 그치지 않고 구체적인 숫자를 만들어봅니다. 비북스 매주 토요일, 10회, 8명. 1기 모집 10/16 마감.">
+<meta property="og:title" content="부천 AI 프로젝트 클럽 1기 모집">
+<meta property="og:description" content="동네에서 함께 공부하고 실천해보는 AI 스터디 모임! 막연한 공부에 그치지 않고, 구체적인 숫자를 만들어봅니다.">
 <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M7 22l6-6 4 4 8-9' stroke='%23ffffff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#0d1411" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234e6813'/%3E%3Cpath d='M7 22l6-6 4 4 8-9' stroke='%23ffffff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/style.css">
 <style>
 /* ---------- HERO ---------- */
 .hero { background: var(--paper); border-bottom: 1px solid var(--line); padding: clamp(48px, 7vw, 88px) 0 clamp(48px, 7vw, 80px); }
 .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(32px, 5vw, 64px); align-items: center; }
 @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+.recruit { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.recruit-tag { font: 800 clamp(24px, 3.4vw, 32px)/1 var(--sans); letter-spacing: -.03em; color: var(--signal-ink); background: var(--signal); padding: 10px 18px; border-radius: 8px; }
+.recruit-when { font-size: 14px; font-weight: 600; color: var(--ink-2); }
 .hero .eyebrow { padding: 5px 11px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--ink-2); font-size: 12px; font-weight: 600; }
 .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
-.hero h1 { font: 800 clamp(34px, 5.4vw, 58px)/1.18 var(--sans); letter-spacing: -.045em; margin: 20px 0 20px; }
+.hero h1 { font: 800 clamp(30px, 4.8vw, 52px)/1.2 var(--sans); letter-spacing: -.045em; margin: 22px 0 20px; }
 .hero h1 .line { display: block; overflow: hidden; padding-bottom: .08em; }
 .hero h1 .line > span { display: inline-block; transform: translateY(105%); animation: rise .8s cubic-bezier(.2,.75,.15,1) forwards; animation-delay: calc(.08s + var(--i) * .1s); }
 @keyframes rise { to { transform: none; } }
@@ -82,7 +85,7 @@
 /* ---------- HOST ---------- */
 .host { display: grid; grid-template-columns: 96px 1fr; gap: clamp(20px, 4vw, 40px); align-items: start; margin-top: 8px; }
 @media (max-width: 640px) { .host { grid-template-columns: 1fr; } }
-.host-av { width: 96px; height: 96px; border-radius: 50%; background: var(--ink); color: var(--paper); display: grid; place-items: center; font: 800 36px var(--sans); }
+.host-av { width: 96px; height: 96px; border-radius: 50%; background: var(--signal); color: var(--signal-ink); display: grid; place-items: center; font: 800 36px var(--sans); }
 .host-facts { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
 .host-facts li { display: grid; grid-template-columns: 100px 1fr; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; color: var(--ink-2); }
 .host-facts li b { font-size: 13px; font-weight: 700; color: var(--signal); }
@@ -111,7 +114,7 @@
 
 /* ---------- ROADMAP ---------- */
 .road { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); overflow: hidden; }
-.phasebar { display: grid; grid-template-columns: 4fr 4fr 2fr; gap: 6px; margin: 44px 0 10px; }
+.phasebar { display: grid; grid-template-columns: 2fr 5fr 2fr; gap: 6px; margin: 44px 0 10px; }
 .phasebar > div { position: relative; }
 .phasebar .bar { height: 6px; border-radius: 3px; background: var(--rule); overflow: hidden; }
 .phasebar .bar i { display: block; height: 100%; background: var(--pc); transform: scaleX(0); transform-origin: left; transition: transform 1s cubic-bezier(.6,0,.2,1); transition-delay: var(--d); }
@@ -168,40 +171,6 @@
 .idea p { margin: 0; color: var(--ink-2); font-size: 14px; }
 .idea .metric { margin-top: auto; padding-top: 14px; font-size: 13px; font-weight: 600; line-height: 1.4; color: var(--muted); }
 .idea .metric::before { content: '지표 · '; color: var(--muted); font-weight: 500; }
-
-/* ---------- SAMPLE ---------- */
-.sample { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(24px, 4vw, 48px); align-items: start; margin-top: 40px; }
-@media (max-width: 900px) { .sample { grid-template-columns: 1fr; } }
-.sample-hero { padding: 28px; background: var(--night); color: var(--night-ink); border-color: var(--night); position: sticky; top: 84px; --g1: #3b82f6; --g2: #0ea5e9; --g3: #818cf8; --gb: rgba(148, 163, 184, .16); }
-.sample-hero p { color: var(--night-muted); }
-.sample-hero .who { display: flex; gap: 12px; align-items: center; font-size: 14px; color: var(--night-muted); }
-.sample-hero .who b { color: #fff; }
-.sample-hero .av { width: 38px; height: 38px; border-radius: 50%; background: var(--signal); color: var(--signal-ink); display: grid; place-items: center; font-weight: 800; }
-.sample-hero h3 { font-size: 24px; letter-spacing: -.035em; margin: 20px 0 8px; line-height: 1.35; color: #fff; }
-.sample-hero h3 .sub-t { font-size: 15px; font-weight: 500; color: var(--night-muted); letter-spacing: -.01em; }
-.sample-hero .gantt { display: grid; gap: 6px; margin-top: 22px; }
-.sample-hero .gantt .row { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; }
-.sample-hero .gantt .row i { grid-row: 1; height: 24px; border-radius: 4px; background: var(--gb); }
-.sample-hero .gantt .row b { grid-row: 1; height: 24px; border-radius: 4px; background: var(--gc); color: #fff; font: 600 11px/24px var(--sans); padding: 0 9px; white-space: nowrap; overflow: hidden; display: flex; justify-content: space-between; transform: scaleX(0); transform-origin: left; transition: transform .8s cubic-bezier(.6,0,.2,1) calc(var(--r) * .3s + .2s); }
-.sample-hero.in .gantt .row b { transform: none; }
-.sample-hero .gantt-cap { display: flex; justify-content: space-between; font-size: 10px; color: var(--night-muted); margin-top: 8px; }
-.sample-hero .goal { margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(148, 163, 184, .22); }
-.sample-hero .goal .v { font: 800 72px/1 var(--sans); letter-spacing: -.05em; color: #fff; font-variant-numeric: tabular-nums; }
-.sample-hero .goal .v small { font: 700 20px var(--sans); margin-left: 3px; color: var(--night-muted); }
-.sample-hero .goal p { margin: 8px 0 0; font-size: 13px; }
-@media (max-width: 900px) { .sample-hero { position: static; } }
-.areas { display: grid; gap: 12px; }
-.area { padding: 22px; }
-.area .h { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 14px; }
-.area h4 { margin: 0; font-size: 17px; letter-spacing: -.02em; }
-.area .when { font-size: 12px; color: var(--muted); }
-.goals { display: grid; gap: 12px; }
-.g { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; font-size: 14px; color: var(--ink-2); }
-.g .gv { font-size: 13px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
-.g .track { grid-column: 1/-1; height: 4px; border-radius: 2px; background: var(--rule); overflow: hidden; }
-.g .track i { display: block; height: 100%; width: 100%; background: var(--signal); transform: scaleX(0); transform-origin: left; transition: transform 1.2s cubic-bezier(.6,0,.2,1) var(--d, .2s); }
-.area.in .g .track i { transform: scaleX(1); }
-.note-s { font-size: 13px; color: var(--muted); margin-top: 14px; }
 
 /* ---------- FIT ---------- */
 .fit { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; }
@@ -272,9 +241,9 @@
 
 /* ---------- FINAL ---------- */
 .final { background: var(--night); color: var(--night-ink); text-align: center; }
-.final .eyebrow { color: #93c5fd; }
+.final .eyebrow { color: #b6d36a; }
 .final h2 { font: 800 clamp(30px, 5vw, 48px)/1.25 var(--sans); letter-spacing: -.04em; margin: 14px 0 16px; color: #fff; }
-.final h2 em { font-style: normal; color: #93c5fd; }
+.final h2 em { font-style: normal; color: #b6d36a; }
 .final .lead { margin: 0 auto 28px; color: var(--night-muted); }
 .final .btn-primary { background: #fff; color: #0f172a; }
 .final .btn-primary:hover { background: #e2e8f0; }
@@ -295,8 +264,8 @@
     <a class="brand" href="./"><span class="brand-mark">AI</span>부천 AI 프로젝트 클럽 <small>1기 · 비북스</small></a>
     <nav class="nav" aria-label="주요">
       <a href="#about">소개</a>
+      <a href="#host">진행자</a>
       <a href="#roadmap">로드맵</a>
-      <a href="#sample">샘플</a>
       <a href="#faq">FAQ</a>
       <a href="members.html">멤버 라운지</a>
       <a class="btn btn-primary btn-sm" href="apply.html">신청하기</a>
@@ -308,22 +277,21 @@
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow"><i class="live-dot"></i>비북스 · 1기 멤버 모집 중</span>
+      <div class="recruit"><span class="recruit-tag">1기 모집</span><span class="recruit-when">신청 10/6(화) 시작 · 10/16(금) 12:00 마감</span></div>
       <h1>
-        <span class="line"><span style="--i:0">3개월,</span></span>
-        <span class="line"><span style="--i:1">내 일에 AI를 붙여</span></span>
-        <span class="line"><span style="--i:2"><span class="num-word">숫자</span>로 증명하기</span></span>
+        <span class="line"><span style="--i:0">동네에서 함께 공부하고</span></span>
+        <span class="line"><span style="--i:1"><span class="num-word">실천해보는</span> AI 스터디 모임!</span></span>
       </h1>
-      <p class="sub">AI 기초부터 바이브코딩까지, 핵심만 정리해 함께 공부하고 내 일에 바로 써 보는 스터디. <b>매주 토요일 비북스</b>에서 8명이 각자의 숫자 하나를 들고 모입니다. 3개월 뒤, 무엇이 달라졌는지 <b>숫자로</b> 보여줍니다.</p>
+      <p class="sub">막연한 공부에 그치지 않고, <b>구체적인 숫자</b>를 만들어보는 걸 지향합니다. 매주 토요일 비북스에서 8명이 각자의 시도를 나누고 서로 응원해요.</p>
       <dl class="meta">
         <div><dt>When</dt><dd>토 14:00–15:30</dd></div>
-        <div><dt>Period</dt><dd>10.17 – 12.19<br><span class="muted" style="color:var(--night-muted);font-weight:500">총 10회</span></dd></div>
+        <div><dt>Period</dt><dd>10.17 – 12.19<br><span class="muted" style="font-weight:500">총 10회</span></dd></div>
         <div><dt>Seats</dt><dd>8명</dd></div>
-        <div><dt>Where</dt><dd>비북스<br><span style="color:var(--night-muted);font-weight:500">부천 원미동</span></dd></div>
+        <div><dt>Where</dt><dd>비북스<br><span class="muted" style="font-weight:500">부천 원미동</span></dd></div>
       </dl>
       <div class="cta-row">
-        <a class="btn btn-primary" href="apply.html">1기 신청하기 <span class="arr">→</span></a>
-        <div><span class="cd-label">마감 10/16(금) 12:00 까지</span><div class="cd" data-countdown></div></div>
+        <a class="btn btn-primary" href="apply.html" data-cta>1기 신청하기 <span class="arr">→</span></a>
+        <div><span class="cd-label" id="cd-label"></span><div class="cd" data-countdown></div></div>
       </div>
     </div>
 
@@ -333,7 +301,7 @@
         <div class="metric" id="nc-metric"></div>
         <div class="bignum"><span class="v" id="nc-v">0</span><span class="u" id="nc-u"></span><span class="delta" id="nc-d"></span></div>
         <svg viewBox="0 0 320 150" id="nc-svg" aria-hidden="true"></svg>
-        <div class="ncard-foot"><span id="nc-cap">W1 시작값 → W10 데모데이</span><span class="pager" id="nc-pager"><i></i><i></i><i></i></span></div>
+        <div class="ncard-foot"><span id="nc-cap">W1 시작점 → W10 마무리</span><span class="pager" id="nc-pager"><i></i><i></i><i></i></span></div>
       </article>
     </div>
   </div>
@@ -344,7 +312,7 @@
   <div class="wrap">
     <span class="eyebrow" data-reveal>What is this</span>
     <h2 class="h2" data-reveal style="--d:.05s">배우러 오는 곳이 아니라,<br><em>만들러</em> 오는 곳입니다.</h2>
-    <p class="lead" data-reveal style="--d:.1s">AI 기초와 바이브코딩을 배우는 데서 멈추지 않고, 내 일에 붙여 숫자로 확인하는 3개월. 매주 15분, 핵심만 정리한 내용을 함께 보고, 각자 써 본 결과를 나눕니다. 진행자 호세도 같은 멤버로 자기 프로젝트의 숫자를 냅니다.</p>
+    <p class="lead" data-reveal style="--d:.1s">각자 세운 목표를 따라 AI를 직접 써 보고, 매주 만나 새로 발견한 것과 진행 상황을 나눕니다. 혼자서는 흐지부지되기 쉬운 시도를, 같은 동네 사람들과 함께 이어 갑니다.</p>
 
     <div class="stats" data-reveal>
       <div><div class="v"><span data-count="10">0</span><small>회</small></div><div class="k">10월 17일부터 12월 19일까지 매주 토요일</div></div>
@@ -355,8 +323,8 @@
     <div class="principles">
       <article class="card pr" data-reveal>
         <svg class="ico ico-share" viewBox="0 0 120 76" aria-hidden="true"><g fill="none" stroke="var(--line)" stroke-width="1.5"><line x1="30" y1="38" x2="60" y2="16"/><line x1="60" y1="16" x2="90" y2="38"/><line x1="90" y1="38" x2="60" y2="60"/><line x1="60" y1="60" x2="30" y2="38"/><line x1="30" y1="38" x2="90" y2="38"/></g><g><circle cx="30" cy="38" r="9" fill="var(--c-design)"/><circle cx="60" cy="16" r="9" fill="var(--signal)"/><circle cx="90" cy="38" r="9" fill="var(--c-prove)"/><circle cx="60" cy="60" r="9" fill="var(--ink)"/></g></svg>
-        <h3><s>강의</s> → 핵심 정리 + 나눔</h3>
-        <p>가르치는 수업이 아니에요. 공개된 학습 자료의 핵심을 매주 15분 정리해 공유하고, 나머지는 각자 해 본 것을 나누고 서로 묻고 답해요.</p>
+        <h3><s>강의</s> → 함께 나누기</h3>
+        <p>정해진 수업을 듣는 모임이 아니에요. 새로 발견한 걸 서로 알려 주고, 각자 진행하는 프로젝트를 함께 들여다봐요.</p>
       </article>
       <article class="card pr" data-reveal style="--d:.1s">
         <svg class="ico ico-prob" viewBox="0 0 120 76" aria-hidden="true"><rect x="40" y="18" width="40" height="40" rx="8" fill="var(--ink)"/><text x="60" y="44" text-anchor="middle" fill="var(--paper)" font-family="JetBrains Mono" font-size="16" font-weight="600">?</text><g class="p"><circle cx="22" cy="20" r="6" fill="none" stroke="var(--signal)" stroke-width="2"/><circle cx="98" cy="58" r="6" fill="none" stroke="var(--c-design)" stroke-width="2"/><circle cx="100" cy="16" r="4" fill="var(--c-prove)"/></g></svg>
@@ -366,7 +334,7 @@
       <article class="card pr" data-reveal style="--d:.2s">
         <svg class="ico" viewBox="0 0 120 76" aria-hidden="true"><g transform="translate(22 0)"><g class="ico-rot"><circle cx="38" cy="38" r="30" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="4 5"/><circle cx="38" cy="8" r="8" fill="var(--signal)"/><circle cx="64" cy="53" r="8" fill="var(--c-design)"/><circle cx="12" cy="53" r="8" fill="var(--c-prove)"/></g></g></svg>
         <h3>역할은 돌아갑니다</h3>
-        <p>핵심 정리는 호세가 준비하고, 진행자와 기록자는 멤버가 매주 순번제로 맡아요. 모두가 한 번씩 이끌고 기록합니다.</p>
+        <p>짧은 미니특강은 Hose가 준비하고, 진행자와 기록자는 멤버가 매주 순번제로 맡아요. 모두가 한 번씩 이끌고 기록합니다.</p>
       </article>
     </div>
   </div>
@@ -377,14 +345,14 @@
   <div class="wrap">
     <span class="eyebrow" data-reveal>Your host</span>
     <div class="host" data-reveal>
-      <div class="host-av" aria-hidden="true">호</div>
+      <div class="host-av" aria-hidden="true">H</div>
       <div>
-        <h2 class="h2" style="margin:10px 0 14px">가르치는 사람이 아니라,<br><em>먼저 공부한 사람</em>입니다.</h2>
-        <p class="lead">호세는 비북스 매니저예요. 컴퓨터공학을 전공했지만 오랫동안 책과 관련된 일만 해 왔고, AI 시대가 되어 다시 공부를 시작했어요. 먼저 공부한 것 중 핵심만 정리해 함께 나누고, 모르는 건 같이 찾아봅니다.</p>
+        <h2 class="h2" style="margin:10px 0 14px">가르치는 사람이 아니라,<br><em>각자의 시도를 응원하고 돕는 사람</em>입니다.</h2>
+        <p class="lead">Hose는 비북스 매니저예요. 컴퓨터공학을 전공했지만 오랫동안 책과 관련된 일만 해 왔고, AI 시대가 되어 다시 공부를 시작했어요. 정해진 답을 알려 주기보다, 각자 해 보고 싶은 걸 같이 들여다보고 필요한 정보를 찾아 나눕니다.</p>
         <ul class="host-facts">
-          <li><b>공부 자료</b>클로드 아카데미에 공개된 학습 자료를 보고 핵심만 정리해 공유해요. 회차마다 강의안 페이지를 만들어 출처 링크와 함께 올려요.</li>
-          <li><b>다루는 내용</b>AI 기초 4회 · 바이브코딩과 AI 활용 꿀팁 6회.</li>
-          <li><b>같은 멤버로</b>호세도 자기 프로젝트(여행기 전자책 출간)의 숫자를 공개하고 함께 냅니다.</li>
+          <li><b>하는 일</b>모임마다 짧은 미니특강을 준비하고, 새로운 정보를 함께 나눠요. 자료는 클로드 아카데미 등 공개된 학습 자료를 바탕으로 정리해요.</li>
+          <li><b>하지 않는 일</b>정해진 커리큘럼을 따라오게 하거나, 정답을 가르치지 않아요. 각자의 목표와 속도를 존중해요.</li>
+          <li><b>같이 하는 일</b>진행 현황을 듣고, 아이디어와 의견을 보태요.</li>
         </ul>
         <p class="host-note">비공식 스터디입니다. Anthropic의 공식 프로그램이 아니며, 공개된 학습 자료를 개인이 정리해 공유하는 모임이에요.</p>
       </div>
@@ -396,8 +364,8 @@
 <section class="block" id="numbers" style="padding-top:0">
   <div class="wrap">
     <span class="eyebrow" data-reveal>How we measure</span>
-    <h2 class="h2" data-reveal>성과는 수익이 아니라,<br><em>숫자 하나</em>의 변화.</h2>
-    <p class="lead" data-reveal>세 유형 중 하나를 골라 핵심 숫자 1개와 보조 숫자 1~2개를 정합니다. 3회차까지 시작값을 기록하고, 매주 토요일 체크인에서 함께 봅니다.</p>
+    <h2 class="h2" data-reveal>막연한 공부에 그치지 않고,<br><em>구체적인 숫자</em>를 만들어봅니다.</h2>
+    <p class="lead" data-reveal>세 유형 중 하나를 골라 핵심 숫자 1개를 정해요. 1회차에 시작점을 기록하고, 매주 모임에서 진행 현황과 함께 나눕니다. 시간을 줄이는 것도, 문의가 늘어나는 것도, 새 상품을 처음 내는 것도 모두 숫자가 될 수 있어요.</p>
     <div class="types">
       <article class="card type" data-reveal>
         <svg class="mini" viewBox="0 0 280 120" aria-hidden="true">
@@ -434,7 +402,7 @@
         <div class="eg">숫자 예 <b>출시 여부 · 첫 판매 · 판매 건수</b></div>
       </article>
     </div>
-    <div class="promise" data-reveal><span class="st">NO HYPE</span><div><b>수익을 약속하지 않습니다.</b> 이 모임은 결과를 보장하는 과정이 아니라, 내 일에 AI를 붙여 본 3개월의 <b>실험과 기록</b>입니다. 목표에 못 미쳐도 “무엇이 효과 없었는지”가 리포트의 절반입니다.</div></div>
+    <div class="promise" data-reveal><span class="st">NO HYPE</span><div><b>수익을 약속하지 않습니다.</b> 이 모임은 결과를 보장하는 과정이 아니라, 내 일에 AI를 붙여 본 3개월의 <b>실험과 기록</b>입니다. 목표에 못 미쳐도 괜찮아요. “무엇이 효과 없었는지”도 소중한 결과예요.</div></div>
   </div>
 </section>
 
@@ -442,11 +410,11 @@
 <section class="block road" id="roadmap">
   <div class="wrap">
     <span class="eyebrow" data-reveal>Roadmap · 10 Saturdays</span>
-    <h2 class="h2" data-reveal>AI 기초에서 바이브코딩까지.<br><em>12월 19일</em>, 비북스 데모데이.</h2>
-    <p class="lead" data-reveal>앞 4회는 AI 기초, 뒤 6회는 바이브코딩과 AI 활용 꿀팁. 모두가 같은 코스를 걷고, 결과는 각자의 일에서 나옵니다. 같은 틀(숫자 보드 · 레시피 카드 · 한 장 리포트)에 내 일을 채워 넣고, 마지막 날은 지인을 초대해 3개월의 숫자를 5분씩 발표해요.</p>
+    <h2 class="h2" data-reveal>킥오프로 시작해,<br><em>각자의 목표</em>대로 실행하고 마무리합니다.</h2>
+    <p class="lead" data-reveal>정해진 커리큘럼 대신 각자의 시도가 중심이에요. 1회차 킥오프에서 시작점을 확인하고, 2~9회차는 각자 세운 목표를 따라 직접 해 보고, 10회차에 처음과 비교해 나눕니다. 1기는 파일럿으로 함께 실험해 봅니다.</p>
     <div class="phasebar" id="phasebar"></div>
     <div class="sessions" id="sessions"></div>
-    <p class="note-road" data-reveal>카드는 그 주 <b>15분 핵심 정리</b>의 큰 구분이에요. 세부 내용은 회차별 강의안 페이지로 공유해요. 주당 부담은 <b>1~2시간</b>이면 충분해요 — 숫자 1개 입력, 시도 1개.</p>
+    <p class="note-road" data-reveal>주당 부담은 <b>1~2시간</b>이면 충분해요. 바쁜 주에는 “이번 주는 시도를 못 했어요”도 괜찮은 나눔이에요.</p>
   </div>
 </section>
 
@@ -454,7 +422,7 @@
 <section class="block" id="weekly">
   <div class="wrap">
     <span class="eyebrow" data-reveal>Every Saturday · 90 min</span>
-    <h2 class="h2" data-reveal>짧게 배우고,<br><em>길게 나누는</em> 90분.</h2>
+    <h2 class="h2" data-reveal>새로 알게 된 걸 나누고,<br><em>각자의 시도</em>를 함께 봅니다.</h2>
     <div class="weekly">
       <div class="clock" data-reveal>
         <svg viewBox="0 0 300 300" aria-hidden="true" id="clock"></svg>
@@ -462,7 +430,7 @@
       </div>
       <div>
         <div class="wsteps" id="wsteps"></div>
-        <div class="roles" data-reveal>핵심 정리는 호세가, 매주 순번제로 <span class="chip"><i style="color:var(--signal)"></i>진행자(시간 관리)</span><span class="chip"><i style="color:var(--c-design)"></i>기록자</span></div>
+        <div class="roles" data-reveal>짧은 미니특강은 Hose가, 매주 순번제로 <span class="chip"><i style="color:var(--signal)"></i>진행자(시간 관리)</span><span class="chip"><i style="color:var(--c-build)"></i>기록자</span></div>
       </div>
     </div>
   </div>
@@ -473,22 +441,22 @@
   <div class="wrap">
     <span class="eyebrow" data-reveal>What you take home</span>
     <h2 class="h2" data-reveal>3개월 뒤,<br><em>손에 남는 것</em>.</h2>
-    <p class="lead" data-reveal>대단한 결과물이 아니어도 괜찮아요. 내 일에 AI를 붙여 본 기록이 숫자와 레시피로 남습니다.</p>
-    <div class="principles" style="margin-top:44px">
+    <p class="lead" data-reveal>대단한 결과물이 아니어도 괜찮아요. 내가 직접 해 본 기록이 숫자와 이야기로 남습니다.</p>
+    <div class="principles" style="margin-top:36px">
       <article class="card pr" data-reveal>
         <svg class="ico" viewBox="0 0 120 76" aria-hidden="true"><g fill="none" stroke="var(--line)" stroke-width="1.5"><line x1="14" y1="64" x2="106" y2="64"/></g><g fill="var(--signal)"><rect x="22" y="44" width="14" height="20" rx="3" opacity=".35"/><rect x="46" y="34" width="14" height="30" rx="3" opacity=".55"/><rect x="70" y="22" width="14" height="42" rx="3" opacity=".8"/><rect x="94" y="8" width="14" height="56" rx="3"/></g></svg>
-        <h3>숫자 한 장 리포트</h3>
-        <p>시작값에서 최종값까지, 무엇이 효과 있었고 무엇이 없었는지. 12/19 데모데이에서 5분으로 발표해요.</p>
+        <h3>처음과 비교한 나의 숫자</h3>
+        <p>시작점에서 마지막 모임까지, 내가 만든 변화를 숫자로 정리해요. 마지막 모임에서 서로의 성과와 수치를 나눕니다.</p>
       </article>
       <article class="card pr" data-reveal style="--d:.1s">
-        <svg class="ico" viewBox="0 0 120 76" aria-hidden="true"><g fill="none" stroke="var(--ink)" stroke-width="2"><rect x="30" y="12" width="60" height="52" rx="8" fill="var(--card)"/><line x1="42" y1="28" x2="78" y2="28"/><line x1="42" y1="38" x2="70" y2="38"/><line x1="42" y1="48" x2="60" y2="48"/></g><circle cx="86" cy="52" r="9" fill="var(--c-prove)"/><path d="M82 52l3 3 5-6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <h3>내 레시피 카드 3장 이상</h3>
-        <p>내 일에 쓰는 프롬프트와 작업 흐름을 복붙해서 다시 쓸 수 있는 카드로. 동의한 내용은 1기 레시피북으로 엮을 계획이에요.</p>
+        <svg class="ico" viewBox="0 0 120 76" aria-hidden="true"><g fill="none" stroke="var(--ink)" stroke-width="2"><rect x="30" y="12" width="60" height="52" rx="8" fill="var(--card)"/><line x1="42" y1="28" x2="78" y2="28"/><line x1="42" y1="38" x2="70" y2="38"/><line x1="42" y1="48" x2="60" y2="48"/></g><circle cx="86" cy="52" r="9" fill="var(--c-build)"/><path d="M82 52l3 3 5-6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>나의 시도 아카이브</h3>
+        <p>매주 해 본 것과 배운 것이 기록으로 쌓여요. 마지막 모임에서 함께 아카이빙하고, 다음을 기약합니다.</p>
       </article>
       <article class="card pr" data-reveal style="--d:.2s">
-        <svg class="ico ico-share" viewBox="0 0 120 76" aria-hidden="true"><g fill="none" stroke="var(--line)" stroke-width="1.5"><line x1="30" y1="38" x2="60" y2="16"/><line x1="60" y1="16" x2="90" y2="38"/><line x1="90" y1="38" x2="60" y2="60"/><line x1="60" y1="60" x2="30" y2="38"/></g><g><circle cx="30" cy="38" r="9" fill="var(--c-design)"/><circle cx="60" cy="16" r="9" fill="var(--signal)"/><circle cx="90" cy="38" r="9" fill="var(--c-prove)"/><circle cx="60" cy="60" r="9" fill="var(--ink)"/></g></svg>
-        <h3>같은 동네의 AI 쓰는 사람들</h3>
-        <p>매주 토요일 얼굴 보며 묻고 답하던 8명. 수료 후에는 2기 선배 멤버로 이어 갈 수 있어요.</p>
+        <svg class="ico" viewBox="0 0 120 76" aria-hidden="true"><g fill="none" stroke="var(--line)" stroke-width="1.5"><line x1="30" y1="38" x2="60" y2="16"/><line x1="60" y1="16" x2="90" y2="38"/><line x1="90" y1="38" x2="60" y2="60"/><line x1="60" y1="60" x2="30" y2="38"/></g><g><circle cx="30" cy="38" r="9" fill="var(--c-design)"/><circle cx="60" cy="16" r="9" fill="var(--c-build)"/><circle cx="90" cy="38" r="9" fill="var(--c-prove)"/><circle cx="60" cy="60" r="9" fill="var(--ink)"/></g></svg>
+        <h3>함께 공부할 동네 사람들</h3>
+        <p>혼자였다면 흐지부지됐을 시도를 매주 얼굴 보며 응원해 준 사람들. 모임이 끝나도 이어 갈 수 있어요.</p>
       </article>
     </div>
   </div>
@@ -507,52 +475,6 @@
       <div class="idea"><span class="no">04 · 매출</span><h3>자영업 마케팅</h3><p>가게 SNS 콘텐츠 제작 자동화</p><span class="metric">발행 빈도 · 팔로워 · 예약·문의 수</span></div>
       <div class="idea"><span class="no">05 · 매출</span><h3>지식 채널</h3><p>블로그, 뉴스레터, 숏폼 채널 키우기</p><span class="metric">구독자 · 조회수</span></div>
       <div class="idea"><span class="no">06 · 바이브코딩</span><h3>내 일에 쓰는 작은 도구</h3><p>견적 계산기, 예약 문의 폼, 재고 정리표 — 말로 설명해 만들기</p><span class="metric">사용 횟수 · 절감 시간</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- SAMPLE -->
-<section class="block" id="sample" style="padding-top:0">
-  <div class="wrap">
-    <span class="eyebrow" data-reveal>Host's sample</span>
-    <h2 class="h2" data-reveal>진행자 호세도 <em>숫자를 먼저</em> 공개합니다.</h2>
-    <p class="lead" data-reveal>“숫자를 정하고 시작한다”는 게 어떤 건지, 호세의 프로젝트로 보여드려요. 목표치는 10/17 첫 모임에서 멤버들과 함께 확정합니다.</p>
-    <div class="sample">
-      <div class="card sample-hero" data-reveal>
-        <div class="who"><span class="av">호</span><div><b >호세</b> · 비북스 매니저 · 신사업형</div></div>
-        <h3>여행기 전자책 출간 프로젝트<br><span class="sub-t">쓰고, epub로 만들고, 알리고 팔기까지</span></h3>
-        <p style="margin:0;font-size:15px">내 여행 기록으로 책 한 권을 써서 epub로 출간하고, 홍보와 판매까지 AI와 함께 3개월 안에 끝까지 해 봅니다. AI는 정리 · 구성 · 교열 · 제작 · 홍보를 돕습니다.</p>
-        <div class="gantt" id="gantt" aria-label="10주 일정: 쓰기 1–5주, 만들고 출간 5–7주, 알리고 팔기 7–10주"></div>
-        <div class="gantt-cap"><span>W1 10/17</span><span>W7 출간 ◆</span><span>W10 12/19</span></div>
-        <div class="goal"><div class="v"><span data-count="10">0</span><small>부</small></div><p>핵심 숫자 · 12월 말까지 누적 판매 (예시 목표) · 보조 숫자: 출간 여부</p></div>
-      </div>
-      <div class="areas">
-        <div class="card area" data-reveal>
-          <div class="h"><h4>쓰고 다듬기</h4><span class="when">10월 ~ 11월 중순</span></div>
-          <div class="goals">
-            <div class="g"><span>여행 사진·메모 → 목차(장 구성) 정리</span><span class="gv">0 → 12장</span><div class="track"><i></i></div></div>
-            <div class="g"><span>원고 분량</span><span class="gv">0 → 4만 자</span><div class="track"><i style="--d:.35s"></i></div></div>
-            <div class="g"><span>교열 · 사실 확인 (지명·날짜·고유명사) 점검표</span><span class="gv">1장</span><div class="track"><i style="--d:.5s"></i></div></div>
-          </div>
-        </div>
-        <div class="card area" data-reveal>
-          <div class="h"><h4>만들고 출간하기</h4><span class="when">11월</span></div>
-          <div class="goals">
-            <div class="g"><span>epub 제작 (표지 · 목차 · 본문 서식)</span><span class="gv">미완 → 완성</span><div class="track"><i></i></div></div>
-            <div class="g"><span>판매처 등록</span><span class="gv">미출간 → 출간</span><div class="track"><i style="--d:.35s"></i></div></div>
-            <div class="g"><span>소개글 · 상세페이지 작성 시간</span><span class="gv">3시간 → 40분</span><div class="track"><i style="--d:.5s"></i></div></div>
-          </div>
-        </div>
-        <div class="card area" data-reveal>
-          <div class="h"><h4>알리고 팔기</h4><span class="when">11월 말 ~ 12월</span></div>
-          <div class="goals">
-            <div class="g"><span>홍보 콘텐츠 AI 제작 (카드뉴스 · 블로그 · 숏폼), 채널별 유입 비교</span><span class="gv">채널 3개</span><div class="track"><i></i></div></div>
-            <div class="g"><span>독자 안내 메일 구독자</span><span class="gv">0 → 50명</span><div class="track"><i style="--d:.35s"></i></div></div>
-            <div class="g"><span>누적 판매</span><span class="gv">0 → 10부</span><div class="track"><i style="--d:.5s"></i></div></div>
-          </div>
-          <p class="note-s">모든 수치는 예시 목표이며 결과를 보장하지 않습니다.</p>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -597,10 +519,10 @@
     <h2 class="h2" data-reveal>신청부터 <em>첫 모임</em>까지.</h2>
     <div class="steps" id="steps" data-reveal>
       <span class="prog"></span>
-      <div class="step"><span class="pt">1</span><div class="d">10/3(토) –</div><h4>신청서 작성</h4><p>10문항, 3~5분. 대부분 고르기예요.</p></div>
+      <div class="step"><span class="pt">1</span><div class="d">10/6(화) –</div><h4>신청서 작성</h4><p>10문항, 3~5분. 대부분 고르기예요.</p></div>
       <div class="step"><span class="pt">2</span><div class="d">10/16(금) 12:00</div><h4>신청 마감</h4><p>8명 초과 시 아래 기준으로 선발</p></div>
       <div class="step"><span class="pt">3</span><div class="d">10/16(금) 20:00</div><h4>결과 안내</h4><p>문자·메일로 개별 연락</p></div>
-      <div class="step"><span class="pt">4</span><div class="d">10/17(토) 14:00</div><h4>1회차 시작</h4><p>AI 기초 ① + 자기소개</p></div>
+      <div class="step"><span class="pt">4</span><div class="d">10/17(토) 14:00</div><h4>1회차 킥오프</h4><p>각자 쓰는 AI 공유 · 시작점 체크</p></div>
     </div>
     <div class="select">
       <div class="card" data-reveal>
@@ -615,7 +537,7 @@
       <div class="card fee" data-reveal style="--d:.1s">
         <h3>참여 조건</h3>
         <dl>
-          <div><dt>DEPOSIT</dt><dd id="fee"></dd><p class="muted" style="font-size:13px;margin:4px 0 0">참가비 없음 · 미달 시 레시피북 제작비로 사용</p></div>
+          <div><dt>FEE</dt><dd id="fee"></dd><p class="muted" style="font-size:13px;margin:4px 0 0">파일럿 모임이라 대관료 실비만 받아요</p></div>
           <div><dt>BRING</dt><dd>노트북 · 지금 쓰는 AI 도구 계정</dd></div>
           <div><dt>SPACE</dt><dd>비북스 세미나실 — 모니터·프로젝터·와이파이</dd></div>
         </dl>
@@ -631,15 +553,15 @@
     <h2 class="h2" data-reveal>자주 묻는 질문</h2>
     <div class="faq" data-reveal>
       <details><summary>AI를 얼마나 잘 써야 하나요?</summary><div class="a"><p>“가끔 질문하는 정도”여도 괜찮아요. 다만 한 번도 안 써 본 분보다는, 몇 번이라도 써 보고 내 일에 붙이고 싶은 마음이 생긴 분을 찾습니다. 수준 차이는 오히려 서로에게 도움이 돼요 — 자동화까지 하는 사람과 매일 질문만 하는 사람이 같은 문제를 다르게 풉니다.</p></div></details>
-      <details><summary>누가 가르치나요? 어떤 내용이에요?</summary><div class="a"><p>강사가 가르치는 수업은 아니에요. 진행자 호세(비북스 매니저)가 클로드 아카데미에 공개된 학습 자료를 보고 핵심만 정리해 매주 15분 공유해요. 1–4회는 AI 기초, 5–10회는 바이브코딩과 AI 활용 꿀팁이에요. 회차마다 강의안 페이지를 만들어 출처 링크와 함께 올리니, 궁금하면 원문도 바로 볼 수 있어요. 호세도 같이 공부하는 중이라, 모르는 건 함께 찾아봅니다.</p></div></details>
+      <details><summary>누가 이끄나요? 강의가 있나요?</summary><div class="a"><p>가르치는 수업은 아니에요. 진행자 Hose(비북스 매니저)는 각자의 시도를 응원하고 돕는 사람이에요. 모임은 ① 새로운 정보 공유(Hose가 준비한 짧은 미니특강 포함), ② 각자 진행하는 AI 프로젝트의 진행 현황 공유와 아이디어·의견 교환, ③ 서로 묻고 답하는 Q&A로 진행돼요.</p></div></details>
+      <details><summary>10회는 어떻게 흘러가나요?</summary><div class="a"><p>1회차는 킥오프예요. 각자 지금 쓰고 적용 중인 AI를 공유하고 시작점을 체크해요. 2~9회차는 각자 세운 목표를 따라 직접 해 보는 기간이고, 10회차에는 처음과 비교해 이룬 성과와 수치를 나누고 결과를 아카이빙해요. 1기는 파일럿이라 정해진 커리큘럼 없이 함께 실험해 봅니다.</p></div></details>
       <details><summary>바이브코딩이 뭐예요? 코딩을 못 해도 되나요?</summary><div class="a"><p>코드를 직접 짜는 대신 AI에게 만들고 싶은 걸 말로 설명하고, 결과를 보며 고쳐 가는 방식이에요. 코딩 경험이 없어도 괜찮아요. 있으면 더 빨리 가고요. 신청서에서는 경험 정도만 물어봅니다.</p></div></details>
       <details><summary>일주일에 시간이 얼마나 드나요?</summary><div class="a"><p>모임 1시간 30분 외에 1~2시간이면 충분해요. 숫자 하나 입력하고, 그 주에 시도할 것 하나만 해 보면 됩니다. 바쁜 주에는 “이번 주는 시도를 못 했어요”도 괜찮은 나눔이에요.</p></div></details>
       <details><summary>어떤 도구를 써야 하나요? 유료 구독이 필요한가요?</summary><div class="a"><p>제한 없어요. ChatGPT, Claude, Gemini, 이미지·영상·자동화 도구 무엇이든. 유료 구독은 필수가 아닙니다. 각자 쓰는 도구가 다를수록 나눔 시간이 풍성해져요.</p></div></details>
-      <details><summary>프로젝트를 아직 확실히 못 정했어요.</summary><div class="a"><p>“무엇을 만들거나 해결하고 싶은지” 방향만 있으면 됩니다. 정확한 한 문장과 숫자는 2~3회차에 같이 다듬어요. 다만 붙일 일(직장 업무, 가게, 사업, 채널)은 이미 있어야 해요.</p></div></details>
-      <details><summary>수익이 안 나면 실패인가요?</summary><div class="a"><p>아니요. 성과는 매출이 아니라 <b>변화를 보여주는 숫자 하나</b>예요. 시간을 줄이는 것도, 문의가 늘어나는 것도, 상품을 처음 출시하는 것도 성과입니다. 목표에 못 미친 숫자와 그 이유도 그대로 기록합니다.</p></div></details>
-      <details><summary>빠지는 날이 있으면요?</summary><div class="a"><p>10회 중 8회 이상 참석이 수료 기준이에요. 불참하는 주에도 숫자 보드에 그 주 숫자만은 입력해 주세요. 신청서에 이미 알고 있는 불참 예정일을 적어 주시면 선발 때 참고합니다.</p></div></details>
-      <details><summary>참가비가 있나요? 보증금은요?</summary><div class="a"><p id="fee-faq"></p></div></details>
-      <details><summary>모임 중 만든 결과물은 공개되나요?</summary><div class="a"><p>작업물과 숫자는 모임 안에서만 공유해요. 데모데이 발표와 레시피북(매주 기록한 프롬프트·작업 흐름 모음)에는 본인이 동의한 내용만 실립니다.</p></div></details>
+      <details><summary>프로젝트를 아직 확실히 못 정했어요.</summary><div class="a"><p>“무엇을 만들거나 해결하고 싶은지” 방향만 있으면 됩니다. 1회차 킥오프에서 시작점을 확인하고, 숫자와 목표는 함께 다듬어요. 다만 붙일 일(직장 업무, 가게, 사업, 채널 등)은 이미 있어야 해요.</p></div></details>
+      <details><summary>수익이 안 나면 실패인가요?</summary><div class="a"><p>아니요. 성과는 매출이 아니라 <b>변화를 보여주는 숫자 하나</b>예요. 시간을 줄이는 것도, 문의가 늘어나는 것도, 상품을 처음 내는 것도 성과입니다. 목표에 못 미친 숫자와 그 이유도 그대로 나눕니다.</p></div></details>
+      <details><summary>빠지는 날이 있으면요?</summary><div class="a"><p>10회 중 8회 이상 함께해 주시길 권해요. 불참하는 주에도 숫자 보드에 그 주 숫자만은 입력해 주세요. 신청서에 이미 알고 있는 불참 예정일을 적어 주시면 선발 때 참고합니다.</p></div></details>
+      <details><summary>참가비가 있나요?</summary><div class="a"><p id="fee-faq"></p></div></details>
     </div>
   </div>
 </section>
@@ -647,10 +569,10 @@
 <!-- FINAL -->
 <section class="block final">
   <div class="wrap">
-    <span class="eyebrow" data-reveal>Cohort 01 · 8 seats</span>
-    <h2 data-reveal>12월 19일, 당신의 <em>숫자</em>는<br>무엇이 되어 있을까요?</h2>
-    <p class="lead" data-reveal>신청서는 10문항, 3~5분이면 충분해요. 작성 중인 내용은 이 기기에 자동 저장됩니다.</p>
-    <a class="btn btn-primary" href="apply.html" data-reveal style="font-size:17px;padding:16px 28px">1기 신청서 작성하기 <span class="arr">→</span></a>
+    <span class="eyebrow" data-reveal>1기 모집 · 8 seats</span>
+    <h2 data-reveal>혼자는 어렵지만,<br>함께 하면 <em>쉽습니다</em>.</h2>
+    <p class="lead" data-reveal>AI 공부도 그렇습니다. 같은 동네에서, 같은 마음으로 시작해 봐요. 신청서는 10문항, 3~5분이면 충분해요.</p>
+    <a class="btn btn-primary" href="apply.html" data-reveal data-cta style="font-size:17px;padding:16px 28px">1기 신청서 작성하기 <span class="arr">→</span></a>
     <div class="cd" data-countdown></div>
   </div>
 </section>
@@ -662,14 +584,19 @@
   </div>
 </footer>
 
-<div class="sticky-cta" id="sticky"><span class="lbl">1기 모집 · 마감까지 <span class="t" id="sticky-t"></span></span><a class="btn btn-primary btn-sm" href="apply.html">신청하기 →</a></div>
+<div class="sticky-cta" id="sticky"><span class="lbl" id="sticky-lbl"></span><a class="btn btn-primary btn-sm" href="apply.html">신청하기 →</a></div>
 
 <script src="assets/config.js"></script>
 <script src="assets/app.js"></script>
 <script>
 (function () {
   const C = CLUB, B = BAPC;
-  document.querySelectorAll('[data-countdown]').forEach(el => B.countdown(el, C.deadline));
+  /* 신청 오픈(10/6) 전에는 '오픈까지', 이후에는 '마감까지' */
+  const openAt = new Date(C.open).getTime(), preOpen = Date.now() < openAt;
+  document.querySelectorAll('[data-countdown]').forEach(el => B.countdown(el, preOpen ? C.open : C.deadline));
+  document.getElementById('cd-label').textContent = preOpen ? '신청 오픈 10/6(화) 00:00 까지' : '마감 10/16(금) 12:00 까지';
+  document.querySelectorAll('[data-cta]').forEach(a => { if (preOpen) a.firstChild.textContent = '10/6(화) 신청 오픈 안내 '; });
+  if (preOpen) setTimeout(() => location.reload(), Math.min(openAt - Date.now() + 1500, 2147483000));
   document.getElementById('fee').textContent = C.fee;
   document.getElementById('fee-faq').textContent = C.feeDetail;
 
@@ -677,9 +604,9 @@
   const isDark = () => { const t = document.documentElement.dataset.theme; return t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches; };
   const hx = (light, dark) => isDark() ? dark : light;
   const EX = [
-    { type: '절감형', color: 'var(--c-design)', hex: hx('#2563eb', '#60a5fa'), metric: '책 소개 1권 작성 시간', unit: '분', dir: 'down', vals: [60, 58, 51, 44, 40, 31, 26, 19, 14, 10] },
-    { type: '매출 증대형', color: 'var(--c-build)', hex: hx('#0891b2', '#22d3ee'), metric: '월 예약·문의 수', unit: '건', dir: 'up', vals: [12, 12, 13, 15, 14, 17, 19, 21, 23, 25] },
-    { type: '신사업형', color: 'var(--c-prove)', hex: hx('#4f46e5', '#818cf8'), metric: '템플릿 누적 판매', unit: '건', dir: 'up', vals: [0, 0, 0, 0, 1, 2, 4, 6, 8, 11], launch: 4 }
+    { type: '절감형', color: 'var(--c-design)', hex: hx('#4e6813', '#a3c85a'), metric: '책 소개 1권 작성 시간', unit: '분', dir: 'down', vals: [60, 58, 51, 44, 40, 31, 26, 19, 14, 10] },
+    { type: '매출 증대형', color: 'var(--c-build)', hex: hx('#7c9a22', '#c9e07a'), metric: '월 예약·문의 수', unit: '건', dir: 'up', vals: [12, 12, 13, 15, 14, 17, 19, 21, 23, 25] },
+    { type: '신사업형', color: 'var(--c-prove)', hex: hx('#2f7a5a', '#6ccfa0'), metric: '템플릿 누적 판매', unit: '건', dir: 'up', vals: [0, 0, 0, 0, 1, 2, 4, 6, 8, 11], launch: 4 }
   ];
   const svg = document.getElementById('nc-svg'), W = 320, H = 150, P = { l: 6, r: 10, t: 16, b: 22 };
   let idx = 0, timer;
@@ -721,19 +648,14 @@
   setTimeout(cycle, 700);
   document.getElementById('ncard').addEventListener('click', () => { idx = (idx + 1) % EX.length; cycle(); });
 
-  /* sample: 10주 일정 막대 — 쓰기 / 만들고 출간 / 알리고 팔기 */
-  const lanes = [['쓰기', 1, 5, 'var(--g1)', ''], ['만들고 출간', 5, 7, 'var(--g2)', '◆'], ['알리고 팔기', 7, 10, 'var(--g3)', '']];
-  document.getElementById('gantt').innerHTML = lanes.map(([name, a, b, col, flag], r) =>
-    `<div class="row" style="--gc:${col};--r:${r}">${Array.from({ length: 10 }, () => '<i></i>').join('')}<b style="grid-column:${a} / ${b + 1}"><span>${name}</span><span>${flag}</span></b></div>`).join('');
-
   /* roadmap */
   document.getElementById('phasebar').innerHTML = C.phases.map((p, i) =>
     `<div style="--pc:${p.color};--d:${i * .45}s"><div class="bar"><i></i></div><h4>${p.name} <span class="mono">${p.range}</span></h4><p>${p.desc}</p><p class="deliv">남는 것 · ${p.deliv}</p></div>`).join('');
   const pc = Object.fromEntries(C.phases.map(p => [p.key, p.color]));
   document.getElementById('sessions').innerHTML = C.sessions.map((s, i) => {
     const demo = s.n === 10;
-    return `<article class="ss${demo ? ' demo' : ''}" title="특강 · ${B.esc(s.lecture)}" data-reveal style="--pc:${pc[s.phase]};--d:${(i % 5) * .06}s;--d2:${.3 + (i % 5) * .06}s">
-      ${demo ? '<span class="badge">DEMO DAY</span>' : ''}
+    return `<article class="ss${demo ? ' demo' : ''}" title="${B.esc(s.focus)}" data-reveal style="--pc:${pc[s.phase]};--d:${(i % 5) * .06}s;--d2:${.3 + (i % 5) * .06}s">
+      
       <div class="top"><b>${String(s.n).padStart(2, '0')}</b><span>${B.fmtDate(s.date)}</span></div>
       <h5>${B.esc(s.title)}</h5><p>${B.esc(s.out)}</p></article>`;
   }).join('');
@@ -774,15 +696,15 @@
   document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
 
   /* process progress: 오늘 날짜 기준 */
-  const now = B.today(), marks = ['2026-10-03T00:00:00+09:00', C.deadline, C.announce, C.firstSession].map(d => new Date(d));
+  const now = B.today(), marks = [C.open, C.deadline, C.announce, C.firstSession].map(d => new Date(d));
   const done = marks.filter(m => m <= now).length;
   document.querySelectorAll('#steps .step').forEach((s, k) => { if (k < done) s.classList.add('done'); else if (k === done) s.classList.add('now'); });
   document.getElementById('steps').style.setProperty('--p', Math.max(0, done - 1) / 3 + (done > 0 && done < 4 ? .12 : 0));
 
   /* sticky cta */
-  const sticky = document.getElementById('sticky'), st = document.getElementById('sticky-t'), hero = document.querySelector('.hero'), fin = document.querySelector('.final');
+  const sticky = document.getElementById('sticky'), st = document.getElementById('sticky-lbl'), hero = document.querySelector('.hero'), fin = document.querySelector('.final');
   const end = new Date(C.deadline).getTime();
-  const upd = () => { const d = Math.max(0, end - Date.now()); st.textContent = d ? `D-${Math.ceil(d / 864e5)}` : '마감'; };
+  const upd = () => { const d = Math.max(0, end - Date.now()); st.textContent = Date.now() < openAt ? '1기 모집 · 신청 10/6(화) 오픈' : d ? `1기 모집 · 마감까지 D-${Math.ceil(d / 864e5)}` : '1기 모집 마감'; };
   upd(); setInterval(upd, 60000);
   let heroVis = true, finVis = false;
   const sv = () => sticky.classList.toggle('show', !heroVis && !finVis);
