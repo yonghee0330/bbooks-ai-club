@@ -98,10 +98,19 @@
   async function api(action, payload) {
     payload = payload || {};
     if (!C.apiUrl) { await new Promise(r => setTimeout(r, 250)); return demo[action](payload); }
-    // text/plain 으로 보내면 CORS preflight 없이 Apps Script doPost 에 닿는다
-    const res = await fetch(C.apiUrl, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(Object.assign({ action }, payload)) });
-    if (!res.ok) throw new Error('서버 응답 ' + res.status);
-    return res.json();
+    // text/plain 으로 보내면 CORS preflight 없이 Apps Script doPost 에 닿는다.
+    // 구글 서버가 가끔 일시적으로 404/5xx를 돌려주므로 자동 재시도 (apply 는 reqId 로 서버가 중복 접수를 막는다)
+    const RETRY = ['apply', 'login', 'board', 'setValue', 'updateProject', 'addLog', 'adminList', 'adminUpdate'];
+    const tries = RETRY.includes(action) ? 4 : 1;
+    let lastErr;
+    for (let i = 0; i < tries; i++) {
+      try {
+        const res = await fetch(C.apiUrl, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(Object.assign({ action }, payload)) });
+        if (!res.ok) throw new Error('서버 응답 ' + res.status);
+        return await res.json();
+      } catch (e) { lastErr = e; if (i < tries - 1) await new Promise(r => setTimeout(r, 700 * (i + 1))); }
+    }
+    throw lastErr;
   }
 
   /* ---------- UI 유틸 ---------- */
