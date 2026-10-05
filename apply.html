@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>1기 신청서 · 부천 AI 프로젝트 클럽</title>
 <meta name="description" content="부천 AI 프로젝트 클럽 1기 신청서. 10/16(금) 12:00 마감.">
-<meta name="theme-color" content="#f3ede2">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23221b16'/%3E%3Cpath d='M7 22l6-6 4 4 8-9' stroke='%23e2552b' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#f8fafc">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M7 22l6-6 4 4 8-9' stroke='%23ffffff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/style.css">
 <style>
 .page { display: grid; grid-template-columns: 1fr 340px; gap: 48px; padding: 40px 0 96px; align-items: start; }
@@ -38,7 +38,7 @@
 @media (max-width: 640px) { .tcards { grid-template-columns: 1fr; } }
 .tcard { position: relative; }
 .tcard input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; z-index: 1; }
-.tcard .in { border: 1.5px solid var(--line); border-radius: 14px; padding: 18px; background: var(--card); transition: .2s; height: 100%; }
+.tcard .in { border: 1.5px solid var(--line); border-radius: 8px; padding: 18px; background: var(--card); transition: .2s; height: 100%; }
 .tcard .in b { display: flex; justify-content: space-between; font-size: 16px; }
 .tcard .in b span { font: 600 13px var(--mono); color: var(--muted); }
 .tcard .in p { margin: 6px 0 0; font-size: 13px; color: var(--ink-2); }
@@ -47,8 +47,8 @@
 .tcard input:checked + .in b span { color: var(--tc); }
 .tcard input:focus-visible + .in { outline: 2px solid var(--signal); outline-offset: 2px; }
 
-.metric-box { border: 1.5px dashed var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 12px; }
-.consent { border: 1.5px solid var(--line); border-radius: 14px; padding: 18px 20px; background: var(--card); font-size: 14px; color: var(--ink-2); }
+.metric-box { border: 1px solid var(--line); border-radius: 8px; padding: 18px; display: grid; gap: 12px; }
+.consent { border: 1.5px solid var(--line); border-radius: 8px; padding: 18px 20px; background: var(--card); font-size: 14px; color: var(--ink-2); }
 .consent table { width: 100%; border-collapse: collapse; margin: 6px 0 14px; font-size: 13px; }
 .consent th, .consent td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
 .consent th { width: 84px; color: var(--muted); font-weight: 600; }
@@ -77,8 +77,8 @@
 .pcard h3 { margin: 10px 0 2px; font-size: 20px; letter-spacing: -.03em; min-height: 1.4em; line-height: 1.35; }
 .pcard .who { font-size: 13px; color: color-mix(in srgb, var(--paper) 65%, transparent); min-height: 1.5em; }
 .pcard .tt { margin-top: 14px; }
-.pcard .tt .chip { background: rgba(243,237,226,.12); color: var(--paper); }
-.pcard .m { margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(243,237,226,.16); }
+.pcard .tt .chip { background: color-mix(in srgb, var(--paper) 14%, transparent); color: var(--paper); }
+.pcard .m { margin-top: 18px; padding-top: 16px; border-top: 1px solid color-mix(in srgb, var(--paper) 16%, transparent); }
 .pcard .m .k { font-size: 13px; color: color-mix(in srgb, var(--paper) 65%, transparent); min-height: 1.4em; }
 .pcard .nums { display: flex; align-items: baseline; gap: 10px; margin-top: 6px; font-family: var(--display); }
 .pcard .nums .a { font-size: 30px; color: color-mix(in srgb, var(--paper) 60%, transparent); }

@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>멤버 라운지 · 부천 AI 프로젝트 클럽</title>
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#f3ede2">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23221b16'/%3E%3Cpath d='M7 22l6-6 4 4 8-9' stroke='%23e2552b' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#f8fafc">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M7 22l6-6 4 4 8-9' stroke='%23ffffff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/style.css">
 <style>
 /* login */
@@ -36,13 +36,12 @@
 .week { display: grid; grid-template-columns: 1.25fr 1fr; gap: 16px; }
 @media (max-width: 900px) { .week { grid-template-columns: 1fr; } }
 .next { padding: 28px; background: var(--ink); color: var(--paper); border: 0; position: relative; overflow: hidden; }
-.next::after { content: ''; position: absolute; width: 360px; height: 360px; border-radius: 50%; background: var(--pc, var(--signal)); filter: blur(80px); opacity: .35; right: -140px; top: -160px; }
 .next .row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; position: relative; z-index: 1; }
-.next .n { font: 400 64px/.9 var(--display); }
-.next .dd { font: 600 13px var(--mono); background: rgba(243,237,226,.12); padding: 6px 10px; border-radius: 999px; }
+.next .n { font: 800 56px/1 var(--display); letter-spacing: -.04em; }
+.next .dd { font: 700 12px var(--sans); background: color-mix(in srgb, var(--paper) 14%, transparent); padding: 5px 9px; border-radius: 4px; }
 .next h3 { font-size: 24px; letter-spacing: -.03em; margin: 18px 0 4px; position: relative; z-index: 1; }
 .next .when { color: color-mix(in srgb, var(--paper) 65%, transparent); font-size: 14px; position: relative; z-index: 1; }
-.next ol { margin: 20px 0 0; padding: 18px 0 0 20px; border-top: 1px solid rgba(243,237,226,.16); display: grid; gap: 6px; position: relative; z-index: 1; font-size: 15px; }
+.next ol { margin: 20px 0 0; padding: 18px 0 0 20px; border-top: 1px solid color-mix(in srgb, var(--paper) 16%, transparent); display: grid; gap: 6px; position: relative; z-index: 1; font-size: 15px; }
 .next .out { margin-top: 18px; font-size: 13px; color: color-mix(in srgb, var(--paper) 65%, transparent); position: relative; z-index: 1; }
 .next .out b { color: var(--paper); }
 .stack { display: grid; gap: 16px; }
@@ -68,7 +67,7 @@
 .mcard .pj { margin: 6px 0 0; font-size: 14px; color: var(--ink-2); min-height: 2.8em; }
 .mcard .mt { font-size: 12px; color: var(--muted); margin-top: 12px; }
 .mcard .vals { display: flex; align-items: baseline; gap: 8px; margin-top: 2px; }
-.mcard .vals .cur { font: 400 40px/1 var(--display); letter-spacing: -.02em; }
+.mcard .vals .cur { font: 800 36px/1 var(--display); letter-spacing: -.03em; }
 .mcard .vals .u { font-size: 13px; color: var(--muted); }
 .mcard .vals .tg { margin-left: auto; font: 500 12px var(--mono); color: var(--muted); }
 .mcard svg { width: 100%; height: 54px; margin-top: 8px; overflow: visible; }
@@ -106,7 +105,7 @@
 .ci .who { font: 800 clamp(36px, 6vw, 76px)/1.05 var(--sans); letter-spacing: -.05em; }
 .ci .pj { font-size: clamp(16px, 2vw, 22px); color: var(--night-muted); margin: 12px 0 28px; }
 .ci .metric { font-size: 15px; color: var(--night-muted); }
-.ci .now { font: 400 clamp(80px, 13vw, 170px)/.9 var(--display); letter-spacing: -.04em; display: flex; align-items: baseline; gap: 12px; }
+.ci .now { font: 800 clamp(72px, 12vw, 150px)/.95 var(--display); letter-spacing: -.04em; display: flex; align-items: baseline; gap: 12px; }
 .ci .now small { font: 600 22px var(--sans); color: var(--night-muted); }
 .ci .delta { display: inline-block; font: 600 16px var(--mono); padding: 8px 14px; border-radius: 999px; margin-top: 14px; }
 .ci .note { margin-top: 18px; font-size: 17px; color: var(--night-ink); max-width: 460px; font-family: var(--serif); }
@@ -114,13 +113,13 @@
 .ci svg text { fill: var(--night-muted); font: 500 12px var(--mono); }
 .ci .ci-foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
 .ci .dots { display: flex; gap: 6px; flex-wrap: wrap; }
-.ci .dots button { all: unset; cursor: pointer; padding: 6px 10px; border-radius: 999px; font-size: 13px; color: var(--night-muted); border: 1px solid rgba(243,237,226,.14); }
+.ci .dots button { all: unset; cursor: pointer; padding: 6px 10px; border-radius: 999px; font-size: 13px; color: var(--night-muted); border: 1px solid rgba(255,255,255,.14); }
 .ci .dots button.on { background: var(--night-ink); color: var(--night); }
 .timer { display: flex; align-items: center; gap: 12px; }
 .timer svg { width: 54px; height: 54px; transform: rotate(-90deg); }
 .timer circle { fill: none; stroke-width: 5; }
 .timer b { font: 600 26px var(--mono); min-width: 70px; }
-.timer.over b { color: #ff7a4d; }
+.timer.over b { color: #f87171; }
 .ci .btn-ghost { color: var(--night-ink); }
 .ci-anim { animation: ciIn .6s cubic-bezier(.2,.7,.2,1); }
 @keyframes ciIn { from { opacity: 0; transform: translateY(18px); } }
@@ -130,7 +129,7 @@
 .log { padding: 0; overflow: hidden; }
 .log summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 64px 1fr auto; gap: 16px; align-items: center; padding: 18px 20px; }
 .log summary::-webkit-details-marker { display: none; }
-.log .n { font: 400 34px/1 var(--display); color: var(--pc); }
+.log .n { font: 800 28px/1 var(--display); color: var(--pc); }
 .log .t b { display: block; font-size: 16px; }
 .log .t span { font-size: 13px; color: var(--muted); }
 .log .st { font: 600 11px var(--mono); padding: 4px 8px; border-radius: 6px; background: var(--rule); color: var(--muted); }
@@ -144,7 +143,7 @@
 
 /* recipes */
 .filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
-.filters button { all: unset; cursor: pointer; padding: 7px 14px; border-radius: 999px; border: 1.5px solid var(--line); font-size: 13px; font-weight: 500; }
+.filters button { all: unset; cursor: pointer; padding: 7px 14px; border-radius: 6px; border: 1px solid var(--line); font-size: 13px; font-weight: 500; }
 .filters button.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .recipes { columns: 3 300px; column-gap: 14px; }
 .recipe { break-inside: avoid; margin-bottom: 14px; padding: 22px; }
@@ -165,7 +164,7 @@
 /* schedule */
 .sched { display: grid; gap: 0; border-top: 1px solid var(--ink); }
 .srow { display: grid; grid-template-columns: 56px 120px 1fr auto; gap: 16px; padding: 18px 4px; border-bottom: 1px solid var(--line); align-items: center; }
-.srow .n { font: 400 28px/1 var(--display); color: var(--pc); }
+.srow .n { font: 800 24px/1 var(--display); color: var(--pc); }
 .srow .d { font: 500 13px var(--mono); color: var(--muted); }
 .srow h4 { margin: 0; font-size: 16px; }
 .srow p { margin: 2px 0 0; font-size: 13px; color: var(--muted); }
@@ -261,7 +260,7 @@
   <div class="ci-body" id="ci-body"></div>
   <div class="ci-foot">
     <div class="dots" id="ci-dots"></div>
-    <div class="timer" id="timer"><svg viewBox="0 0 54 54"><circle cx="27" cy="27" r="22" stroke="rgba(243,237,226,.12)"/><circle id="tring" cx="27" cy="27" r="22" stroke="#ff7a4d" stroke-dasharray="138.2" stroke-dashoffset="0" stroke-linecap="round"/></svg><b id="tval">7:00</b><button class="btn btn-ghost btn-sm" id="tbtn">시작</button></div>
+    <div class="timer" id="timer"><svg viewBox="0 0 54 54"><circle cx="27" cy="27" r="22" stroke="rgba(255,255,255,.12)"/><circle id="tring" cx="27" cy="27" r="22" stroke="#60a5fa" stroke-dasharray="138.2" stroke-dashoffset="0" stroke-linecap="round"/></svg><b id="tval">7:00</b><button class="btn btn-ghost btn-sm" id="tbtn">시작</button></div>
   </div>
 </div>
 
@@ -271,7 +270,7 @@
 (function () {
   const C = CLUB, B = BAPC, $ = s => document.querySelector(s);
   const TC = { save: 'var(--c-design)', grow: 'var(--c-build)', new: 'var(--c-prove)' };
-  const TH = { save: '#7d8cf0', grow: '#ff7a4d', new: '#5fd38d' };
+  const TH = { save: '#60a5fa', grow: '#22d3ee', new: '#818cf8' };
   const PC = Object.fromEntries(C.phases.map(p => [p.key, p.color]));
   let S = { code: null, me: null, members: [], logs: [], recipes: [] };
   if (B.demoMode) { $('#demo').hidden = false; $('#demo-hint').hidden = false; }
@@ -457,14 +456,14 @@
   const ciWeek = () => { const { next } = B.currentSession(); return next ? next.n : 10; };
   function ciRender() {
     const m = S.members[ciI], wk = ciWeek(), s = series(m), v = s[wk - 1], prevArr = s.slice(0, wk - 1).filter(x => x != null), prev = prevArr.length ? prevArr[prevArr.length - 1] : +m.base;
-    const col = TH[m.type] || '#ff7a4d', good = v != null && (m.dir === 'down' ? v < prev : v > prev), d = v != null ? v - prev : null;
+    const col = TH[m.type] || '#60a5fa', good = v != null && (m.dir === 'down' ? v < prev : v > prev), d = v != null ? v - prev : null;
     $('#ci-wk').textContent = `W${wk} 지난주 AI 활용 나누기 · ${ciI + 1}/${S.members.length}`;
     $('#ci-body').innerHTML = `<div class="ci-anim"><div class="who">${B.esc(m.name)}</div><div class="pj">${B.esc(m.project || '')}</div>
       <div class="metric">${B.esc(m.metric || '')} · 목표 ${fmtN(m.target)}${B.esc(m.unit || '')}</div>
       <div class="now">${v != null ? fmtN(v) : '<span style="opacity:.35">—</span>'}<small>${B.esc(m.unit || '')}</small></div>
-      ${d != null ? `<span class="delta" style="background:${good ? 'rgba(95,211,141,.16)' : d === 0 ? 'rgba(243,237,226,.1)' : 'rgba(255,122,77,.16)'};color:${good ? '#5fd38d' : d === 0 ? 'var(--night-muted)' : '#ff7a4d'}">지난 기록 대비 ${d > 0 ? '+' : ''}${fmtN(d)}</span>` : '<span class="delta" style="background:rgba(243,237,226,.1);color:var(--night-muted)">이번 주 값 미입력</span>'}
+      ${d != null ? `<span class="delta" style="background:${good ? 'rgba(52,211,153,.16)' : d === 0 ? 'rgba(255,255,255,.1)' : 'rgba(248,113,113,.16)'};color:${good ? '#34d399' : d === 0 ? 'var(--night-muted)' : '#f87171'}">지난 기록 대비 ${d > 0 ? '+' : ''}${fmtN(d)}</span>` : '<span class="delta" style="background:rgba(255,255,255,.1);color:var(--night-muted)">이번 주 값 미입력</span>'}
       ${v != null && m.values[wk].note ? `<p class="note">“${B.esc(m.values[wk].note)}”</p>` : ''}</div>
-      <div class="ci-anim" style="animation-delay:.1s">${chart(m, 640, 300, { axis: true, color: col, grid: 'rgba(243,237,226,.18)', bg: 'var(--night)', sw: 4, r: 7, pad: { l: 14, r: 14, t: 30, b: 14 } })}</div>`;
+      <div class="ci-anim" style="animation-delay:.1s">${chart(m, 640, 300, { axis: true, color: col, grid: 'rgba(255,255,255,.18)', bg: 'var(--night)', sw: 4, r: 7, pad: { l: 14, r: 14, t: 30, b: 14 } })}</div>`;
     $('#ci-dots').innerHTML = S.members.map((x, i) => `<button class="${i === ciI ? 'on' : ''}" data-i="${i}">${B.esc(x.name)}</button>`).join('');
     resetTimer();
   }

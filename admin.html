@@ -12,7 +12,7 @@
 .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 20px 0; }
 @media (max-width: 760px) { .kpis { grid-template-columns: 1fr 1fr; } }
 .kpi { padding: 18px; }
-.kpi b { font: 400 42px/1 var(--display); display: block; }
+.kpi b { font: 800 34px/1 var(--display); display: block; letter-spacing: -.03em; }
 .kpi span { font-size: 13px; color: var(--muted); }
 .dist { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px; }
 @media (max-width: 900px) { .dist { grid-template-columns: 1fr; } }
@@ -24,7 +24,7 @@
 .hb i.sel::after { background: var(--signal); }
 .hb span:last-child { font: 500 12px var(--mono); text-align: right; }
 .toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
-.toolbar select { padding: 8px 12px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--card); }
+.toolbar select { padding: 8px 12px; border-radius: 6px; border: 1px solid var(--line); background: var(--card); }
 .tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--card); }
 table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 13px; }
 .t th { position: sticky; top: 0; background: var(--paper); text-align: left; font: 600 11px var(--mono); color: var(--muted); padding: 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
