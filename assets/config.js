@@ -15,8 +15,8 @@ window.CLUB = {
   announce: '2026-10-16T20:00:00+09:00',
   firstSession: '2026-10-17T14:00:00+09:00',
   // 참가비·보증금 — 확정되면 문구만 교체
-  fee: '회당 5,000원 (비북스 대관료)',
-  feeDetail: '1기는 파일럿 모임이라, 비북스 세미나실 대관료 실비만 받아요. 회당 5,000원이고, 결제 방법은 선발 안내(10/16 20:00) 때 알려드려요.',
+  fee: '10회 50,000원 (일괄 결제)',
+  feeDetail: '10회 50,000원을 일괄로 받아요(회당 5,000원 꼴). 비북스 공간 대관과 간단한 다과·음료 비용이 포함돼요. 책임감 있게 함께하기 위해, 중간에 빠져도 환불되지 않아요. 결제 방법은 선발 안내 때 알려드려요.',
   contact: { instagram: 'https://www.instagram.com/bbooks_bucheon/', moim: 'https://moim.bbooks.co.kr/' },
 
   // Google Apps Script 웹앱 주소. 비워 두면 데모 모드(이 브라우저에만 저장).
@@ -24,9 +24,9 @@ window.CLUB = {
 
   // 3구간: 킥오프(1회) → 각자 목표대로 실행(2~9회) → 마무리(10회). 정해진 커리큘럼 없이 각자의 시도가 중심.
   phases: [
-    { key: 'design', name: '킥오프', color: 'var(--c-design)', range: '10/17', desc: '각자 지금 쓰고 적용 중인 AI를 공유하고, 시작점을 체크해요', deliv: '시작점 · 나의 목표' },
-    { key: 'build',  name: '각자 목표대로 실행', color: 'var(--c-build)', range: '10/24 – 12/12', desc: '각자 세운 목표를 따라 직접 만들고 해 보며, 매주 진행 현황과 아이디어를 나눠요', deliv: '주간 시도 기록 · 진행 현황' },
-    { key: 'prove',  name: '마무리', color: 'var(--c-prove)', range: '12/19', desc: '처음과 비교해 이룬 성과와 수치를 나누고, 결과를 아카이빙해요', deliv: '전후 비교 · 아카이브' }
+    { key: 'design', name: '킥오프', color: 'var(--c-design)', range: '10/17', desc: '지금 쓰는 AI 공유 · 시작점 체크', deliv: '시작점 · 나의 목표' },
+    { key: 'build',  name: '각자 목표대로 실행', color: 'var(--c-build)', range: '10/24 – 12/12', desc: '각자 목표대로 만들고, 현황을 나눠요', deliv: '주간 시도 기록' },
+    { key: 'prove',  name: '마무리', color: 'var(--c-prove)', range: '12/19', desc: '처음과 비교해 나누고 아카이빙', deliv: '전후 비교 · 아카이브' }
   ],
 
   // 진행: Hose(비북스 매니저). 가르치는 사람이 아니라 각자의 시도를 응원하고 돕는 사람.
@@ -56,9 +56,9 @@ window.CLUB = {
 
   // 기본 90분 (14:00–15:30)
   weekly: [
-    { min: 25, name: '새로운 정보 공유', desc: '각자 새로 발견한 걸 나누고 알려줘요. Hose가 준비한 짧은 미니특강도 함께해요' },
-    { min: 50, name: '프로젝트 진행현황 공유', desc: '각자 진행하는 AI 프로젝트의 현황을 나누고, 아이디어와 의견을 주고받아요' },
-    { min: 15, name: 'Q&A', desc: '서로서로 묻고 답해요. 정답은 한 사람만 아는 게 아니라 같이 찾아요' }
+    { min: 25, name: '새로운 정보 공유', desc: '새로 발견한 걸 나누고, Hose가 짧은 미니특강을 해요' },
+    { min: 50, name: '프로젝트 진행현황 공유', desc: '프로젝트 진행 현황을 나누고 아이디어를 주고받아요' },
+    { min: 15, name: 'Q&A', desc: '서로 묻고 답해요' }
   ],
   shareMinPerPerson: 6,
 

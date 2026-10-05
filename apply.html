@@ -16,22 +16,22 @@
 .head .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
 
 .stepper { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 32px 0 8px; position: sticky; top: 60px; z-index: 5; background: var(--paper); padding: 12px 0; }
-.stepper button { all: unset; cursor: pointer; display: grid; gap: 8px; font-size: 13px; color: var(--muted); }
+.stepper button { all: unset; cursor: pointer; display: grid; gap: 8px; font-size: 15px; color: var(--muted); }
 .stepper button i { display: block; height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; position: relative; }
 .stepper button i::after { content: ''; position: absolute; inset: 0; background: var(--ink); transform: scaleX(var(--fill, 0)); transform-origin: left; transition: transform .5s cubic-bezier(.6,0,.2,1); }
 .stepper button[aria-current] { color: var(--ink); font-weight: 700; }
-.stepper button .mono { font-size: 11px; }
+.stepper button .mono { font-size: 13px; }
 .stepper button:focus-visible { outline: 2px solid var(--signal); outline-offset: 4px; border-radius: 4px; }
 
 .pane { display: none; animation: paneIn .5s cubic-bezier(.2,.7,.2,1); }
 .pane.on { display: grid; gap: 30px; }
 @keyframes paneIn { from { opacity: 0; transform: translateX(24px); } }
-.pane > h2 { font-size: 22px; letter-spacing: -.03em; margin: 18px 0 -10px; display: flex; gap: 12px; align-items: baseline; }
-.pane > h2 .mono { color: var(--signal); font-size: 13px; }
+.pane > h2 { font-size: 24px; letter-spacing: -.03em; margin: 18px 0 -10px; display: flex; gap: 12px; align-items: baseline; }
+.pane > h2 .mono { color: var(--signal); font-size: 15px; }
 .grid3 { display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 10px; }
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 @media (max-width: 640px) { .grid3, .grid2 { grid-template-columns: 1fr; } }
-.sub-lab { font-size: 12px; color: var(--muted); margin-bottom: 4px; display: block; }
+.sub-lab { font-size: 14px; color: var(--muted); margin-bottom: 4px; display: block; }
 .other { margin-top: 8px; display: none; } .other.on { display: block; }
 
 .tcards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
@@ -39,33 +39,33 @@
 .tcard { position: relative; }
 .tcard input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; z-index: 1; }
 .tcard .in { border: 1.5px solid var(--line); border-radius: 8px; padding: 18px; background: var(--card); transition: .2s; height: 100%; }
-.tcard .in b { display: flex; justify-content: space-between; font-size: 16px; }
-.tcard .in b span { font: 600 13px var(--mono); color: var(--muted); }
-.tcard .in p { margin: 6px 0 0; font-size: 13px; color: var(--ink-2); }
-.tcard .in small { display: block; margin-top: 8px; font-size: 12px; color: var(--muted); }
+.tcard .in b { display: flex; justify-content: space-between; font-size: 18px; }
+.tcard .in b span { font: 600 15px var(--mono); color: var(--muted); }
+.tcard .in p { margin: 6px 0 0; font-size: 15px; color: var(--ink-2); }
+.tcard .in small { display: block; margin-top: 8px; font-size: 14px; color: var(--muted); }
 .tcard input:checked + .in { border-color: var(--tc); box-shadow: 0 0 0 3px color-mix(in srgb, var(--tc) 22%, transparent); }
 .tcard input:checked + .in b span { color: var(--tc); }
 .tcard input:focus-visible + .in { outline: 2px solid var(--signal); outline-offset: 2px; }
 
 .metric-box { border: 1px solid var(--line); border-radius: 8px; padding: 18px; display: grid; gap: 12px; }
-.consent { border: 1.5px solid var(--line); border-radius: 8px; padding: 18px 20px; background: var(--card); font-size: 14px; color: var(--ink-2); }
-.consent table { width: 100%; border-collapse: collapse; margin: 6px 0 14px; font-size: 13px; }
+.consent { border: 1.5px solid var(--line); border-radius: 8px; padding: 18px 20px; background: var(--card); font-size: 16px; color: var(--ink-2); }
+.consent table { width: 100%; border-collapse: collapse; margin: 6px 0 14px; font-size: 15px; }
 .consent th, .consent td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
 .consent th { width: 84px; color: var(--muted); font-weight: 600; }
-.check { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; font-size: 15px; color: var(--ink); font-weight: 600; }
+.check { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; font-size: 17px; color: var(--ink); font-weight: 600; }
 .check input { width: 20px; height: 20px; accent-color: var(--signal); margin: 2px 0 0; flex: none; }
-.check.light { font-weight: 500; font-size: 14px; color: var(--ink-2); margin-top: 10px; }
+.check.light { font-weight: 500; font-size: 16px; color: var(--ink-2); margin-top: 10px; }
 
 .navrow { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 36px; padding-top: 22px; border-top: 1px solid var(--line); }
-.saved { font: 500 12px var(--mono); color: var(--muted); }
+.saved { font: 500 14px var(--mono); color: var(--muted); }
 .saved.flash { color: var(--ok); }
 
 /* review */
 .review { display: grid; gap: 14px; }
 .rv { padding: 18px 20px; }
-.rv h3 { display: flex; justify-content: space-between; margin: 0 0 10px; font-size: 15px; }
-.rv h3 button { all: unset; cursor: pointer; font-size: 13px; color: var(--signal); font-weight: 600; }
-.rv dl { margin: 0; display: grid; grid-template-columns: 140px 1fr; gap: 6px 14px; font-size: 14px; }
+.rv h3 { display: flex; justify-content: space-between; margin: 0 0 10px; font-size: 17px; }
+.rv h3 button { all: unset; cursor: pointer; font-size: 15px; color: var(--signal); font-weight: 600; }
+.rv dl { margin: 0; display: grid; grid-template-columns: 140px 1fr; gap: 6px 14px; font-size: 16px; }
 .rv dt { color: var(--muted); }
 .rv dd { margin: 0; white-space: pre-wrap; }
 @media (max-width: 560px) { .rv dl { grid-template-columns: 1fr; } .rv dd { margin-bottom: 6px; } }
@@ -73,31 +73,31 @@
 /* side preview */
 .side { position: sticky; top: 84px; }
 .pcard { padding: 22px; background: var(--night); color: var(--night-ink); border: 0; }
-.pcard .lbl { font: 600 11px var(--mono); letter-spacing: .1em; color: color-mix(in srgb, var(--night-ink) 55%, transparent); }
-.pcard h3 { margin: 10px 0 2px; font-size: 20px; letter-spacing: -.03em; min-height: 1.4em; line-height: 1.35; }
-.pcard .who { font-size: 13px; color: color-mix(in srgb, var(--night-ink) 65%, transparent); min-height: 1.5em; }
+.pcard .lbl { font: 600 13px var(--mono); letter-spacing: .1em; color: color-mix(in srgb, var(--night-ink) 55%, transparent); }
+.pcard h3 { margin: 10px 0 2px; font-size: 22px; letter-spacing: -.03em; min-height: 1.4em; line-height: 1.35; }
+.pcard .who { font-size: 15px; color: color-mix(in srgb, var(--night-ink) 65%, transparent); min-height: 1.5em; }
 .pcard .tt { margin-top: 14px; }
 .pcard .tt .chip { background: color-mix(in srgb, var(--night-ink) 14%, transparent); color: var(--night-ink); }
 .pcard .m { margin-top: 18px; padding-top: 16px; border-top: 1px solid color-mix(in srgb, var(--night-ink) 16%, transparent); }
-.pcard .m .k { font-size: 13px; color: color-mix(in srgb, var(--night-ink) 65%, transparent); min-height: 1.4em; }
+.pcard .m .k { font-size: 15px; color: color-mix(in srgb, var(--night-ink) 65%, transparent); min-height: 1.4em; }
 .pcard .nums { display: flex; align-items: baseline; gap: 10px; margin-top: 6px; font-family: var(--display); }
-.pcard .nums .a { font-size: 30px; color: color-mix(in srgb, var(--night-ink) 60%, transparent); }
+.pcard .nums .a { font-size: 32px; color: color-mix(in srgb, var(--night-ink) 60%, transparent); }
 .pcard .nums .b { font-size: 46px; }
-.pcard .nums .arr { font: 500 16px var(--mono); color: var(--signal); }
-.pcard .nums .u { font: 500 14px var(--sans); color: color-mix(in srgb, var(--night-ink) 65%, transparent); }
+.pcard .nums .arr { font: 500 18px var(--mono); color: var(--signal); }
+.pcard .nums .u { font: 500 16px var(--sans); color: color-mix(in srgb, var(--night-ink) 65%, transparent); }
 .pcard svg { margin-top: 10px; width: 100%; height: 70px; }
 .pcard svg path { fill: none; stroke: var(--signal); stroke-width: 2.5; stroke-linecap: round; transition: d .6s; }
 .pcard .rows { display: grid; gap: 10px; margin-top: 4px; }
-.pcard .rows div { display: grid; grid-template-columns: 56px 1fr; gap: 10px; font-size: 13px; align-items: baseline; }
-.pcard .rows span { color: color-mix(in srgb, var(--night-ink) 55%, transparent); font: 500 11px var(--mono); }
+.pcard .rows div { display: grid; grid-template-columns: 56px 1fr; gap: 10px; font-size: 15px; align-items: baseline; }
+.pcard .rows span { color: color-mix(in srgb, var(--night-ink) 55%, transparent); font: 500 13px var(--mono); }
 .pcard .rows b { font-weight: 500; line-height: 1.5; }
-.side .tip { margin-top: 14px; font-size: 13px; color: var(--muted); padding: 0 4px; }
+.side .tip { margin-top: 14px; font-size: 15px; color: var(--muted); padding: 0 4px; }
 .side .tip b { color: var(--ink); }
 .progress-ring { display: flex; gap: 12px; align-items: center; margin-top: 16px; padding: 14px 16px; }
 .progress-ring svg { width: 44px; height: 44px; transform: rotate(-90deg); flex: none; }
 .progress-ring circle { fill: none; stroke-width: 5; }
 .progress-ring .fg { stroke: var(--signal); stroke-linecap: round; transition: stroke-dashoffset .5s; }
-.progress-ring b { font: 600 15px var(--mono); }
+.progress-ring b { font: 600 17px var(--mono); }
 
 /* done */
 .done { text-align: center; padding: 64px 0 40px; display: none; }
@@ -107,8 +107,8 @@
 .done .seal path { fill: none; stroke: var(--signal); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 80; stroke-dashoffset: 80; animation: sealDraw .6s .9s forwards; }
 @keyframes sealDraw { to { stroke-dashoffset: 0; } }
 .done h2 { font: 800 clamp(28px, 4vw, 40px)/1.25 var(--sans); letter-spacing: -.04em; margin: 0 0 12px; }
-.done .rid { display: inline-block; font: 600 22px var(--mono); padding: 10px 18px; border: 1.5px dashed var(--ink); border-radius: 10px; margin: 18px 0; }
-.done ol { text-align: left; max-width: 460px; margin: 24px auto; color: var(--ink-2); font-size: 15px; }
+.done .rid { display: inline-block; font: 600 24px var(--mono); padding: 10px 18px; border: 1.5px dashed var(--ink); border-radius: 10px; margin: 18px 0; }
+.done ol { text-align: left; max-width: 460px; margin: 24px auto; color: var(--ink-2); font-size: 17px; }
 .closed { padding: 40px; text-align: center; margin-top: 32px; }
 </style>
 </head>
@@ -127,7 +127,7 @@
         <span class="eyebrow">Application · Cohort 01</span>
         <h1>1기 신청서</h1>
         <p>10문항, 3~5분이면 충분해요. 대부분 고르기예요. 작성 중인 내용은 이 기기에 자동 저장됩니다. 정답은 없어요 — 지금 있는 그대로 골라 주세요.</p>
-        <div class="meta"><span class="chip"><i style="color:var(--signal)"></i>신청 10/6(화) ~ 10/16(금) 12:00</span><span class="chip">결과 안내 10/16(금) 20:00</span><span class="chip">정원 8명</span><span class="chip">모임 외 주 1~2시간</span></div>
+        <div class="meta"><span class="chip"><i style="color:var(--signal)"></i>신청 10/6(화) ~ 10/16(금) 12:00</span><span class="chip">결과 안내 10/16(금) 20:00</span><span class="chip">정원 8명</span><span class="chip">참가비 5만 원 (10회 일괄)</span><span class="chip">모임 외 주 1~2시간</span></div>
       </div>
 
       <form id="form" novalidate autocomplete="on">
@@ -192,7 +192,7 @@
           </div>
           <div class="field" data-q="attend">
             <div class="lab"><span class="num">Q8</span>10회 출석 가능 여부 <span class="req">필수</span></div>
-            <p class="help">10/17 · 10/24 · 10/31 · 11/7 · 11/14 · 11/21 · 11/28 · 12/5 · 12/12 · 12/19 (토 14:00–15:30). 가능하면 8회 이상 함께해 주세요.</p>
+            <p class="help"><b>참가비 5만 원</b>은 10회 일괄이고, 중간에 빠져도 환불되지 않아요. (공간 대관 + 다과·음료 포함)<br>10/17 · 10/24 · 10/31 · 11/7 · 11/14 · 11/21 · 11/28 · 12/5 · 12/12 · 12/19 (토 14:00–15:30). 가능하면 8회 이상 함께해 주세요.</p>
             <div class="opts" id="opt-attend"></div>
             <input class="input other" name="absent" maxlength="40" placeholder="불참 예정일 (예: 11/21, 12/5)">
             <span class="err">하나를 고르고, 불참 예정일이 있으면 적어 주세요.</span>
@@ -210,7 +210,7 @@
                 <tr><th>목적</th><td>1기 선발 및 결과 안내, 모임 운영 연락</td></tr>
                 <tr><th>보관 기간</th><td>선발 멤버: 1기 종료(2026-12-19) 후 3개월 뒤 파기<br>미선발: 결과 안내 후 1개월 내 파기</td></tr>
               </table>
-              <p style="margin:0 0 12px;font-size:13px">동의를 거부할 수 있으며, 거부 시 신청이 어렵습니다.</p>
+              <p style="margin:0 0 12px;font-size:15px">동의를 거부할 수 있으며, 거부 시 신청이 어렵습니다.</p>
               <label class="check"><input type="checkbox" name="consent" value="Y">위 내용에 동의합니다</label>
               <label class="check light"><input type="checkbox" name="consentNext" value="Y">(선택) 이번에 함께하지 못하면 2기 모집 소식을 받을게요</label>
             </div>
@@ -263,7 +263,7 @@
       </div>
       <div class="card progress-ring">
         <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" stroke="var(--rule)"/><circle class="fg" id="ring" cx="22" cy="22" r="18" stroke-dasharray="113.1" stroke-dashoffset="113.1"/></svg>
-        <div><b id="ring-t">0 / 10</b><div style="font-size:13px;color:var(--muted)">문항 작성</div></div>
+        <div><b id="ring-t">0 / 10</b><div style="font-size:15px;color:var(--muted)">문항 작성</div></div>
       </div>
       <p class="tip">입력하는 대로 위 카드가 채워져요. 선발 때 가장 먼저 보는 건 <b>Q7</b> — 바꿔 보고 싶은 일이 구체적일수록 좋아요. 숫자는 모임 2회차에 같이 정해요.</p>
     </aside>

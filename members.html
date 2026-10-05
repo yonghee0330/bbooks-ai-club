@@ -12,17 +12,17 @@
 /* login */
 .gate { min-height: calc(100vh - 60px); display: grid; place-items: center; padding: 40px 0; }
 .gate .card { padding: 36px; width: min(420px, 100%); }
-.gate h1 { font: 800 30px/1.25 var(--sans); letter-spacing: -.04em; margin: 12px 0 8px; }
+.gate h1 { font: 800 32px/1.25 var(--sans); letter-spacing: -.04em; margin: 12px 0 8px; }
 .gate form { display: grid; gap: 14px; margin-top: 22px; }
-.gate .hint { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.gate .hint { font-size: 15px; color: var(--muted); margin-top: 6px; }
 
 /* lounge head */
 .lhead { padding: 34px 0 0; display: flex; justify-content: space-between; align-items: flex-end; gap: 18px; flex-wrap: wrap; }
 .lhead h1 { font: 800 clamp(26px, 4vw, 38px)/1.2 var(--sans); letter-spacing: -.04em; margin: 8px 0 0; }
-.lhead .me { font-size: 14px; color: var(--ink-2); display: flex; gap: 10px; align-items: center; }
-.lhead .me button { all: unset; cursor: pointer; color: var(--muted); font-size: 13px; text-decoration: underline; }
+.lhead .me { font-size: 16px; color: var(--ink-2); display: flex; gap: 10px; align-items: center; }
+.lhead .me button { all: unset; cursor: pointer; color: var(--muted); font-size: 15px; text-decoration: underline; }
 .tabs { display: flex; gap: 4px; margin: 26px 0 0; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; position: sticky; top: 60px; background: var(--paper); z-index: 5; }
-.tabs button { all: unset; cursor: pointer; padding: 14px 16px; font-weight: 600; font-size: 15px; color: var(--muted); position: relative; white-space: nowrap; }
+.tabs button { all: unset; cursor: pointer; padding: 14px 16px; font-weight: 600; font-size: 17px; color: var(--muted); position: relative; white-space: nowrap; }
 .tabs button[aria-selected="true"] { color: var(--ink); }
 .tabs button[aria-selected="true"]::after { content: ''; position: absolute; left: 12px; right: 12px; bottom: -1px; height: 2.5px; background: var(--signal); border-radius: 2px; }
 .tabs button:focus-visible { outline: 2px solid var(--signal); }
@@ -30,7 +30,7 @@
 .tab.on { display: block; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } }
 .sec-h { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 0 0 16px; flex-wrap: wrap; }
-.sec-h h2 { margin: 0; font-size: 20px; letter-spacing: -.03em; }
+.sec-h h2 { margin: 0; font-size: 22px; letter-spacing: -.03em; }
 
 /* this week */
 .week { display: grid; grid-template-columns: 1.25fr 1fr; gap: 16px; }
@@ -38,17 +38,17 @@
 .next { padding: 28px; background: var(--night); color: var(--night-ink); border: 0; position: relative; overflow: hidden; }
 .next .row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; position: relative; z-index: 1; }
 .next .n { font: 800 56px/1 var(--display); letter-spacing: -.04em; }
-.next .dd { font: 700 12px var(--sans); background: color-mix(in srgb, var(--night-ink) 14%, transparent); padding: 5px 9px; border-radius: 4px; }
-.next h3 { font-size: 24px; letter-spacing: -.03em; margin: 18px 0 4px; position: relative; z-index: 1; }
-.next .when { color: color-mix(in srgb, var(--night-ink) 65%, transparent); font-size: 14px; position: relative; z-index: 1; }
-.next ol { margin: 20px 0 0; padding: 18px 0 0 20px; border-top: 1px solid color-mix(in srgb, var(--night-ink) 16%, transparent); display: grid; gap: 6px; position: relative; z-index: 1; font-size: 15px; }
-.next .out { margin-top: 18px; font-size: 13px; color: color-mix(in srgb, var(--night-ink) 65%, transparent); position: relative; z-index: 1; }
+.next .dd { font: 700 14px var(--sans); background: color-mix(in srgb, var(--night-ink) 14%, transparent); padding: 5px 9px; border-radius: 4px; }
+.next h3 { font-size: 26px; letter-spacing: -.03em; margin: 18px 0 4px; position: relative; z-index: 1; }
+.next .when { color: color-mix(in srgb, var(--night-ink) 65%, transparent); font-size: 16px; position: relative; z-index: 1; }
+.next ol { margin: 20px 0 0; padding: 18px 0 0 20px; border-top: 1px solid color-mix(in srgb, var(--night-ink) 16%, transparent); display: grid; gap: 6px; position: relative; z-index: 1; font-size: 17px; }
+.next .out { margin-top: 18px; font-size: 15px; color: color-mix(in srgb, var(--night-ink) 65%, transparent); position: relative; z-index: 1; }
 .next .out b { color: var(--night-ink); }
 .stack { display: grid; gap: 16px; }
 .mini-card { padding: 22px; }
-.mini-card h3 { margin: 0 0 12px; font-size: 16px; }
+.mini-card h3 { margin: 0 0 12px; font-size: 18px; }
 .roles-l { display: grid; gap: 10px; }
-.roles-l div { display: flex; justify-content: space-between; align-items: center; font-size: 15px; }
+.roles-l div { display: flex; justify-content: space-between; align-items: center; font-size: 17px; }
 .quick { display: grid; gap: 10px; }
 .quick .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .timeline-mini { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; margin-top: 4px; }
@@ -63,19 +63,19 @@
 .mcard:hover { transform: translateY(-3px); }
 .mcard.mine { outline: 2px solid var(--signal); outline-offset: -1px; }
 .mcard .top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-.mcard .nm { font-weight: 700; font-size: 16px; }
-.mcard .pj { margin: 6px 0 0; font-size: 14px; color: var(--ink-2); min-height: 2.8em; }
-.mcard .mt { font-size: 12px; color: var(--muted); margin-top: 12px; }
+.mcard .nm { font-weight: 700; font-size: 18px; }
+.mcard .pj { margin: 6px 0 0; font-size: 16px; color: var(--ink-2); min-height: 2.8em; }
+.mcard .mt { font-size: 14px; color: var(--muted); margin-top: 12px; }
 .mcard .vals { display: flex; align-items: baseline; gap: 8px; margin-top: 2px; }
 .mcard .vals .cur { font: 800 36px/1 var(--display); letter-spacing: -.03em; }
-.mcard .vals .u { font-size: 13px; color: var(--muted); }
-.mcard .vals .tg { margin-left: auto; font: 500 12px var(--mono); color: var(--muted); }
+.mcard .vals .u { font-size: 15px; color: var(--muted); }
+.mcard .vals .tg { margin-left: auto; font: 500 14px var(--mono); color: var(--muted); }
 .mcard svg { width: 100%; height: 54px; margin-top: 8px; overflow: visible; }
 .mcard .bar { height: 6px; border-radius: 3px; background: var(--rule); margin-top: 12px; overflow: hidden; }
 .mcard .bar i { display: block; height: 100%; background: var(--tc); border-radius: 3px; transform-origin: left; animation: grow 1.2s cubic-bezier(.6,0,.2,1) both; }
 @keyframes grow { from { transform: scaleX(0); } }
-.mcard .pct { display: flex; justify-content: space-between; font: 500 11px var(--mono); color: var(--muted); margin-top: 6px; }
-.sample-tag { font: 600 10px var(--mono); color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 2px 5px; }
+.mcard .pct { display: flex; justify-content: space-between; font: 500 13px var(--mono); color: var(--muted); margin-top: 6px; }
+.sample-tag { font: 600 13px var(--mono); color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 2px 5px; }
 
 /* detail drawer */
 .drawer { position: fixed; inset: 0; z-index: 80; display: none; }
@@ -85,11 +85,11 @@
 .drawer .panel { position: absolute; right: 0; top: 0; bottom: 0; width: min(560px, 100%); background: var(--paper); overflow-y: auto; padding: 28px; animation: slide .4s cubic-bezier(.2,.7,.2,1); box-shadow: -20px 0 60px -20px rgba(0,0,0,.4); }
 @keyframes slide { from { transform: translateX(40px); opacity: 0; } }
 .drawer .x { position: absolute; top: 18px; right: 18px; }
-.drawer h2 { font-size: 24px; letter-spacing: -.03em; margin: 10px 0 4px; }
+.drawer h2 { font-size: 26px; letter-spacing: -.03em; margin: 10px 0 4px; }
 .drawer .big svg { width: 100%; height: auto; }
-.wk-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 18px; }
+.wk-table { width: 100%; border-collapse: collapse; font-size: 16px; margin-top: 18px; }
 .wk-table th, .wk-table td { padding: 8px 6px; border-bottom: 1px solid var(--line); text-align: left; }
-.wk-table th { font: 600 11px var(--mono); color: var(--muted); }
+.wk-table th { font: 600 13px var(--mono); color: var(--muted); }
 .wk-table input { width: 90px; padding: 6px 8px; border-radius: 8px; border: 1.5px solid var(--line); background: var(--card); }
 .wk-table input.note { width: 100%; }
 .edit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
@@ -99,26 +99,26 @@
 /* check-in mode */
 .ci { position: fixed; inset: 0; z-index: 90; background: var(--night); color: var(--night-ink); display: none; grid-template-rows: auto 1fr auto; padding: clamp(18px, 3vw, 40px); }
 .ci.on { display: grid; }
-.ci .ci-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; font: 600 13px var(--mono); color: var(--night-muted); }
+.ci .ci-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; font: 600 15px var(--mono); color: var(--night-muted); }
 .ci .ci-body { display: grid; grid-template-columns: 1fr 1.3fr; gap: clamp(24px, 4vw, 64px); align-items: center; }
 @media (max-width: 860px) { .ci .ci-body { grid-template-columns: 1fr; align-content: center; } }
 .ci .who { font: 800 clamp(36px, 6vw, 76px)/1.05 var(--sans); letter-spacing: -.05em; }
 .ci .pj { font-size: clamp(16px, 2vw, 22px); color: var(--night-muted); margin: 12px 0 28px; }
-.ci .metric { font-size: 15px; color: var(--night-muted); }
+.ci .metric { font-size: 17px; color: var(--night-muted); }
 .ci .now { font: 800 clamp(72px, 12vw, 150px)/.95 var(--display); letter-spacing: -.04em; display: flex; align-items: baseline; gap: 12px; }
-.ci .now small { font: 600 22px var(--sans); color: var(--night-muted); }
-.ci .delta { display: inline-block; font: 600 16px var(--mono); padding: 8px 14px; border-radius: 999px; margin-top: 14px; }
-.ci .note { margin-top: 18px; font-size: 17px; color: var(--night-ink); max-width: 460px; font-family: var(--serif); }
+.ci .now small { font: 600 24px var(--sans); color: var(--night-muted); }
+.ci .delta { display: inline-block; font: 600 18px var(--mono); padding: 8px 14px; border-radius: 999px; margin-top: 14px; }
+.ci .note { margin-top: 18px; font-size: 19px; color: var(--night-ink); max-width: 460px; font-family: var(--serif); }
 .ci svg { width: 100%; height: auto; overflow: visible; }
 .ci svg text { fill: var(--night-muted); font: 500 12px var(--mono); }
 .ci .ci-foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
 .ci .dots { display: flex; gap: 6px; flex-wrap: wrap; }
-.ci .dots button { all: unset; cursor: pointer; padding: 6px 10px; border-radius: 999px; font-size: 13px; color: var(--night-muted); border: 1px solid rgba(255,255,255,.14); }
+.ci .dots button { all: unset; cursor: pointer; padding: 6px 10px; border-radius: 999px; font-size: 15px; color: var(--night-muted); border: 1px solid rgba(255,255,255,.14); }
 .ci .dots button.on { background: var(--night-ink); color: var(--night); }
 .timer { display: flex; align-items: center; gap: 12px; }
 .timer svg { width: 54px; height: 54px; transform: rotate(-90deg); }
 .timer circle { fill: none; stroke-width: 5; }
-.timer b { font: 600 26px var(--mono); min-width: 70px; }
+.timer b { font: 600 28px var(--mono); min-width: 70px; }
 .timer.over b { color: #f87171; }
 .ci .btn-ghost { color: var(--night-ink); }
 .ci-anim { animation: ciIn .6s cubic-bezier(.2,.7,.2,1); }
@@ -129,32 +129,32 @@
 .log { padding: 0; overflow: hidden; }
 .log summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 64px 1fr auto; gap: 16px; align-items: center; padding: 18px 20px; }
 .log summary::-webkit-details-marker { display: none; }
-.log .n { font: 800 28px/1 var(--display); color: var(--pc); }
-.log .t b { display: block; font-size: 16px; }
-.log .t span { font-size: 13px; color: var(--muted); }
-.log .st { font: 600 11px var(--mono); padding: 4px 8px; border-radius: 6px; background: var(--rule); color: var(--muted); }
+.log .n { font: 800 30px/1 var(--display); color: var(--pc); }
+.log .t b { display: block; font-size: 18px; }
+.log .t span { font-size: 15px; color: var(--muted); }
+.log .st { font: 600 13px var(--mono); padding: 4px 8px; border-radius: 6px; background: var(--rule); color: var(--muted); }
 .log .st.has { background: color-mix(in srgb, var(--ok) 16%, transparent); color: var(--ok); }
-.log .body { padding: 0 20px 22px 100px; font-size: 15px; color: var(--ink-2); }
+.log .body { padding: 0 20px 22px 100px; font-size: 17px; color: var(--ink-2); }
 @media (max-width: 600px) { .log .body { padding-left: 20px; } }
-.log .body h4 { margin: 16px 0 4px; font-size: 13px; color: var(--muted); font-family: var(--mono); font-weight: 600; letter-spacing: .04em; }
+.log .body h4 { margin: 16px 0 4px; font-size: 15px; color: var(--muted); font-family: var(--mono); font-weight: 600; letter-spacing: .04em; }
 .log .body p { margin: 0; white-space: pre-wrap; }
 .log .body a { color: var(--signal); word-break: break-all; }
 .log form { display: grid; gap: 10px; margin-top: 14px; }
 
 /* recipes */
 .filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
-.filters button { all: unset; cursor: pointer; padding: 7px 14px; border-radius: 6px; border: 1px solid var(--line); font-size: 13px; font-weight: 500; }
+.filters button { all: unset; cursor: pointer; padding: 7px 14px; border-radius: 6px; border: 1px solid var(--line); font-size: 15px; font-weight: 500; }
 .filters button.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .recipes { columns: 3 300px; column-gap: 14px; }
 .recipe { break-inside: avoid; margin-bottom: 14px; padding: 22px; }
-.recipe .by { font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; }
-.recipe h3 { margin: 8px 0 12px; font-size: 18px; letter-spacing: -.02em; }
-.recipe dl { margin: 0; display: grid; gap: 8px; font-size: 14px; }
-.recipe dt { font: 600 11px var(--mono); color: var(--muted); letter-spacing: .06em; }
+.recipe .by { font-size: 14px; color: var(--muted); display: flex; justify-content: space-between; }
+.recipe h3 { margin: 8px 0 12px; font-size: 20px; letter-spacing: -.02em; }
+.recipe dl { margin: 0; display: grid; gap: 8px; font-size: 16px; }
+.recipe dt { font: 600 13px var(--mono); color: var(--muted); letter-spacing: .06em; }
 .recipe dd { margin: 0; }
 .recipe pre { white-space: pre-wrap; font: 13px/1.6 var(--mono); background: var(--rule); padding: 12px; border-radius: 8px; margin: 0; position: relative; }
 .recipe .copy { position: absolute; top: 6px; right: 6px; }
-.recipe .res { font: 600 15px var(--mono); color: var(--signal); }
+.recipe .res { font: 600 17px var(--mono); color: var(--signal); }
 .recipe .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
 .modal { position: fixed; inset: 0; z-index: 85; display: none; place-items: center; padding: 16px; background: rgba(20,15,10,.45); }
 .modal.on { display: grid; animation: fade .25s; }
@@ -164,10 +164,10 @@
 /* schedule */
 .sched { display: grid; gap: 0; border-top: 1px solid var(--ink); }
 .srow { display: grid; grid-template-columns: 56px 120px 1fr auto; gap: 16px; padding: 18px 4px; border-bottom: 1px solid var(--line); align-items: center; }
-.srow .n { font: 800 24px/1 var(--display); color: var(--pc); }
-.srow .d { font: 500 13px var(--mono); color: var(--muted); }
-.srow h4 { margin: 0; font-size: 16px; }
-.srow p { margin: 2px 0 0; font-size: 13px; color: var(--muted); }
+.srow .n { font: 800 26px/1 var(--display); color: var(--pc); }
+.srow .d { font: 500 15px var(--mono); color: var(--muted); }
+.srow h4 { margin: 0; font-size: 18px; }
+.srow p { margin: 2px 0 0; font-size: 15px; color: var(--muted); }
 .srow.done { opacity: .55; }
 .srow.next { background: color-mix(in srgb, var(--signal) 8%, transparent); border-radius: 10px; }
 @media (max-width: 600px) { .srow { grid-template-columns: 44px 1fr; } .srow .d { grid-column: 2; order: -1; } .srow .chip { display: none; } }
@@ -187,7 +187,7 @@
   <div class="card">
     <span class="eyebrow">Members only</span>
     <h1>멤버 라운지</h1>
-    <p style="margin:0;color:var(--ink-2);font-size:15px">이번 주 안내, 숫자 보드, 회차 기록과 레시피가 모여 있는 1기 멤버 공간이에요. 멤버 코드는 1회차에 개별로 드려요.</p>
+    <p style="margin:0;color:var(--ink-2);font-size:17px">이번 주 안내, 숫자 보드, 회차 기록과 레시피가 모여 있는 1기 멤버 공간이에요. 멤버 코드는 1회차에 개별로 드려요.</p>
     <form id="login">
       <div class="field"><label for="ln">이름</label><input class="input" id="ln" autocomplete="name" required></div>
       <div class="field"><label for="lc">멤버 코드</label><input class="input" id="lc" autocomplete="off" required></div>
@@ -214,24 +214,24 @@
   <section class="tab" id="t-week"></section>
 
   <section class="tab" id="t-board">
-    <div class="sec-h"><h2>숫자 보드 <span class="muted" style="font-size:14px;font-weight:500">· 매주 금요일 자정까지 입력</span></h2>
+    <div class="sec-h"><h2>숫자 보드 <span class="muted" style="font-size:16px;font-weight:500">· 매주 금요일 자정까지 입력</span></h2>
       <div style="display:flex;gap:8px"><button class="btn btn-ghost btn-sm" id="edit-mine">내 숫자 입력</button><button class="btn btn-dark btn-sm" id="ci-open">▶ 나눔 화면</button></div></div>
     <div class="board" id="board"></div>
   </section>
 
   <section class="tab" id="t-logs">
-    <div class="sec-h"><h2>회차 기록</h2><span class="muted" style="font-size:13px">기록자가 당일 저녁까지 올려요 · 누구나 보완 가능</span></div>
+    <div class="sec-h"><h2>회차 기록</h2><span class="muted" style="font-size:15px">기록자가 당일 저녁까지 올려요 · 누구나 보완 가능</span></div>
     <div class="logs" id="logs"></div>
   </section>
 
   <section class="tab" id="t-recipes">
-    <div class="sec-h"><h2>레시피 <span class="muted" style="font-size:14px;font-weight:500">· 오늘 건진 프롬프트·작업 흐름</span></h2><button class="btn btn-primary btn-sm" id="r-add">+ 레시피 기록</button></div>
+    <div class="sec-h"><h2>레시피 <span class="muted" style="font-size:16px;font-weight:500">· 오늘 건진 프롬프트·작업 흐름</span></h2><button class="btn btn-primary btn-sm" id="r-add">+ 레시피 기록</button></div>
     <div class="filters" id="filters"></div>
     <div class="recipes" id="recipes"></div>
   </section>
 
   <section class="tab" id="t-sched">
-    <div class="sec-h"><h2>10회 일정</h2><span class="muted" style="font-size:13px">매주 토 14:00–16:00 · 비북스 세미나실 · 13:45 입실</span></div>
+    <div class="sec-h"><h2>10회 일정</h2><span class="muted" style="font-size:15px">매주 토 14:00–16:00 · 비북스 세미나실 · 13:45 입실</span></div>
     <div class="sched" id="sched"></div>
   </section>
 </main>
@@ -352,7 +352,7 @@
     $('#t-week').innerHTML = `
       <div class="week">
         <article class="card next" style="--pc:${PC[s.phase]}">
-          <div class="row"><span class="n">${String(s.n).padStart(2, '0')}<span style="font-size:20px">/10</span></span><span class="dd">${next ? (days > 0 ? 'D-' + days : days === 0 ? 'TODAY' : '진행 중') : '1기 종료'}</span></div>
+          <div class="row"><span class="n">${String(s.n).padStart(2, '0')}<span style="font-size:22px">/10</span></span><span class="dd">${next ? (days > 0 ? 'D-' + days : days === 0 ? 'TODAY' : '진행 중') : '1기 종료'}</span></div>
           <h3>${B.esc(s.title)}</h3>
           <div class="when">${B.fmtDate(s.date, { year: 'numeric' })} 14:00–${s.end || '15:30'} · ${C.phases.find(p => p.key === s.phase).name} 단계</div>
           <ol>${agendaOf(s).map(a => `<li>${a}</li>`).join('')}</ol>
@@ -361,15 +361,15 @@
         <div class="stack">
           <div class="card mini-card"><h3>이번 주 역할</h3><div class="roles-l">
             ${[['진행자', r.lead, 'var(--signal)'], ['기록자', r.note, 'var(--c-design)']].map(([k, m, c]) => `<div><span class="chip"><i style="color:${c}"></i>${k}</span><b>${m ? B.esc(m.name) : '—'}${m && m.id === mine.id ? ' (나)' : ''}</b></div>`).join('')}
-          </div><p class="muted" style="font-size:12px;margin:12px 0 0">미니특강은 Hose가 준비해요. 진행자(시간 관리)와 기록자는 멤버 순서대로 자동 순환, 서로 바꾸는 건 자유.</p></div>
+          </div><p class="muted" style="font-size:14px;margin:12px 0 0">미니특강은 Hose가 준비해요. 진행자(시간 관리)와 기록자는 멤버 순서대로 자동 순환, 서로 바꾸는 건 자유.</p></div>
           <div class="card mini-card"><h3>내 숫자 · W${wk}</h3>
             <form class="quick" id="quick">
-              <div class="muted" style="font-size:13px">${B.esc(mine.metric || '핵심 숫자 미정')} · 시작 ${fmtN(mine.base)} → 목표 ${fmtN(mine.target)}${B.esc(mine.unit || '')}</div>
+              <div class="muted" style="font-size:15px">${B.esc(mine.metric || '핵심 숫자 미정')} · 시작 ${fmtN(mine.base)} → 목표 ${fmtN(mine.target)}${B.esc(mine.unit || '')}</div>
               <div class="row2"><input class="input" name="v" inputmode="decimal" placeholder="이번 주 값" value="${myVal ? myVal.v : ''}"><button class="btn btn-primary" type="submit">저장</button></div>
               <input class="input" name="note" placeholder="한 줄 메모 — 한 일 · 실패담 환영" value="${myVal ? B.esc(myVal.note) : ''}">
             </form></div>
           <div class="card mini-card"><h3>1기 진행</h3><div class="timeline-mini">${C.sessions.map((x, i) => `<i class="${i < done ? 'd' : i === done ? 'n' : ''}" style="--pc:${PC[x.phase]}" title="${x.n}회 ${B.esc(x.title)}"></i>`).join('')}</div>
-            <p class="muted" style="font-size:13px;margin:10px 0 0">${done}회 완료 · 데모데이 12/19(토)</p></div>
+            <p class="muted" style="font-size:15px;margin:10px 0 0">${done}회 완료 · 데모데이 12/19(토)</p></div>
         </div>
       </div>`;
     $('#quick').addEventListener('submit', async e => {
@@ -410,7 +410,7 @@
       <button class="btn btn-ghost btn-sm x" data-close>닫기</button>
       <span class="chip"><i style="color:${TC[m.type]}"></i>${t.name || '유형 미정'}</span>
       <h2>${B.esc(m.name)}</h2><p style="margin:0;color:var(--ink-2)">${B.esc(m.project || '')}</p>
-      ${m.intro ? `<p class="muted" style="font-size:14px">${B.esc(m.intro)}</p>` : ''}
+      ${m.intro ? `<p class="muted" style="font-size:16px">${B.esc(m.intro)}</p>` : ''}
       <div class="big" style="margin-top:22px">${chart(m, 500, 200, { axis: true, sw: 3, r: 5, pad: { l: 10, r: 10, t: 22, b: 10 } })}</div>
       ${mine ? `<details style="margin-top:20px" ${m.metric ? '' : 'open'}><summary style="cursor:pointer;font-weight:600">프로젝트·숫자 설정</summary>
         <form id="pform" class="edit-grid">
@@ -493,8 +493,8 @@
       return `<details class="card log" style="--pc:${PC[s.phase]}" ${!upcoming && i === done - 1 ? 'open' : ''}>
         <summary><span class="n">${String(s.n).padStart(2, '0')}</span><span class="t"><b>${B.esc(s.title)}</b><span>${B.fmtDate(s.date)} · 기록자 ${r.note ? B.esc(r.note.name) : '—'}</span></span><span class="st ${l ? 'has' : ''}">${l ? '기록 있음' : upcoming ? '예정' : '기록 대기'}</span></summary>
         <div class="body">
-          ${l ? `<h4>새로운 정보 공유</h4><p>${B.esc(l.checkin || '—')}</p><h4>프로젝트 진행현황 · Q&A</h4><p>${B.esc(l.show || '—')}</p><h4>다음 주 약속</h4><p>${B.esc(l.promise || '—')}</p>${l.links ? `<h4>사진 · 링크</h4><p>${linkify(l.links)}</p>` : ''}<p class="muted" style="font-size:12px;margin-top:14px">${by ? B.esc(by.name) : ''} · ${new Date(l.at).toLocaleString('ko-KR')}</p>` : `<p class="muted">${upcoming ? '아직 진행 전이에요. 이 회차 계획: ' + B.esc(s.title) + ' — ' + B.esc(s.focus) : '아직 기록이 없어요. 기록자가 아니어도 먼저 남길 수 있어요.'}</p>`}
-          ${!upcoming ? `<details style="margin-top:14px"><summary style="cursor:pointer;font-weight:600;font-size:14px;color:var(--signal)">${l ? '기록 수정' : '기록 남기기'}</summary>
+          ${l ? `<h4>새로운 정보 공유</h4><p>${B.esc(l.checkin || '—')}</p><h4>프로젝트 진행현황 · Q&A</h4><p>${B.esc(l.show || '—')}</p><h4>다음 주 약속</h4><p>${B.esc(l.promise || '—')}</p>${l.links ? `<h4>사진 · 링크</h4><p>${linkify(l.links)}</p>` : ''}<p class="muted" style="font-size:14px;margin-top:14px">${by ? B.esc(by.name) : ''} · ${new Date(l.at).toLocaleString('ko-KR')}</p>` : `<p class="muted">${upcoming ? '아직 진행 전이에요. 이 회차 계획: ' + B.esc(s.title) + ' — ' + B.esc(s.focus) : '아직 기록이 없어요. 기록자가 아니어도 먼저 남길 수 있어요.'}</p>`}
+          ${!upcoming ? `<details style="margin-top:14px"><summary style="cursor:pointer;font-weight:600;font-size:16px;color:var(--signal)">${l ? '기록 수정' : '기록 남기기'}</summary>
             <form data-n="${s.n}" class="logform">${fld('checkin', '새로운 정보 공유 요약', '새로 발견한 것 · 미니특강 핵심')}${fld('show', '프로젝트 진행현황 · Q&A 메모', '다룬 문제 → 시도한 도구 → 결과')}${fld('promise', '다음 주 약속', '멤버별 한 줄')}${fld('links', '사진 · 링크', '구글 드라이브·사진 링크 등')}<button class="btn btn-dark" type="submit">기록 저장</button></form></details>` : ''}
         </div></details>`;
     }).join('');
