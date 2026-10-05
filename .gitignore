@@ -5,3 +5,4 @@ apps-script/
 .DS_Store
 CLAUDE.md
 deploy.sh
+_src/
