@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>신청자 관리 · 부천 AI 프로젝트 클럽</title>
+<title>신청자 관리 · 부천 AI 특공대</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://script.google.com">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="assets/style.css?v=1012">
+<link rel="stylesheet" href="assets/style.css?v=1013">
 <style>
 .ahead { padding: 30px 0 10px; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
 .ahead h1 { font: 800 30px/1.2 var(--sans); letter-spacing: -.04em; margin: 8px 0 0; }
@@ -53,7 +53,7 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
 </style>
 </head>
 <body>
-<header class="topbar"><div class="wrap"><a class="brand" href="./"><span class="brand-mark">AI</span>부천 AI 프로젝트 클럽 <small>운영 · 신청 관리</small></a><nav class="nav"><span class="demo-flag" id="demo" hidden>DEMO</span></nav></div></header>
+<header class="topbar"><div class="wrap"><a class="brand" href="./"><span class="brand-mark">AI</span>부천 AI 특공대 <small>운영 · 신청 관리</small></a><nav class="nav"><span class="demo-flag" id="demo" hidden>DEMO</span></nav></div></header>
 
 <main class="wrap" id="gate" style="padding:80px 0;max-width:420px">
   <span class="eyebrow">Admin</span><h1 style="font-size:28px;margin:10px 0 18px">신청 관리</h1>
@@ -74,8 +74,8 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
 
 <div class="detail" id="detail"><div class="card" id="dcard"></div></div>
 
-<script src="assets/config.js?v=1012"></script>
-<script src="assets/app.js?v=1012"></script>
+<script src="assets/config.js?v=1013"></script>
+<script src="assets/app.js?v=1013"></script>
 <script>
 (function () {
   const C = CLUB, B = BAPC, $ = s => document.querySelector(s);
@@ -141,7 +141,7 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
     const q = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
     const rows = APPS.map(a => cols.map(c => q(Array.isArray(a[c]) ? a[c].join(', ') : a[c])).join(','));
     const blob = new Blob(['﻿' + cols.join(',') + '\n' + rows.join('\n')], { type: 'text/csv' });
-    const l = document.createElement('a'); l.href = URL.createObjectURL(blob); l.download = 'AI클럽1기_신청자_' + new Date().toISOString().slice(0, 10) + '.csv'; l.click();
+    const l = document.createElement('a'); l.href = URL.createObjectURL(blob); l.download = 'AI특공대1기_신청자_' + new Date().toISOString().slice(0, 10) + '.csv'; l.click();
   };
   if (KEY) open();
 })();
