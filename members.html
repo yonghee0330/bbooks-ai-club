@@ -7,7 +7,10 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#f8fafc">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234e6813'/%3E%3Cpath d='M7 22l6-6 4 4 8-9' stroke='%23ffffff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/style.css?v=1009">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://script.google.com">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/style.css?v=1011">
 <style>
 /* 로그인 */
 .gate { min-height: calc(100vh - 60px); display: grid; place-items: center; padding: 32px 0; }
@@ -63,6 +66,7 @@
 .c .cwhen { font-size: 13px; color: var(--muted); margin-left: 6px; }
 .cform { display: flex; gap: 8px; margin-top: 6px; }
 .cform input { flex: 1; min-width: 0; padding: 10px 12px; font-size: 16px; }
+.pend { opacity: .6; }
 .empty { padding: 36px 20px; text-align: center; color: var(--muted); border: 1px dashed var(--line); border-radius: var(--r); font-size: 17px; }
 @media (max-width: 520px) { .sched li { grid-template-columns: 30px 78px 1fr; } .lounge { padding-top: 20px; } }
 </style>
@@ -110,46 +114,71 @@
     </div>
   </form>
 
-  <div class="feedbar"><h2>함께 올린 글</h2><button type="button" id="refresh">새로고침</button></div>
+  <div class="feedbar"><h2>함께 올린 글 <span id="sync" class="muted" style="font-size:14px;font-weight:500"></span></h2><button type="button" id="refresh">새로고침</button></div>
   <div id="feed"></div>
 </main>
 
-<script src="assets/config.js?v=1009"></script>
-<script src="assets/app.js?v=1009"></script>
+<script src="assets/config.js?v=1011"></script>
+<script src="assets/app.js?v=1011"></script>
 <script>
+/* 빠르게 쓰는 방법: ① 저장해 둔 글을 먼저 보여 주고 서버는 뒤에서 확인 ② 글·댓글은 서버 응답을 기다리지 않고 바로 화면에 올린다 */
 (function () {
   const C = CLUB, B = BAPC, $ = s => document.querySelector(s);
-  let S = { code: null, me: null, members: {}, posts: [], comments: [], sig: '' };
+  let S = { code: null, me: null, members: {}, posts: [], comments: [], sig: '', last: 0, busy: 0 };
   if (B.demoMode) { $('#demo').hidden = false; $('#demo-hint').hidden = false; }
 
-  /* ---------- 로그인 ---------- */
-  async function boot() {
-    const sess = B.store.get('session');
-    if (sess && sess.code) { S.code = sess.code; if (await load()) return enter(); }
-    $('#gate').hidden = false; $('#lounge').hidden = true;
+  /* ---------- 저장해 둔 데이터 ---------- */
+  const saveCache = () => B.store.set('lounge', { me: S.me, members: S.members, posts: S.posts.filter(p => !p.pending), comments: S.comments.filter(c => !c.pending) });
+  function apply(r) { // 서버 응답을 반영하되, 아직 올라가는 중인 내 글·댓글은 지키지 않고 그대로 둔다
+    const pp = S.posts.filter(p => p.pending), pc = S.comments.filter(c => c.pending);
+    S.me = r.me; S.members = Object.fromEntries(r.members.map(m => [m.id, m]));
+    S.posts = r.posts.concat(pp).sort((a, b) => b.at.localeCompare(a.at)); S.comments = r.comments.concat(pc).sort((a, b) => a.at.localeCompare(b.at));
+    S.last = Date.now(); saveCache();
   }
-  $('#login').addEventListener('submit', async e => {
-    e.preventDefault();
-    const name = $('#ln').value.trim(), code = $('#lc').value.trim();
-    let r; try { r = await B.api('login', { name, code }); } catch (err) { return B.toast('연결하지 못했어요. 잠시 후 다시 시도해 주세요', 'err'); }
-    if (!r.ok) return B.toast(r.error || '입장할 수 없어요', 'err');
-    S.code = code; B.store.set('session', { code });
-    if (await load()) enter();
-  });
-  $('#logout').onclick = () => { B.store.set('session', null); location.reload(); };
 
-  async function load(silent) {
-    try {
-      const r = await B.api('feed', { code: S.code });
-      if (!r.ok) { if (!silent) B.store.set('session', null); return false; }
-      S.me = r.me; S.members = Object.fromEntries(r.members.map(m => [m.id, m])); S.posts = r.posts; S.comments = r.comments;
-      return true;
-    } catch (e) { if (!silent) B.toast('불러오지 못했어요: ' + e.message, 'err'); return false; }
+  /* ---------- 입장 ---------- */
+  async function boot() {
+    const sess = B.store.get('session'), cache = B.store.get('lounge');
+    if (sess && sess.code) {
+      S.code = sess.code;
+      if (cache && cache.me) { S.me = cache.me; S.members = cache.members || {}; S.posts = cache.posts || []; S.comments = cache.comments || []; enter(); sync(); return; }
+      enter(true); const ok = await sync(); if (!ok && !S.me) return toGate(); return;
+    }
+    toGate();
   }
-  function enter() {
+  function toGate() { B.store.set('session', null); B.store.set('lounge', null); $('#lounge').hidden = true; $('#gate').hidden = false; }
+  $('#login').addEventListener('submit', async e => {
+    e.preventDefault(); const btn = e.target.querySelector('button'); btn.disabled = true; btn.textContent = '들어가는 중…';
+    const name = $('#ln').value.trim(), code = $('#lc').value.trim();
+    try {
+      const r = await B.api('feed', { name, code });
+      if (!r.ok) { B.toast(r.error || '입장할 수 없어요', 'err'); return; }
+      S.code = code; B.store.set('session', { code }); apply(r); enter();
+    } catch (err) { B.toast('연결이 느려요. 잠시 후 다시 시도해 주세요', 'err'); }
+    finally { btn.disabled = false; btn.textContent = '들어가기 →'; }
+  });
+  $('#logout').onclick = () => { B.store.set('session', null); B.store.set('lounge', null); location.reload(); };
+
+  function enter(loading) {
     $('#gate').hidden = true; $('#lounge').hidden = false;
-    $('#hello').textContent = S.me.name + '님, 안녕하세요';
-    renderWeek(); renderFeed(true);
+    $('#hello').textContent = S.me ? S.me.name + '님, 안녕하세요' : '불러오는 중…';
+    renderWeek();
+    if (loading) $('#feed').innerHTML = '<div class="empty">불러오는 중…</div>'; else renderFeed(true);
+  }
+  // 서버와 맞추기 (백그라운드). 실패해도 화면은 그대로 둔다
+  let syncing = null;
+  function sync() {
+    if (syncing) return syncing;
+    $('#sync').textContent = '새 글 확인 중…';
+    syncing = (async () => {
+      try {
+        const r = await B.api('feed', { code: S.code });
+        if (!r.ok) { if (r.error === 'auth') toGate(); return false; }
+        apply(r); $('#hello').textContent = S.me.name + '님, 안녕하세요'; renderFeed(false); return true;
+      } catch (e) { return false; }
+      finally { $('#sync').textContent = ''; syncing = null; }
+    })();
+    return syncing;
   }
 
   /* ---------- 이번 회차 + 일정 ---------- */
@@ -162,70 +191,80 @@
     $('#sched').innerHTML = C.sessions.map(x => `<li class="${next && x.n === next.n ? 'now' : next && x.n < next.n ? 'past' : ''}"><b>${String(x.n).padStart(2, '0')}</b><span>${B.fmtDate(x.date)}</span><div>${B.esc(x.title)}</div></li>`).join('');
   }
 
-  /* ---------- 글 · 댓글 ---------- */
+  /* ---------- 글 · 댓글 화면 ---------- */
   const ago = iso => {
     const t = new Date(iso), sec = (Date.now() - t) / 1000;
     if (sec < 60) return '방금'; if (sec < 3600) return Math.floor(sec / 60) + '분 전'; if (sec < 86400) return Math.floor(sec / 3600) + '시간 전';
     return (t.getMonth() + 1) + '/' + t.getDate() + ' ' + String(t.getHours()).padStart(2, '0') + ':' + String(t.getMinutes()).padStart(2, '0');
   };
   const linkify = t => B.esc(t).replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener nofollow">$1</a>');
-  const nameOf = id => (S.members[id] || {}).name || '멤버';
-  const isOp = id => (S.members[id] || {}).role === '운영자';
+  const nameOf = id => (S.members[id] || (S.me && S.me.id === id ? S.me : {})).name || '멤버';
+  const isOp = id => ((S.members[id] || (S.me && S.me.id === id ? S.me : {})).role) === '운영자';
   const mine = id => id === S.me.id || S.me.role === '운영자';
   const avatar = id => `<span class="av${isOp(id) ? ' op' : ''}">${B.esc(nameOf(id).slice(0, 1))}</span>`;
 
   function renderFeed(force) {
-    const sig = JSON.stringify([S.posts.map(p => p.id), S.comments.map(c => c.id)]);
+    const sig = JSON.stringify([S.posts.map(p => p.id + (p.pending ? '*' : '')), S.comments.map(c => c.id + (c.pending ? '*' : ''))]);
     if (!force && sig === S.sig) return; S.sig = sig;
     const drafts = {}; document.querySelectorAll('.cform input').forEach(i => { if (i.value) drafts[i.dataset.p] = i.value; });
-    const feed = $('#feed');
-    feed.innerHTML = S.posts.length ? S.posts.map(p => {
+    const ae = document.activeElement, focus = ae && ae.matches && ae.matches('.cform input') ? { p: ae.dataset.p, pos: ae.selectionStart } : null;
+    $('#feed').innerHTML = S.posts.length ? S.posts.map(p => {
       const cs = S.comments.filter(c => c.postId === p.id);
-      return `<article class="card post" data-id="${B.esc(p.id)}">
-        <div class="ph">${avatar(p.by)}<div><div class="who">${B.esc(nameOf(p.by))}${isOp(p.by) ? ' <span class="chip">운영</span>' : ''}</div><div class="when">${ago(p.at)}${mine(p.by) ? `<button class="del" data-delpost="${B.esc(p.id)}">삭제</button>` : ''}</div></div><span class="chip kind">${B.esc(p.kind || '정보 공유')}</span></div>
+      return `<article class="card post${p.pending ? ' pend' : ''}" data-id="${B.esc(p.id)}">
+        <div class="ph">${avatar(p.by)}<div><div class="who">${B.esc(nameOf(p.by))}${isOp(p.by) ? ' <span class="chip">운영</span>' : ''}</div><div class="when">${p.pending ? '올리는 중…' : ago(p.at)}${!p.pending && mine(p.by) ? `<button class="del" data-delpost="${B.esc(p.id)}">삭제</button>` : ''}</div></div><span class="chip kind">${B.esc(p.kind || '정보 공유')}</span></div>
         <p class="pt">${linkify(p.text)}</p>
         ${p.link ? `<a class="plink" href="${B.esc(p.link)}" target="_blank" rel="noopener nofollow">🔗 ${B.esc(p.link.replace(/^https?:\/\//, '').slice(0, 60))}</a>` : ''}
-        <div class="cm">${cs.map(c => `<div class="c"><span class="cw">${B.esc(nameOf(c.by))}${isOp(c.by) ? ' ✓' : ''}</span><span class="ct">${linkify(c.text)}</span><span class="cwhen">${ago(c.at)}</span>${mine(c.by) ? `<button class="del" data-delc="${B.esc(c.id)}">삭제</button>` : ''}</div>`).join('')}
-          <form class="cform" data-p="${B.esc(p.id)}"><input class="input" data-p="${B.esc(p.id)}" maxlength="600" placeholder="댓글 달기" value="${B.esc(drafts[p.id] || '')}" aria-label="댓글"><button class="btn btn-ghost btn-sm" type="submit">등록</button></form>
+        <div class="cm">${cs.map(c => `<div class="c${c.pending ? ' pend' : ''}"><span class="cw">${B.esc(nameOf(c.by))}${isOp(c.by) ? ' ✓' : ''}</span><span class="ct">${linkify(c.text)}</span><span class="cwhen">${c.pending ? '올리는 중…' : ago(c.at)}</span>${!c.pending && mine(c.by) ? `<button class="del" data-delc="${B.esc(c.id)}">삭제</button>` : ''}</div>`).join('')}
+          <form class="cform" data-p="${B.esc(p.id)}"><input class="input" data-p="${B.esc(p.id)}" maxlength="600" placeholder="${p.pending ? '올리는 중…' : '댓글 달기'}" ${p.pending ? 'disabled' : ''} value="${B.esc(drafts[p.id] || '')}" aria-label="댓글"><button class="btn btn-ghost btn-sm" type="submit" ${p.pending ? 'disabled' : ''}>등록</button></form>
         </div></article>`;
     }).join('') : '<div class="empty">아직 올라온 글이 없어요.<br>첫 글을 남겨 보세요 — 자기소개 한 줄도 좋아요.</div>';
+    if (focus) { const el = document.querySelector(`.cform input[data-p="${CSS.escape(focus.p)}"]`); if (el) { el.focus(); try { el.setSelectionRange(focus.pos, focus.pos); } catch (e) {} } }
   }
 
+  /* ---------- 올리기 · 댓글 · 삭제 (화면에 먼저 반영) ---------- */
   $('#compose').addEventListener('submit', async e => {
-    e.preventDefault(); const f = e.target, btn = $('#post-btn');
-    const text = f.text.value.trim(); if (!text) return B.toast('내용을 적어 주세요', 'err');
-    btn.disabled = true;
+    e.preventDefault(); const f = e.target;
+    const text = f.text.value.trim(), link = f.link.value.trim(), kind = f.kind.value; if (!text) return B.toast('내용을 적어 주세요', 'err');
+    const tmp = { id: 'tmp-' + Date.now(), by: S.me.id, kind, text, link, at: new Date().toISOString(), pending: true };
+    S.posts.unshift(tmp); renderFeed(true); f.text.value = ''; f.link.value = ''; S.busy++;
     try {
-      const r = await B.api('addPost', { code: S.code, post: { kind: f.kind.value, text, link: f.link.value.trim() } });
-      if (!r.ok) return B.toast(r.error || '올리지 못했어요', 'err');
-      f.text.value = ''; f.link.value = ''; await load(); renderFeed(true); B.toast('올렸어요');
-    } catch (err) { B.toast('올리지 못했어요: ' + err.message, 'err'); } finally { btn.disabled = false; }
+      const r = await B.api('addPost', { code: S.code, post: { kind, text, link } });
+      if (!r.ok) throw new Error(r.error || '올리지 못했어요');
+      S.posts = S.posts.filter(p => p !== tmp && p.id !== r.post.id); S.posts.unshift(r.post); S.posts.sort((a, b) => b.at.localeCompare(a.at));
+      saveCache(); renderFeed(true);
+    } catch (err) {
+      S.posts = S.posts.filter(p => p !== tmp); renderFeed(true); f.text.value = text; f.link.value = link; B.toast('올리지 못했어요: ' + err.message, 'err');
+    } finally { S.busy--; }
   });
   $('#feed').addEventListener('submit', async e => {
     const f = e.target.closest('.cform'); if (!f) return; e.preventDefault();
-    const inp = f.querySelector('input'), text = inp.value.trim(); if (!text) return;
-    inp.disabled = true;
+    const inp = f.querySelector('input'), text = inp.value.trim(), postId = f.dataset.p; if (!text) return;
+    const tmp = { id: 'tmp-' + Date.now(), postId, by: S.me.id, text, at: new Date().toISOString(), pending: true };
+    S.comments.push(tmp); inp.value = ''; renderFeed(true); S.busy++;
     try {
-      const r = await B.api('addComment', { code: S.code, postId: f.dataset.p, text });
-      if (!r.ok) { B.toast(r.error || '등록하지 못했어요', 'err'); inp.disabled = false; return; }
-      inp.value = ''; await load(); renderFeed(true);
-    } catch (err) { B.toast('등록하지 못했어요: ' + err.message, 'err'); inp.disabled = false; }
+      const r = await B.api('addComment', { code: S.code, postId, text });
+      if (!r.ok) throw new Error(r.error || '등록하지 못했어요');
+      S.comments = S.comments.filter(c => c !== tmp && c.id !== r.comment.id); S.comments.push(r.comment); S.comments.sort((a, b) => a.at.localeCompare(b.at));
+      saveCache(); renderFeed(true);
+    } catch (err) {
+      S.comments = S.comments.filter(c => c !== tmp); renderFeed(true); const el = document.querySelector(`.cform input[data-p="${CSS.escape(postId)}"]`); if (el) el.value = text; B.toast('등록하지 못했어요: ' + err.message, 'err');
+    } finally { S.busy--; }
   });
   $('#feed').addEventListener('click', async e => {
     const dp = e.target.closest('[data-delpost]'), dc = e.target.closest('[data-delc]');
     if (!dp && !dc) return; if (!confirm(dp ? '이 글을 삭제할까요? (댓글도 함께 지워져요)' : '이 댓글을 삭제할까요?')) return;
-    const r = await B.api(dp ? 'deletePost' : 'deleteComment', { code: S.code, id: (dp || dc).dataset[dp ? 'delpost' : 'delc'] });
-    if (!r.ok) return B.toast(r.error || '삭제하지 못했어요', 'err');
-    await load(); renderFeed(true);
+    const id = (dp || dc).dataset[dp ? 'delpost' : 'delc'];
+    if (dp) { S.posts = S.posts.filter(p => p.id !== id); S.comments = S.comments.filter(c => c.postId !== id); } else S.comments = S.comments.filter(c => c.id !== id);
+    saveCache(); renderFeed(true); S.busy++;
+    try { const r = await B.api(dp ? 'deletePost' : 'deleteComment', { code: S.code, id }); if (!r.ok) throw new Error(r.error || '삭제하지 못했어요'); }
+    catch (err) { B.toast(err.message, 'err'); await sync(); } finally { S.busy--; }
   });
-  $('#refresh').onclick = async () => { if (await load()) { renderFeed(true); B.toast('새로 불러왔어요'); } };
-  // 자동 새로고침: 화면이 보일 때, 글·댓글 입력 중이 아닐 때만
-  setInterval(async () => {
-    if (document.hidden || !S.me) return;
-    const ae = document.activeElement, typing = ae && ['INPUT', 'TEXTAREA'].includes(ae.tagName) && ae.value;
-    if (typing || $('#compose').text.value) return;
-    if (await load(true)) renderFeed(false);
-  }, 45000);
+  $('#refresh').onclick = async () => { const ok = await sync(); B.toast(ok ? '새로 불러왔어요' : '연결이 느려요. 잠시 후 다시 눌러 주세요', ok ? '' : 'err'); };
+
+  // 자동 새로고침: 화면이 보일 때, 올리는 중이거나 입력 중이 아닐 때만 (30초 / 탭으로 돌아왔을 때)
+  const idle = () => { const ae = document.activeElement; return !S.busy && !(ae && ['INPUT', 'TEXTAREA'].includes(ae.tagName) && ae.value) && !$('#compose').text.value; };
+  setInterval(() => { if (!document.hidden && S.me && idle()) sync(); }, 30000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && S.me && idle() && Date.now() - S.last > 15000) sync(); });
 
   boot();
 })();

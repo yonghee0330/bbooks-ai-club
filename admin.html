@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>신청자 관리 · 부천 AI 프로젝트 클럽</title>
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="assets/style.css?v=1009">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://script.google.com">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/style.css?v=1011">
 <style>
 .ahead { padding: 30px 0 10px; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
 .ahead h1 { font: 800 30px/1.2 var(--sans); letter-spacing: -.04em; margin: 8px 0 0; }
@@ -63,37 +66,22 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
     <div style="display:flex;gap:8px"><button class="btn btn-ghost btn-sm" id="reload">새로고침</button><button class="btn btn-dark btn-sm" id="csv">CSV 내보내기</button></div></div>
   <div class="kpis" id="kpis"></div>
   <div class="dist" id="dist"></div>
-  <div class="toolbar"><span class="muted" style="font-size:13px">정렬</span>
-    <select id="sort"><option value="at">신청 순 (선착순)</option><option value="total">참고 점수순</option></select>
-    <select id="filter"><option value="">전체 상태</option><option>접수</option><option>입금확인</option><option>대기</option><option>취소</option></select>
-    <span class="muted" style="font-size:12px;margin-left:auto">선착순 8명 · 자리는 <b>접수 + 입금확인</b> 신청 수로 세고 8명이 차면 신청이 자동 마감돼요. 결제(계좌 입금 / 현장 결제)를 확인하면 <b>입금확인</b>으로 바꾸세요(멤버 라운지 코드 발급). 안 오는 신청은 <b>취소</b>로 바꾸면 자리가 다시 열려요</span></div>
+  <div class="toolbar"><select id="filter"><option value="">전체 상태</option><option>접수</option><option>입금확인</option><option>대기</option><option>취소</option></select>
+    <span class="muted" style="font-size:12px;margin-left:auto">선착순 8명 · 자리는 <b>접수 + 입금확인</b> 신청 수로 세고 8명이 차면 신청이 자동 마감돼요. 결제(계좌 입금 / 현장 결제)를 확인하면 <b>입금확인</b>으로 바꾸세요(입장 코드 발급). 안 오는 신청은 <b>취소</b>로 바꾸면 자리가 다시 열려요</span></div>
   <div class="tbl-wrap"><table class="t"><thead><tr>
-    <th>#</th><th>이름 · 연락</th><th><span class="c">②</span>하는 일</th><th><span class="c">②</span>도구 · 사용 범위 · 코딩</th><th><span class="c">①</span>Q7 바꿔 볼 일</th><th><span class="c">③</span>Q6 기대</th><th><span class="c">④</span>Q8 출석</th>
-    <th>① 점</th><th>③ 점</th><th>④ 점</th><th>합</th><th>상태</th><th>메모</th></tr></thead><tbody id="rows"></tbody></table></div>
+    <th>#</th><th>이름 · 연락</th><th>하는 일</th><th>도구 · 사용 범위 · 코딩</th><th>Q7 바꿔 볼 일</th><th>Q6 기대</th><th>Q8 출석</th><th>상태</th><th>메모</th></tr></thead><tbody id="rows"></tbody></table></div>
 </main>
 
 <div class="detail" id="detail"><div class="card" id="dcard"></div></div>
 
-<script src="assets/config.js?v=1009"></script>
-<script src="assets/app.js?v=1009"></script>
+<script src="assets/config.js?v=1011"></script>
+<script src="assets/app.js?v=1011"></script>
 <script>
 (function () {
   const C = CLUB, B = BAPC, $ = s => document.querySelector(s);
   let KEY = sessionStorage.getItem('bapc-admin') || '', APPS = [];
   if (B.demoMode) { $('#demo').hidden = false; $('#khint').hidden = false; }
 
-  // 신청서 응답으로 자동 추천 점수 (운영자가 바꿀 수 있음)
-  function auto(a) {
-    const hope = [].concat(a.hope || []), n = hope.filter(h => h !== '같이 공부할 사람 만나기').length;
-    const len = (a.goal || '').length;
-    const s1 = len >= 14 ? 3 : len >= 6 ? 2 : 1;           // ① 바꿔 볼 일의 구체성 (Q7)
-    const s3 = n >= 2 ? 3 : n === 1 ? 2 : 1;               // ③ 코스 적합도: 학습·적용 의지 (Q6)
-    const s4 = /^10회/.test(a.attend) ? 3 : /^8/.test(a.attend) ? 2 : 1; // ④ 출석 (Q8)
-    return { s1, s3, s4 };
-  }
-  const sc = a => Object.assign(auto(a), a.scores || {});
-  const total = a => { const s = sc(a); return s.s1 * 100 + s.s3 * 10 + s.s4; }; // 기준 순서대로 적용
-  const sum = a => { const s = sc(a); return s.s1 + s.s3 + s.s4; };
 
   async function open() {
     const r = await B.api('adminList', { key: KEY });
@@ -114,29 +102,25 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
       .map(([k, v]) => `<div class="card kpi"><b>${v}</b><span>${k}</span></div>`).join('');
     const cnt = (list, f) => list.reduce((o, a) => { [].concat(f(a)).filter(Boolean).forEach(k => o[k] = (o[k] || 0) + 1); return o; }, {});
     const role = a => a.role === '기타' ? '기타:' + a.roleOther : a.role, tools = a => (a.tools || []).filter(t => t !== '기타');
-    $('#dist').innerHTML = bars('② 직군', cnt(APPS, role), cnt(sel, role)) + bars('② 주력 도구', cnt(APPS, tools), cnt(sel, tools)) + bars('② 사용 범위 · 코딩 경험', Object.assign(cnt(APPS, a => a.level), cnt(APPS, a => a.coding)), Object.assign(cnt(sel, a => a.level), cnt(sel, a => a.coding)));
+    $('#dist').innerHTML = bars('직군', cnt(APPS, role), cnt(sel, role)) + bars('주력 도구', cnt(APPS, tools), cnt(sel, tools)) + bars('사용 범위 · 코딩 경험', Object.assign(cnt(APPS, a => a.level), cnt(APPS, a => a.coding)), Object.assign(cnt(sel, a => a.level), cnt(sel, a => a.coding)));
     let list = APPS.slice(); const f = $('#filter').value; if (f) list = list.filter(a => (a.status || '접수') === f);
-    if ($('#sort').value === 'total') list.sort((a, b) => total(b) - total(a) || a.at.localeCompare(b.at)); else list.sort((a, b) => a.at.localeCompare(b.at));
-    const opt = (n, v) => [3, 2, 1].map(x => `<option ${x === v ? 'selected' : ''}>${x}</option>`).join('');
-    $('#rows').innerHTML = list.map((a, i) => { const s = sc(a), st = a.status || '접수';
+    list.sort((a, b) => a.at.localeCompare(b.at)); // 선착순
+    $('#rows').innerHTML = list.map((a, i) => { const st = a.status || '접수';
       return `<tr class="st-${st}" data-id="${a.id}">
         <td class="mono">${i + 1}<br><button class="more" data-more>전체</button></td>
-        <td><b>${B.esc(a.name)}</b><br><span class="muted">${B.esc(a.phone)}<br>${B.esc(a.email)}</span>${a.memberCode ? `<br><span class="code" title="멤버 라운지 코드">${B.esc(a.memberCode)}</span>` : ''}</td>
+        <td><b>${B.esc(a.name)}</b><br><span class="muted">${B.esc(a.phone)}<br>${B.esc(a.email)}</span>${a.memberCode ? `<br><span class="code" title="입장 코드">${B.esc(a.memberCode)}</span>` : ''}</td>
         <td>${B.esc(role(a))}</td>
         <td>${B.esc(tools(a).concat(a.toolsOther ? [a.toolsOther] : []).join(', '))}<br><span class="chip" style="margin-top:4px">${B.esc(a.level)}</span> <span class="chip" style="margin-top:4px">${B.esc(a.coding || '')}</span></td>
         <td class="long"><div>${B.esc(a.goal)}</div></td>
         <td class="long"><div>${B.esc([].concat(a.hope || []).join(' · '))}</div></td>
         <td>${B.esc(a.attend)}${a.absent ? '<br><span class="muted">불참 ' + B.esc(a.absent) + '</span>' : ''}<br><span class="muted">${B.esc(a.pay || '')}</span></td>
-        <td><select data-s="s1">${opt('s1', s.s1)}</select></td><td><select data-s="s3">${opt('s3', s.s3)}</select></td><td><select data-s="s4">${opt('s4', s.s4)}</select></td>
-        <td class="tot">${sum(a)}</td>
         <td><select data-status>${['접수', '입금확인', '대기', '취소'].map(x => `<option ${x === st ? 'selected' : ''}>${x}</option>`).join('')}</select></td>
-        <td><input class="memo" data-memo value="${B.esc(a.memo || '')}" placeholder="메모"></td></tr>`; }).join('') || '<tr><td colspan="13" style="padding:40px;text-align:center" class="muted">아직 신청이 없어요.</td></tr>';
+        <td><input class="memo" data-memo value="${B.esc(a.memo || '')}" placeholder="메모"></td></tr>`; }).join('') || '<tr><td colspan="9" style="padding:40px;text-align:center" class="muted">아직 신청이 없어요.</td></tr>';
   }
-  $('#sort').onchange = render; $('#filter').onchange = render;
+  $('#filter').onchange = render;
   $('#rows').addEventListener('change', async e => {
     const tr = e.target.closest('tr'), a = APPS.find(x => x.id === tr.dataset.id); if (!a) return;
     const p = { key: KEY, id: a.id };
-    if (e.target.dataset.s) { a.scores = Object.assign(sc(a), { [e.target.dataset.s]: +e.target.value }); p.scores = a.scores; }
     if (e.target.hasAttribute('data-status')) { a.status = e.target.value; p.status = a.status; }
     if (e.target.hasAttribute('data-memo')) { a.memo = e.target.value; p.memo = a.memo; }
     const r = await B.api('adminUpdate', p); if (!r.ok) return B.toast('저장 실패', 'err');
@@ -151,9 +135,9 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
   });
   $('#detail').addEventListener('click', e => { if (e.target.id === 'detail' || e.target.closest('[data-x]')) $('#detail').classList.remove('on'); });
   $('#csv').onclick = () => {
-    const cols = ['id', 'at', 'status', 'name', 'phone', 'email', 'role', 'roleOther', 'tools', 'toolsOther', 'level', 'coding', 'hope', 'goal', 'attend', 'absent', 'pay', 'consentNext', 's1', 's3', 's4', 'sum', 'memo', 'memberCode'];
+    const cols = ['id', 'at', 'status', 'name', 'phone', 'email', 'role', 'roleOther', 'tools', 'toolsOther', 'level', 'coding', 'hope', 'goal', 'attend', 'absent', 'pay', 'consentNext', 'memo', 'memberCode'];
     const q = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
-    const rows = APPS.map(a => { const s = sc(a); return cols.map(c => q(c in s ? s[c] : c === 'sum' ? sum(a) : Array.isArray(a[c]) ? a[c].join(', ') : a[c])).join(','); });
+    const rows = APPS.map(a => cols.map(c => q(Array.isArray(a[c]) ? a[c].join(', ') : a[c])).join(','));
     const blob = new Blob(['﻿' + cols.join(',') + '\n' + rows.join('\n')], { type: 'text/csv' });
     const l = document.createElement('a'); l.href = URL.createObjectURL(blob); l.download = 'AI클럽1기_신청자_' + new Date().toISOString().slice(0, 10) + '.csv'; l.click();
   };

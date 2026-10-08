@@ -12,7 +12,6 @@ window.CLUB = {
   // 마감·발표 (KST)
   open: '2026-10-06T00:00:00+09:00',      // 신청 시작 (이전에는 신청서가 닫혀 있음)
   deadline: '2026-10-16T12:00:00+09:00',
-  announce: '2026-10-16T20:00:00+09:00',
   firstSession: '2026-10-17T14:00:00+09:00',
   // 참가비·보증금 — 확정되면 문구만 교체
   fee: '10회 50,000원 (일괄 결제)',
@@ -62,14 +61,6 @@ window.CLUB = {
     { min: 50, name: '프로젝트 진행현황 공유', desc: '프로젝트 진행 현황을 나누고 아이디어를 주고받아요' },
     { min: 15, name: 'Q&A', desc: '서로 묻고 답해요' }
   ],
-  shareMinPerPerson: 6,
 
-  types: {
-    save:  { name: '절감형',     dir: 'down', desc: '본업의 시간·비용을 줄인다',     ex: '주당 절감 시간, 건당 작업 시간' },
-    grow:  { name: '매출 증대형', dir: 'up',   desc: '기존 일의 홍보·판매를 키운다',   ex: '유입수, 문의 수, 주문 건수' },
-    new:   { name: '신사업형',   dir: 'up',   desc: 'AI로 새 상품·서비스를 만든다',  ex: '출시 여부, 첫 판매, 판매 건수' }
-  },
 
-  tools: ['ChatGPT', 'Claude', 'Gemini', 'Perplexity', 'Copilot', 'Notion AI', 'Midjourney', '나노바나나·이미지 생성', 'Canva AI', '영상 생성(Sora·Veo·Kling 등)', 'Suno·음악', 'Make·Zapier·n8n', 'Cursor·Claude Code', 'NotebookLM'],
-  roles: ['직장인', '자영업', '프리랜서', '창업 준비']
 };
