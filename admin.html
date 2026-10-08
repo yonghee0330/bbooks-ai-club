@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>신청자 관리 · 부천 AI 프로젝트 클럽</title>
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="assets/style.css?v=1008">
+<link rel="stylesheet" href="assets/style.css?v=1008c">
 <style>
 .ahead { padding: 30px 0 10px; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
 .ahead h1 { font: 800 30px/1.2 var(--sans); letter-spacing: -.04em; margin: 8px 0 0; }
@@ -66,7 +66,7 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
   <div class="toolbar"><span class="muted" style="font-size:13px">정렬</span>
     <select id="sort"><option value="at">신청 순 (선착순)</option><option value="total">참고 점수순</option></select>
     <select id="filter"><option value="">전체 상태</option><option>접수</option><option>입금확인</option><option>대기</option><option>취소</option></select>
-    <span class="muted" style="font-size:12px;margin-left:auto">선착순 · 입금을 확인하면 상태를 <b>입금확인</b>으로 바꾸세요 (멤버 라운지 코드가 발급돼요). 정원 8명이 차면 나머지는 <b>대기</b></span></div>
+    <span class="muted" style="font-size:12px;margin-left:auto">선착순 8명 · 자리는 <b>접수 + 입금확인</b> 신청 수로 세고 8명이 차면 신청이 자동 마감돼요. 결제(계좌 입금 / 현장 결제)를 확인하면 <b>입금확인</b>으로 바꾸세요(멤버 라운지 코드 발급). 안 오는 신청은 <b>취소</b>로 바꾸면 자리가 다시 열려요</span></div>
   <div class="tbl-wrap"><table class="t"><thead><tr>
     <th>#</th><th>이름 · 연락</th><th><span class="c">②</span>하는 일</th><th><span class="c">②</span>도구 · 사용 범위 · 코딩</th><th><span class="c">①</span>Q7 바꿔 볼 일</th><th><span class="c">③</span>Q6 기대</th><th><span class="c">④</span>Q8 출석</th>
     <th>① 점</th><th>③ 점</th><th>④ 점</th><th>합</th><th>상태</th><th>메모</th></tr></thead><tbody id="rows"></tbody></table></div>
@@ -74,8 +74,8 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
 
 <div class="detail" id="detail"><div class="card" id="dcard"></div></div>
 
-<script src="assets/config.js?v=1008"></script>
-<script src="assets/app.js?v=1008"></script>
+<script src="assets/config.js?v=1008c"></script>
+<script src="assets/app.js?v=1008c"></script>
 <script>
 (function () {
   const C = CLUB, B = BAPC, $ = s => document.querySelector(s);
@@ -126,7 +126,7 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
         <td>${B.esc(tools(a).concat(a.toolsOther ? [a.toolsOther] : []).join(', '))}<br><span class="chip" style="margin-top:4px">${B.esc(a.level)}</span> <span class="chip" style="margin-top:4px">${B.esc(a.coding || '')}</span></td>
         <td class="long"><div>${B.esc(a.goal)}</div></td>
         <td class="long"><div>${B.esc([].concat(a.hope || []).join(' · '))}</div></td>
-        <td>${B.esc(a.attend)}${a.absent ? '<br><span class="muted">불참 ' + B.esc(a.absent) + '</span>' : ''}<br><span class="muted">노트북 ${/^예/.test(a.laptop) ? 'O' : 'X'}</span></td>
+        <td>${B.esc(a.attend)}${a.absent ? '<br><span class="muted">불참 ' + B.esc(a.absent) + '</span>' : ''}<br><span class="muted">${B.esc(a.pay || '')}</span></td>
         <td><select data-s="s1">${opt('s1', s.s1)}</select></td><td><select data-s="s3">${opt('s3', s.s3)}</select></td><td><select data-s="s4">${opt('s4', s.s4)}</select></td>
         <td class="tot">${sum(a)}</td>
         <td><select data-status>${['접수', '입금확인', '대기', '취소'].map(x => `<option ${x === st ? 'selected' : ''}>${x}</option>`).join('')}</select></td>
@@ -145,13 +145,13 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
   });
   $('#rows').addEventListener('click', e => { if (!e.target.closest('[data-more]')) return;
     const a = APPS.find(x => x.id === e.target.closest('tr').dataset.id);
-    const L = { id: '접수번호', at: '접수 시각', name: '이름', phone: '연락처', email: '이메일', role: 'Q2 하는 일', roleOther: 'Q2 기타', tools: 'Q3 도구', toolsOther: 'Q3 기타', level: 'Q4 AI 사용 범위', coding: 'Q5 코딩 경험', hope: 'Q6 기대하는 것', goal: 'Q7 바꿔 보고 싶은 일', attend: 'Q8 출석', absent: 'Q8 불참일', laptop: 'Q9 노트북', consent: 'Q10 동의', consentNext: '2기 소식 동의' };
+    const L = { id: '접수번호', at: '접수 시각', name: '이름', phone: '연락처', email: '이메일', role: 'Q2 하는 일', roleOther: 'Q2 기타', tools: 'Q3 도구', toolsOther: 'Q3 기타', level: 'Q4 AI 사용 범위', coding: 'Q5 코딩 경험', hope: 'Q6 기대하는 것', goal: 'Q7 바꿔 보고 싶은 일', attend: 'Q8 출석', absent: 'Q8 불참일', pay: 'Q9 결제 방법', consent: 'Q10 동의', consentNext: '2기 소식 동의' };
     $('#dcard').innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">${B.esc(a.name)}</h2><button class="btn btn-ghost btn-sm" data-x>닫기</button></div><dl style="margin-top:16px">${Object.entries(L).map(([k, l]) => `<dt>${l}</dt><dd>${B.esc([].concat(a[k] || '').join(', '))}</dd>`).join('')}</dl>`;
     $('#detail').classList.add('on');
   });
   $('#detail').addEventListener('click', e => { if (e.target.id === 'detail' || e.target.closest('[data-x]')) $('#detail').classList.remove('on'); });
   $('#csv').onclick = () => {
-    const cols = ['id', 'at', 'status', 'name', 'phone', 'email', 'role', 'roleOther', 'tools', 'toolsOther', 'level', 'coding', 'hope', 'goal', 'attend', 'absent', 'laptop', 'consentNext', 's1', 's3', 's4', 'sum', 'memo', 'memberCode'];
+    const cols = ['id', 'at', 'status', 'name', 'phone', 'email', 'role', 'roleOther', 'tools', 'toolsOther', 'level', 'coding', 'hope', 'goal', 'attend', 'absent', 'pay', 'consentNext', 's1', 's3', 's4', 'sum', 'memo', 'memberCode'];
     const q = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
     const rows = APPS.map(a => { const s = sc(a); return cols.map(c => q(c in s ? s[c] : c === 'sum' ? sum(a) : Array.isArray(a[c]) ? a[c].join(', ') : a[c])).join(','); });
     const blob = new Blob(['﻿' + cols.join(',') + '\n' + rows.join('\n')], { type: 'text/csv' });

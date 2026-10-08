@@ -32,8 +32,10 @@
   }
 
   const demo = {
+    status() { const n = store.get('apps', []).filter(a => ['취소', '대기'].indexOf(a.status || '접수') < 0).length; return { ok: true, seats: C.seats, taken: n, closed: n >= C.seats }; },
     apply({ data: d }) {
       const apps = store.get('apps', []);
+      if (apps.filter(a => ['취소', '대기'].indexOf(a.status || '접수') < 0).length >= C.seats) return { ok: false, closed: true, error: '정원 ' + C.seats + '명이 모두 찼어요' };
       const id = 'AI1-' + String(apps.length + 1).padStart(3, '0') + '-' + Math.random().toString(36).slice(2, 4).toUpperCase();
       apps.push(Object.assign({ id, at: now(), status: '접수', scores: {} }, d));
       store.set('apps', apps);
@@ -100,7 +102,7 @@
     if (!C.apiUrl) { await new Promise(r => setTimeout(r, 250)); return demo[action](payload); }
     // text/plain 으로 보내면 CORS preflight 없이 Apps Script doPost 에 닿는다.
     // 구글 서버가 가끔 일시적으로 404/5xx를 돌려주므로 자동 재시도 (apply 는 reqId 로 서버가 중복 접수를 막는다)
-    const RETRY = ['apply', 'login', 'board', 'setValue', 'updateProject', 'addLog', 'adminList', 'adminUpdate'];
+    const RETRY = ['status', 'apply', 'login', 'board', 'setValue', 'updateProject', 'addLog', 'adminList', 'adminUpdate'];
     const tries = RETRY.includes(action) ? 4 : 1;
     let lastErr;
     for (let i = 0; i < tries; i++) {
@@ -164,5 +166,8 @@
     return { next, done };
   }
 
-  window.BAPC = { api, store, reveal, toast, countdown, countUp, esc, fmtDate, today, currentSession, reduced, demoMode: !C.apiUrl };
+  // 정원 현황 { seats, taken, closed } — 서버가 안 되면 null (이때는 마감으로 막지 않는다)
+  async function seatStatus() { try { const r = await api('status'); return r && r.ok ? r : null; } catch (e) { return null; } }
+
+  window.BAPC = { api, seatStatus, store, reveal, toast, countdown, countUp, esc, fmtDate, today, currentSession, reduced, demoMode: !C.apiUrl };
 })();

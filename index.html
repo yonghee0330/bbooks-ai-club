@@ -12,18 +12,18 @@
 <meta property="og:title" content="부천 AI 프로젝트 클럽 1기 모집">
 <meta property="og:description" content="동네에서 함께 공부하고 실천해보는 AI 스터디 모임! 막연한 공부에 그치지 않고, 구체적인 숫자를 만들어봅니다.">
 <meta property="og:url" content="https://bbooks.co.kr/ai-study/">
-<meta property="og:image" content="https://bbooks.co.kr/ai-study/images/og.png?v=1008">
+<meta property="og:image" content="https://bbooks.co.kr/ai-study/images/og.png?v=1008c">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="1기 모집 — 동네에서 함께 공부하고 실천해보는 AI 스터디 모임">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="부천 AI 프로젝트 클럽 1기 모집">
 <meta name="twitter:description" content="동네에서 함께 공부하고 실천해보는 AI 스터디 모임! 막연한 공부에 그치지 않고, 구체적인 숫자를 만들어봅니다.">
-<meta name="twitter:image" content="https://bbooks.co.kr/ai-study/images/og.png?v=1008">
+<meta name="twitter:image" content="https://bbooks.co.kr/ai-study/images/og.png?v=1008c">
 <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0d1411" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234e6813'/%3E%3Cpath d='M7 22l6-6 4 4 8-9' stroke='%23ffffff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/style.css?v=1008">
+<link rel="stylesheet" href="assets/style.css?v=1008c">
 <style>
 /* ---------- HERO ---------- */
 .hero { background: var(--paper); border-bottom: 1px solid var(--line); padding: clamp(48px, 7vw, 88px) 0 clamp(48px, 7vw, 80px); }
@@ -32,6 +32,8 @@
 .recruit { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
 .recruit-tag { font: 800 clamp(26px, 4vw, 36px)/1 var(--sans); letter-spacing: -.03em; color: var(--signal-ink); background: var(--signal); padding: 10px 18px; border-radius: 8px; }
 .recruit-when { font-size: 16px; font-weight: 600; color: var(--ink-2); }
+.recruit-tag.closed { background: var(--muted); }
+.btn.is-closed { background: var(--muted); color: #fff; pointer-events: none; }
 .hero .eyebrow { padding: 5px 11px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--ink-2); font-size: 14px; font-weight: 600; }
 .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
 .hero h1 { font: 800 clamp(34px, 5.4vw, 54px)/1.25 var(--sans); letter-spacing: -.045em; margin: 22px 0 20px; }
@@ -554,14 +556,15 @@
     <div class="steps" id="steps" data-reveal>
       <span class="prog"></span>
       <div class="step"><span class="pt">1</span><div class="d">10/6(화) ~ 10/16(금) 12:00</div><h4>신청서 작성</h4><p>10문항 · 3~5분</p></div>
-      <div class="step"><span class="pt">2</span><div class="d">선착순 8명</div><h4>송금하면 신청 완료</h4><p>입금 확인 순서대로 확정돼요</p></div>
+      <div class="step"><span class="pt">2</span><div class="d">선착순 8명</div><h4>결제하면 신청 완료</h4><p>계좌 입금 또는 매장 카드결제</p></div>
       <div class="step"><span class="pt">3</span><div class="d">10/17(토) 14:00</div><h4>1회차 킥오프</h4><p>각자 쓰는 AI 공유</p></div>
     </div>
     <div class="select">
       <div class="card fee" data-reveal style="--d:.1s">
-        <h3>참가비 · 준비물</h3>
+        <h3>참가비 · 결제 · 준비물</h3>
         <dl>
           <div><dt>FEE</dt><dd id="fee"></dd><p class="muted" style="margin:6px 0 0">회당 5,000원 꼴이에요. 끝까지 함께하는 <b>책임감</b>을 위해 한 번에 받고, 중간에 빠져도 환불되지 않아요. 비북스 공간 대관과 모임 <b>다과·음료</b>에 보태요.</p></div>
+          <div><dt>PAY</dt><dd>계좌 입금 · 매장 현장 카드결제</dd><p class="muted" style="margin:6px 0 0">카카오뱅크 7942-33-45474 경규환<br>신청서에서 결제 방법을 고르면 제출 후 안내가 나와요</p></div>
           <div><dt>BRING</dt><dd>노트북</dd></div>
           <div><dt>SPACE</dt><dd>비북스 세미나실 · 와이파이 · 모니터</dd></div>
         </dl>
@@ -576,7 +579,7 @@
     <span class="eyebrow" data-reveal>FAQ</span>
     <h2 class="h2" data-reveal>자주 묻는 질문</h2>
     <div class="faq" data-reveal>
-      <details><summary>어떻게 신청하나요?</summary><div class="a"><p>신청서(10문항, 3~5분)를 작성하고 송금하면 신청이 완료돼요. 선착순 8명이고, 입금 확인 순서대로 확정돼요. 별도 선발은 없어요.</p></div></details>
+      <details><summary>어떻게 신청하나요?</summary><div class="a"><p>신청서(10문항, 3~5분)를 작성하고 결제하면 신청이 완료돼요. 결제는 계좌 입금 또는 비북스 매장 현장 카드결제 중 고를 수 있어요. 선착순 8명이 차면 모집이 마감되고, 별도 선발은 없어요.</p></div></details>
       <details><summary>참가비는 얼마인가요? 왜 한 번에 받나요?</summary><div class="a"><p id="fee-faq"></p></div></details>
       <details><summary>누가 이끄나요? 강의가 있나요?</summary><div class="a"><p>가르치는 수업은 아니에요. Hose는 각자의 시도를 응원하고 돕는 사람이에요. 새로운 정보 공유(미니특강 포함), 프로젝트 진행현황 공유, Q&A로 진행돼요.</p></div></details>
       <details><summary>10회는 어떻게 흘러가나요?</summary><div class="a"><p>1회 킥오프, 2~9회 각자 목표대로 실행, 10회 마무리예요. 정해진 커리큘럼 없이 함께 실험해요.</p></div></details>
@@ -610,8 +613,8 @@
 
 <div class="sticky-cta" id="sticky"><span class="lbl" id="sticky-lbl"></span><a class="btn btn-primary btn-sm" href="apply.html">신청하기 →</a></div>
 
-<script src="assets/config.js?v=1008"></script>
-<script src="assets/app.js?v=1008"></script>
+<script src="assets/config.js?v=1008c"></script>
+<script src="assets/app.js?v=1008c"></script>
 <script>
 (function () {
   const C = CLUB, B = BAPC;
@@ -719,6 +722,24 @@
   const cio = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { B.countUp(e.target, +e.target.dataset.count, 1300); cio.unobserve(e.target); } }), { threshold: .6 });
   document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
 
+  /* 정원 현황: 남은 자리 표시, 8명이 다 차면 모집 마감 화면으로 자동 전환 */
+  B.seatStatus().then(st => {
+    if (!st) return;
+    const left = Math.max(0, st.seats - st.taken), when = document.querySelector('.recruit-when');
+    if (!st.closed) { if (when && !preOpen) when.textContent = '선착순 8명 · 남은 자리 ' + left + '명 · 10/16(금) 12:00까지'; return; }
+    document.querySelector('.recruit-tag').textContent = '1기 모집 마감';
+    document.querySelector('.recruit-tag').classList.add('closed');
+    if (when) when.textContent = '정원 ' + st.seats + '명이 모두 찼어요';
+    document.querySelectorAll('[data-cta]').forEach(a => { a.classList.add('is-closed'); a.removeAttribute('href'); a.firstChild.textContent = '모집이 마감되었어요 '; const ar = a.querySelector('.arr'); if (ar) ar.remove(); });
+    const lbl = document.getElementById('cd-label'); if (lbl) lbl.textContent = '2기 소식은 인스타그램 @bbooks_bucheon';
+    document.querySelectorAll('[data-countdown]').forEach(el => el.style.display = 'none');
+    const nav = document.querySelector('.nav .btn-primary'); if (nav) { nav.textContent = '모집 마감'; nav.removeAttribute('href'); nav.classList.add('is-closed'); }
+    const fin = document.querySelector('.final'); if (fin) { fin.querySelector('h2').innerHTML = '1기 모집이<br><em>마감</em>되었어요'; fin.querySelector('.lead').textContent = '함께해 주셔서 고마워요. 2기 소식은 인스타그램에서 알려드릴게요.'; }
+    window.__closed = true;
+    const sl = document.getElementById('sticky-lbl'); if (sl) sl.textContent = '1기 모집 마감';
+    const sb = document.querySelector('#sticky .btn'); if (sb) { sb.textContent = '마감'; sb.removeAttribute('href'); sb.classList.add('is-closed'); }
+  });
+
   /* process progress: 오늘 날짜 기준 */
   const now = B.today(), marks = [C.open, C.open, C.firstSession].map(d => new Date(d));
   const done = marks.filter(m => m <= now).length;
@@ -728,7 +749,7 @@
   /* sticky cta */
   const sticky = document.getElementById('sticky'), st = document.getElementById('sticky-lbl'), hero = document.querySelector('.hero'), fin = document.querySelector('.final');
   const end = new Date(C.deadline).getTime();
-  const upd = () => { const d = Math.max(0, end - Date.now()); st.textContent = Date.now() < openAt ? '1기 모집 · 신청 10/6(화) 오픈' : d ? `1기 모집 · 마감까지 D-${Math.ceil(d / 864e5)}` : '1기 모집 마감'; };
+  const upd = () => { if (window.__closed) { st.textContent = '1기 모집 마감'; return; } const d = Math.max(0, end - Date.now()); st.textContent = Date.now() < openAt ? '1기 모집 · 신청 10/6(화) 오픈' : d ? `1기 모집 · 마감까지 D-${Math.ceil(d / 864e5)}` : '1기 모집 마감'; };
   upd(); setInterval(upd, 60000);
   let heroVis = true, finVis = false;
   const sv = () => sticky.classList.toggle('show', !heroVis && !finVis);
