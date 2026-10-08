@@ -12,20 +12,20 @@
 <meta property="og:title" content="1기 신청서 · 부천 AI 프로젝트 클럽">
 <meta property="og:description" content="10문항, 3~5분이면 끝나요. 선착순 8명 · 신청서 작성 후 송금하면 신청 완료.">
 <meta property="og:url" content="https://bbooks.co.kr/ai-study/apply.html">
-<meta property="og:image" content="https://bbooks.co.kr/ai-study/images/og.png?v=1011">
+<meta property="og:image" content="https://bbooks.co.kr/ai-study/images/og.png?v=1012">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="1기 모집 — 동네에서 함께 공부하고 실천해보는 AI 스터디 모임">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="1기 신청서 · 부천 AI 프로젝트 클럽">
 <meta name="twitter:description" content="10문항, 3~5분이면 끝나요. 선착순 8명 · 신청서 작성 후 송금하면 신청 완료.">
-<meta name="twitter:image" content="https://bbooks.co.kr/ai-study/images/og.png?v=1011">
+<meta name="twitter:image" content="https://bbooks.co.kr/ai-study/images/og.png?v=1012">
 <meta name="theme-color" content="#f8fafc">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234e6813'/%3E%3Cpath d='M7 22l6-6 4 4 8-9' stroke='%23ffffff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://script.google.com">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="assets/style.css?v=1011">
+<link rel="stylesheet" href="assets/style.css?v=1012">
 <style>
 .page { display: grid; grid-template-columns: 1fr 340px; gap: 48px; padding: 40px 0 96px; align-items: start; }
 @media (max-width: 980px) { .page { grid-template-columns: 1fr; } .side { display: none; } }
@@ -222,7 +222,13 @@
             <input class="input other" name="absent" maxlength="40" placeholder="불참 예정일 (예: 11/21, 12/5)">
             <span class="err">하나를 고르고, 불참 예정일이 있으면 적어 주세요.</span>
           </div>
-          <div class="field" data-q="pay">
+          <div class="field" data-q="slot" id="slot-field" hidden>
+            <div class="lab"><span class="num">Q9</span>참여 반 <span class="req">필수</span></div>
+            <p class="help" id="slot-help"></p>
+            <div class="opts" id="opt-slot"></div>
+            <span class="err">하나를 골라 주세요.</span>
+          </div>
+          <div class="field" data-q="pay" id="pay-field">
             <div class="lab"><span class="num">Q9</span>결제 방법 <span class="req">필수</span></div>
             <p class="help">참가비 5만 원. 신청서를 제출하면 안내가 나와요. 노트북은 모임 때 챙겨 와 주세요.</p>
             <div class="opts" id="opt-pay"></div>
@@ -298,8 +304,8 @@
 
 <footer class="foot"><div class="wrap"><div>부천 AI 프로젝트 클럽 1기 · 비북스</div><div>문의 · <a href="https://www.instagram.com/bbooks_bucheon/" target="_blank" rel="noopener">@bbooks_bucheon</a></div></div></footer>
 
-<script src="assets/config.js?v=1011"></script>
-<script src="assets/app.js?v=1011"></script>
+<script src="assets/config.js?v=1012"></script>
+<script src="assets/app.js?v=1012"></script>
 <script>
 (function () {
   const C = CLUB, B = BAPC, form = document.getElementById('form');
@@ -347,7 +353,25 @@
   const val = n => { const els = form.elements[n]; if (!els) return ''; if (els instanceof RadioNodeList || els.length > 1 && els[0] && els[0].type) {
     const arr = [...els]; if (arr[0].type === 'checkbox') return arr.filter(x => x.checked).map(x => x.value); return (arr.find(x => x.checked) || {}).value || ''; }
     if (els.type === 'checkbox') return els.checked ? els.value : ''; return els.value.trim(); };
-  const NAMES = ['name', 'phone', 'email', 'role', 'roleOther', 'tools', 'toolsOther', 'level', 'coding', 'hope', 'goal', 'attend', 'absent', 'pay', 'consent', 'consentNext'];
+  /* 오후반 정원이 차면 '대기 신청' 모드: 오전반(개설형) 또는 오후반 대기를 고르고, 결제는 받지 않는다 */
+  const MODE = { full: false, st: null };
+  function applyMode(st) {
+    MODE.st = st; MODE.full = !!(st && st.closed && !(st.am && st.am.full));
+    const M = C.morning, am = st && st.am, left = st ? st.seats - st.taken : 0;
+    document.getElementById('slot-field').hidden = !MODE.full; document.getElementById('pay-field').hidden = MODE.full;
+    const chip = document.getElementById('seat-chip'), intro = document.querySelector('.head p');
+    if (MODE.full) {
+      document.getElementById('opt-slot').innerHTML = [
+        ['오전반', `토요일 오전반 ${M.time} · ${M.min}명 이상 모이면 개설${am && am.open ? ' (개설 확정!)' : ''}`],
+        ['오후반 대기', `오후반(14:00–15:30) 대기 · 자리가 나면 연락`]
+      ].map(([v, t]) => `<label class="opt-pill"><input type="radio" name="slot" value="${B.esc(v)}"><span>${B.esc(t)}</span></label>`).join('');
+      document.getElementById('slot-help').textContent = `오후반 정원 ${st.seats}명이 마감됐어요. 지금은 대기 신청을 받아요 — 결제는 지금 하지 않고, 확정되면 안내드려요.`;
+      chip.innerHTML = '<i style="color:var(--signal)"></i>오후반 마감 · 대기 신청 중';
+      intro.innerHTML = `오후반(토 14:00–15:30) 정원 ${st.seats}명이 마감됐어요. <b>대기 신청</b>을 받고 있어요. 토요일 <b>오전반(${M.time})</b>은 ${M.min}명 이상 신청하면 개설돼요 <b>(현재 ${am ? am.count : 0}/${M.min}명${am && am.open ? ' · 개설 확정' : ''})</b>.`;
+    } else if (st && left < st.seats) chip.innerHTML = `<i style="color:var(--signal)"></i>남은 자리 ${left}명 (선착순 ${st.seats}명)`;
+    sync();
+  }
+  const NAMES = ['name', 'slot', 'phone', 'email', 'role', 'roleOther', 'tools', 'toolsOther', 'level', 'coding', 'hope', 'goal', 'attend', 'absent', 'pay', 'consent', 'consentNext'];
   const collect = () => Object.fromEntries(NAMES.map(n => [n, val(n)]));
   const RULES = {
     contact: d => d.name.length >= 2 && /^0\d{1,2}-?\d{3,4}-?\d{4}$/.test(d.phone.replace(/\s/g, '')) && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email),
@@ -358,7 +382,8 @@
     hope: d => d.hope.length >= 1 && d.hope.length <= 2,
     goal: d => d.goal.length >= 4,
     attend: d => d.attend && (d.attend === '10회 모두 가능' || d.absent),
-    pay: d => !!d.pay,
+    slot: d => !MODE.full || !!d.slot,
+    pay: d => MODE.full || !!d.pay,
     consent: d => d.consent === 'Y'
   };
   function validate(step, quiet) {
@@ -405,7 +430,7 @@
     document.getElementById('pv-level').textContent = d.level || '—';
     document.getElementById('pv-coding').textContent = d.coding || '—';
     document.getElementById('pv-hope').textContent = d.hope.length ? d.hope.join(' · ') : '—';
-    const keys = Object.keys(RULES), done = keys.filter(k => RULES[k](d)).length;
+    const keys = [...document.querySelectorAll('.field[data-q]')].filter(f => !f.hidden && RULES[f.dataset.q]).map(f => f.dataset.q), done = keys.filter(k => RULES[k](d)).length;
     document.getElementById('ring').style.strokeDashoffset = 113.1 * (1 - done / keys.length);
     document.getElementById('ring-t').textContent = done + ' / ' + keys.length;
   }
@@ -417,7 +442,7 @@
     document.getElementById('review').innerHTML =
       sec('나에 대해', 0, [['이름', d.name], ['연락처', d.phone], ['이메일', d.email], ['하는 일', d.role === '기타' ? '기타 · ' + d.roleOther : d.role]]) +
       sec('AI 사용', 1, [['도구', d.tools.filter(x => x !== '기타').concat(d.toolsOther ? [d.toolsOther] : []).join(', ')], ['AI 사용 범위', d.level], ['코딩 경험', d.coding]]) +
-      sec('기대와 참여', 2, [['기대하는 것', d.hope.join(' · ')], ['바꿔 보고 싶은 일', d.goal], ['출석', d.attend + (d.absent ? ' · 불참: ' + d.absent : '')], ['결제 방법', d.pay], ['2기 소식', d.consentNext ? '받음' : '받지 않음']]);
+      sec('기대와 참여', 2, [['기대하는 것', d.hope.join(' · ')], ['바꿔 보고 싶은 일', d.goal], ['출석', d.attend + (d.absent ? ' · 불참: ' + d.absent : '')], ...(MODE.full ? [['참여 반', d.slot]] : [['결제 방법', d.pay]]), ['2기 소식', d.consentNext ? '받음' : '받지 않음']]);
     document.querySelectorAll('[data-edit]').forEach(b => b.onclick = () => show(+b.dataset.edit));
   }
   function showClosed() {
@@ -431,20 +456,30 @@
     if (Date.now() > new Date(C.deadline).getTime() && !/[?&]late=1/.test(location.search)) { B.toast('모집이 마감되었어요', 'err'); return; }
     sending = true; const nx = document.getElementById('next'); nx.disabled = true; nx.textContent = '제출 중…';
     try {
-      const d = collect(); d.ua = navigator.userAgent.slice(0, 120);
+      const d = collect(); d.ua = navigator.userAgent.slice(0, 120); if (!MODE.full) d.slot = '오후반'; else d.pay = '';
       d.reqId = B.store.get('reqId') || ('R' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8)); B.store.set('reqId', d.reqId);
       const r = await B.api('apply', { data: d });
+      if (r.closed && r.full) { const st = await B.seatStatus(); applyMode(st); show(2); B.toast('오후반이 방금 마감됐어요. 대기 신청으로 이어서 신청해 주세요', 'err'); nx.disabled = false; nx.textContent = '신청서 제출하기'; return; }
       if (r.closed) { showClosed(); return; }
       if (!r.ok) throw new Error(r.error || '접수 실패');
       B.store.set(DKEY, null); B.store.set('reqId', null); B.store.set('lastApply', { id: r.id, at: new Date().toISOString() });
       form.hidden = true; document.querySelector('.head').hidden = true; document.querySelector('.side').hidden = true;
       document.getElementById('page').style.gridTemplateColumns = '1fr';
       document.getElementById('rid').textContent = r.id;
-      const P = C.pay || {}, bank = d.pay === '계좌 입금';
+      const P = C.pay || {}, M = C.morning, bank = d.pay === '계좌 입금', wait = r.status === '대기';
+      if (wait) {
+        const am = d.slot === '오전반', n = r.am || 0, open = am && n >= M.min;
+        document.getElementById('done-lead').textContent = am ? (open ? '오전반 개설이 확정됐어요!' : '오전반 대기 신청을 받았어요.') : '오후반 대기 신청을 받았어요.';
+        document.getElementById('paybox').innerHTML = am
+          ? `<dl><dt>반</dt><dd>토요일 오전반 ${B.esc(M.time)}</dd><dt>현황</dt><dd>${n} / ${M.min}명${open ? ' · 개설 확정' : ''}</dd></dl><div class="sm">${open ? '곧 문자로 결제 안내를 드려요.' : `${M.min}명이 모이면 개설돼요. 개설이 확정되면 문자로 결제 안내를 드려요.`}</div>`
+          : '<div class="sm" style="margin:0">오후반에 자리가 나면 입력하신 연락처로 먼저 연락드려요.</div>';
+        document.getElementById('done-steps').innerHTML = '<li>결제는 <b>지금 하지 않아도</b> 돼요. 확정되면 문자로 안내해 드려요.</li><li>확정되면 멤버끼리 이야기하는 <b>‘함께 쓰는 공간’ 입장 코드</b>도 함께 보내드려요.</li>';
+      } else {
       document.getElementById('done-lead').textContent = bank ? '송금하면 신청이 완료돼요.' : '매장에서 카드 결제하면 신청이 완료돼요.';
       document.getElementById('paybox').innerHTML = bank
         ? `<dl><dt>금액</dt><dd class="amt">${B.esc(P.amount || '50,000원')}</dd><dt>은행</dt><dd>${B.esc(P.bank)}</dd><dt>계좌</dt><dd><span id="acct">${B.esc(P.account)}</span> <button type="button" class="copy" id="copy-acct">복사</button></dd><dt>예금주</dt><dd>${B.esc(P.holder)}</dd></dl><div class="sm">입금자명은 신청서의 이름과 같게 해 주세요. 10회 일괄 · 환불 불가</div>`
         : `<dl><dt>금액</dt><dd class="amt">${B.esc(P.amount || '50,000원')}</dd><dt>장소</dt><dd>비북스 매장<br><span style="font-weight:500">부천시 원미구 부천로 136번길 24, B02호</span></dd></dl><div class="sm">매장에 방문해서 카드로 결제해 주세요. 방문 전 문의는 인스타그램 @bbooks_bucheon 으로 편하게 주세요. 10회 일괄 · 환불 불가</div>`;
+      }
       const cb = document.getElementById('copy-acct');
       if (cb) cb.onclick = () => navigator.clipboard.writeText(P.account).then(() => B.toast('계좌번호를 복사했어요'), () => B.toast('복사하지 못했어요', 'err'));
       document.getElementById('done').classList.add('on'); scrollTo(0, 0);
@@ -455,7 +490,7 @@
   }
 
   restore(); sync(); show(0);
-  B.seatStatus().then(st => { if (!st) return; if (st.closed) return showClosed(); const left = st.seats - st.taken, chip = document.getElementById('seat-chip'); if (chip && left < st.seats) chip.innerHTML = `<i style="color:var(--signal)"></i>남은 자리 ${left}명 (선착순 ${st.seats}명)`; });
+  B.seatStatus().then(st => { if (!st) return; if (st.closed && st.am && st.am.full) return showClosed(); applyMode(st); });
   if (B.store.get(DKEY)) { const s = document.getElementById('saved'); s.textContent = '✓ 작성하던 내용을 불러왔어요'; }
   if (Date.now() < new Date(C.open).getTime() && !/[?&]open=1/.test(location.search)) {
     form.innerHTML = '<div class="card closed"><h2 style="margin:0 0 8px">신청은 10/6(화)부터 열려요</h2><p class="muted" style="margin:0 0 18px">10/6(화) 00:00부터 10/16(금) 12:00까지 이 페이지에서 신청서를 작성할 수 있어요.</p><a class="btn btn-dark" href="./">모집 안내로 돌아가기</a></div>';

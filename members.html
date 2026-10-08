@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://script.google.com">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="assets/style.css?v=1011">
+<link rel="stylesheet" href="assets/style.css?v=1012">
 <style>
 /* 로그인 */
 .gate { min-height: calc(100vh - 60px); display: grid; place-items: center; padding: 32px 0; }
@@ -118,8 +118,8 @@
   <div id="feed"></div>
 </main>
 
-<script src="assets/config.js?v=1011"></script>
-<script src="assets/app.js?v=1011"></script>
+<script src="assets/config.js?v=1012"></script>
+<script src="assets/app.js?v=1012"></script>
 <script>
 /* 빠르게 쓰는 방법: ① 저장해 둔 글을 먼저 보여 주고 서버는 뒤에서 확인 ② 글·댓글은 서버 응답을 기다리지 않고 바로 화면에 올린다 */
 (function () {
@@ -228,7 +228,7 @@
     const tmp = { id: 'tmp-' + Date.now(), by: S.me.id, kind, text, link, at: new Date().toISOString(), pending: true };
     S.posts.unshift(tmp); renderFeed(true); f.text.value = ''; f.link.value = ''; S.busy++;
     try {
-      const r = await B.api('addPost', { code: S.code, post: { kind, text, link } });
+      const r = await B.api('addPost', { code: S.code, cid: tmp.id, post: { kind, text, link } });
       if (!r.ok) throw new Error(r.error || '올리지 못했어요');
       S.posts = S.posts.filter(p => p !== tmp && p.id !== r.post.id); S.posts.unshift(r.post); S.posts.sort((a, b) => b.at.localeCompare(a.at));
       saveCache(); renderFeed(true);
@@ -242,7 +242,7 @@
     const tmp = { id: 'tmp-' + Date.now(), postId, by: S.me.id, text, at: new Date().toISOString(), pending: true };
     S.comments.push(tmp); inp.value = ''; renderFeed(true); S.busy++;
     try {
-      const r = await B.api('addComment', { code: S.code, postId, text });
+      const r = await B.api('addComment', { code: S.code, cid: tmp.id, postId, text });
       if (!r.ok) throw new Error(r.error || '등록하지 못했어요');
       S.comments = S.comments.filter(c => c !== tmp && c.id !== r.comment.id); S.comments.push(r.comment); S.comments.sort((a, b) => a.at.localeCompare(b.at));
       saveCache(); renderFeed(true);

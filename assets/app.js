@@ -27,17 +27,20 @@
     store.set('comments', [{ id: 'C-EX1', postId: 'P-EX2', by: 'M-HOSE', text: '예전에 쓴 글 3개를 예시로 붙여 주고 "이 말투로"라고 해 보세요! (예시 댓글)', at: new Date(Date.now() - 900e3).toISOString() }]);
     store.set('seeded', true);
   }
-  const counted = () => store.get('apps', []).filter(a => ['취소', '대기'].indexOf(a.status || '접수') < 0).length;
+  const counts = () => { let pm = 0, pmWait = 0, am = 0; store.get('apps', []).forEach(a => { const st = a.status || '접수'; if (st === '취소') return; if (a.slot === '오전반') am++; else if (st === '대기') pmWait++; else pm++; }); return { pm, pmWait, am }; };
   const me = (code) => { seed(); return store.get('members', []).find(x => x.code === code); };
 
   const demo = {
-    status() { const n = counted(); return { ok: true, seats: C.seats, taken: n, closed: n >= C.seats }; },
+    status() { const c = counts(), M = C.morning; return { ok: true, seats: C.seats, taken: c.pm, closed: c.pm >= C.seats, waitlist: c.pmWait, am: { count: c.am, min: M.min, seats: M.seats, open: c.am >= M.min, full: c.am >= M.seats } }; },
     apply({ data: d }) {
-      if (counted() >= C.seats) return { ok: false, closed: true, error: '정원 ' + C.seats + '명이 모두 찼어요' };
+      const c = counts(), M = C.morning; let slot = ['오후반', '오전반', '오후반 대기'].includes(d.slot) ? d.slot : '오후반', status = '접수';
+      if (slot === '오전반') { if (c.am >= M.seats) return { ok: false, closed: true, error: '오전반도 정원이 모두 찼어요' }; status = '대기'; }
+      else if (c.pm >= C.seats) { if (slot !== '오후반 대기') return { ok: false, closed: true, full: true, error: '오후반 정원 ' + C.seats + '명이 모두 찼어요' }; status = '대기'; }
+      else if (slot === '오후반 대기') slot = '오후반';
       const apps = store.get('apps', []);
       const id = 'AI1-' + String(apps.length + 1).padStart(3, '0') + '-' + Math.random().toString(36).slice(2, 4).toUpperCase();
-      apps.push(Object.assign({ id, at: now(), status: '접수' }, d)); store.set('apps', apps);
-      return { ok: true, id };
+      apps.push(Object.assign({ id, at: now() }, d, { status, slot, pay: status === '대기' ? '' : d.pay })); store.set('apps', apps);
+      return { ok: true, id, status, slot, am: counts().am };
     },
     feed({ code, name }) {
       const m = me(code);
@@ -85,20 +88,21 @@
     }
   };
 
-  // 서버 호출. 구글 서버가 가끔 일시적으로 404/5xx를 돌려주므로 읽기·신청은 자동 재시도(apply 는 reqId 로 서버가 중복 접수를 막는다).
+  // 서버 호출. 구글 서버가 가끔 일시적으로 느리거나 404/5xx를 돌려주므로 시간 제한(15초) + 자동 재시도(최대 3번).
+  // 글·댓글은 cid, 신청은 reqId 로 서버가 같은 요청을 한 번만 저장하므로 재시도해도 중복되지 않는다.
   // text/plain 으로 보내면 CORS preflight 없이 Apps Script doPost 에 닿는다.
-  const RETRY = ['status', 'apply', 'feed', 'adminList', 'adminUpdate'];
   async function api(action, payload) {
     payload = payload || {};
     if (!C.apiUrl) { await new Promise(r => setTimeout(r, 120)); return demo[action](payload); }
-    const tries = RETRY.includes(action) ? 4 : 2;
     let lastErr;
-    for (let i = 0; i < tries; i++) {
+    for (let i = 0; i < 3; i++) {
+      const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), 15000);
       try {
-        const res = await fetch(C.apiUrl, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(Object.assign({ action }, payload)) });
+        const res = await fetch(C.apiUrl, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(Object.assign({ action }, payload)), signal: ctl.signal });
         if (!res.ok) throw new Error('서버 응답 ' + res.status);
         return await res.json();
-      } catch (e) { lastErr = e; if (i < tries - 1) await new Promise(r => setTimeout(r, 500 * (i + 1))); }
+      } catch (e) { lastErr = e.name === 'AbortError' ? new Error('응답이 늦어요') : e; if (i < 2) await new Promise(r => setTimeout(r, 400 * (i + 1))); }
+      finally { clearTimeout(timer); }
     }
     throw lastErr;
   }
