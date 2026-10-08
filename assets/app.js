@@ -71,8 +71,14 @@
     feed({ code, name }) {
       const m = me(code);
       if (!m || (name && m.name !== name && !code.startsWith('demo'))) return { ok: false, error: name ? '이름 또는 입장 코드가 맞지 않아요.' : 'auth' };
-      return { ok: true, me: { id: m.id, name: m.name, role: m.role }, members: store.get('members', []).map(x => ({ id: x.id, name: x.name, role: x.role })),
+      return { ok: true, me: { id: m.id, name: m.name, role: m.role, color: m.color }, members: store.get('members', []).map(x => ({ id: x.id, name: x.name, role: x.role, color: x.color })),
         posts: store.get('posts', []).slice().sort((a, b) => b.at.localeCompare(a.at)), comments: store.get('comments', []) };
+    },
+    setColor({ code, color }) {
+      const m = me(code); if (!m) return { ok: false, error: 'auth' }; const c = String(color), ms = store.get('members', []);
+      if (!/^[0-9]$/.test(c)) return { ok: false, error: '색을 골라 주세요' };
+      if (ms.some(x => x.id !== m.id && String(x.color) === c)) return { ok: false, error: '다른 멤버가 쓰고 있는 색이에요', taken: true };
+      ms.find(x => x.id === m.id).color = c; store.set('members', ms); return { ok: true, color: c };
     },
     addPost({ code, post }) {
       const m = me(code); if (!m) return { ok: false, error: 'auth' };
