@@ -28,6 +28,13 @@
       { id: 'R-EX1', by: 'M-HOSE', week: 2, title: '여행 메모를 장 구성으로 (예시)', problem: '사진과 메모가 흩어져 있어 책의 순서를 못 잡음', tool: 'Claude', flow: '1) 날짜별 여행 메모와 사진 설명을 한 파일로 붙여 넣기\n2) “이 기록을 독자가 따라가기 좋은 12개 장으로 묶어 줘. 장마다 제목 후보 2개, 들어갈 날짜, 빠진 이야기가 있으면 질문으로 알려 줘” 프롬프트\n3) 제안을 그대로 쓰지 않고 내가 순서를 고쳐 목차 확정', result: '목차 정리 이틀 → 한나절', caution: '지명·날짜·고유명사는 반드시 내 기록과 대조', tags: ['신사업형', '글쓰기'], at: now() }
     ]);
     store.set('apps', []);
+    store.set('posts', [
+      { id: 'P-EX1', by: 'M-EX1', kind: '정보 공유', text: '요즘 회의록 정리에 쓰는 방법: 녹음 → 텍스트 → AI에게 "결정사항 / 할 일 / 담당자"로 나눠 달라고 해요. 시간이 꽤 줄었어요. (예시 글)', link: '', at: new Date(Date.now() - 3600e3).toISOString() },
+      { id: 'P-EX2', by: 'M-EX2', kind: '질문', text: '인스타 문구를 AI로 만들면 다 비슷하게 나오는데, 우리 가게 말투로 쓰게 하려면 어떻게 하세요? (예시 글)', link: '', at: new Date(Date.now() - 1800e3).toISOString() }
+    ]);
+    store.set('comments', [
+      { id: 'C-EX1', postId: 'P-EX2', by: 'M-HOSE', text: '예전에 쓴 글 3개를 예시로 붙여 주고 "이 말투로"라고 해 보세요! (예시 댓글)', at: new Date(Date.now() - 900e3).toISOString() }
+    ]);
     store.set('seeded', true);
   }
 
@@ -74,6 +81,34 @@
       const l = Object.assign({ by: m.id, at: now() }, log); ls.push(l);
       store.set('logs', ls); return { ok: true, log: l };
     },
+    feed({ code }) {
+      demoSeed(); const m = me(code); if (!m) return { ok: false, error: 'auth' };
+      return { ok: true, me: { id: m.id, name: m.name, role: m.role }, members: store.get('members', []).map(x => ({ id: x.id, name: x.name, role: x.role })),
+        posts: store.get('posts', []).slice().sort((a, b) => b.at.localeCompare(a.at)), comments: store.get('comments', []) };
+    },
+    addPost({ code, post }) {
+      const m = me(code); if (!m) return { ok: false, error: 'auth' };
+      const t = String(post.text || '').trim(); if (!t || t.length > 1500) return { ok: false, error: '내용을 1~1500자로 적어 주세요' };
+      const link = String(post.link || '').trim(); if (link && !/^https?:\/\/\S{3,300}$/i.test(link)) return { ok: false, error: '링크는 http(s)로 시작해야 해요' };
+      const ps = store.get('posts', []); const x = { id: uid('P'), by: m.id, kind: post.kind || '정보 공유', text: t, link, at: now() };
+      ps.push(x); store.set('posts', ps); return { ok: true, post: x };
+    },
+    addComment({ code, postId, text }) {
+      const m = me(code); if (!m) return { ok: false, error: 'auth' };
+      const t = String(text || '').trim(); if (!t || t.length > 600) return { ok: false, error: '댓글을 1~600자로 적어 주세요' };
+      const cs = store.get('comments', []); const x = { id: uid('C'), postId, by: m.id, text: t, at: now() };
+      cs.push(x); store.set('comments', cs); return { ok: true, comment: x };
+    },
+    deletePost({ code, id }) {
+      const m = me(code); if (!m) return { ok: false, error: 'auth' }; const ps = store.get('posts', []); const x = ps.find(p => p.id === id); if (!x) return { ok: true };
+      if (x.by !== m.id && m.role !== '운영자') return { ok: false, error: '내 글만 지울 수 있어요' };
+      store.set('posts', ps.filter(p => p.id !== id)); store.set('comments', store.get('comments', []).filter(c => c.postId !== id)); return { ok: true };
+    },
+    deleteComment({ code, id }) {
+      const m = me(code); if (!m) return { ok: false, error: 'auth' }; const cs = store.get('comments', []); const x = cs.find(c => c.id === id); if (!x) return { ok: true };
+      if (x.by !== m.id && m.role !== '운영자') return { ok: false, error: '내 댓글만 지울 수 있어요' };
+      store.set('comments', cs.filter(c => c.id !== id)); return { ok: true };
+    },
     adminList({ key }) {
       if (key !== 'demo') return { ok: false, error: '관리자 키가 맞지 않아요. (데모 모드 키: demo)' };
       return { ok: true, apps: store.get('apps', []) };
@@ -102,7 +137,7 @@
     if (!C.apiUrl) { await new Promise(r => setTimeout(r, 250)); return demo[action](payload); }
     // text/plain 으로 보내면 CORS preflight 없이 Apps Script doPost 에 닿는다.
     // 구글 서버가 가끔 일시적으로 404/5xx를 돌려주므로 자동 재시도 (apply 는 reqId 로 서버가 중복 접수를 막는다)
-    const RETRY = ['status', 'apply', 'login', 'board', 'setValue', 'updateProject', 'addLog', 'adminList', 'adminUpdate'];
+    const RETRY = ['status', 'apply', 'login', 'feed', 'board', 'setValue', 'updateProject', 'addLog', 'adminList', 'adminUpdate'];
     const tries = RETRY.includes(action) ? 4 : 1;
     let lastErr;
     for (let i = 0; i < tries; i++) {
