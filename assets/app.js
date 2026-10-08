@@ -81,8 +81,8 @@
       const apps = store.get('apps', []); const a = apps.find(x => x.id === id);
       if (!a) return { ok: false, error: 'not found' };
       if (scores) a.scores = scores; if (status) a.status = status; if (memo !== undefined) a.memo = memo;
-      // 선발 처리 시 멤버 라운지 계정(멤버 코드) 자동 발급
-      if (a.status === '선발' && !a.memberCode) {
+      // 입금확인 처리 시 멤버 라운지 계정(멤버 코드) 자동 발급
+      if (a.status === '입금확인' && !a.memberCode) {
         demoSeed();
         const ms = store.get('members', []); const code = Math.random().toString(36).slice(2, 8);
         ms.push({ id: 'M-' + a.id, name: a.name, code, role: a.role, project: (a.goal || '').slice(0, 40), type: '', metric: '', unit: '',

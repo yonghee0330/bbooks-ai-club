@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>신청자 선발 보기 · 부천 AI 프로젝트 클럽</title>
+<title>신청자 관리 · 부천 AI 프로젝트 클럽</title>
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="assets/style.css?v=1005b">
+<link rel="stylesheet" href="assets/style.css?v=1008">
 <style>
 .ahead { padding: 30px 0 10px; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
 .ahead h1 { font: 800 30px/1.2 var(--sans); letter-spacing: -.04em; margin: 8px 0 0; }
@@ -33,9 +33,9 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
 .t td.long { max-width: 260px; }
 .t td.long div { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 .t tr:hover td { background: var(--rule); }
-.t tr.st-선발 td:first-child { box-shadow: inset 4px 0 var(--ok); }
+.t tr.st-입금확인 td:first-child { box-shadow: inset 4px 0 var(--ok); }
 .t tr.st-대기 td:first-child { box-shadow: inset 4px 0 #d9a514; }
-.t tr.st-미선발 { opacity: .5; }
+.t tr.st-취소 { opacity: .5; }
 .t select { padding: 5px 6px; border-radius: 6px; border: 1.5px solid var(--line); background: var(--card); font-size: 13px; }
 .t .tot { font: 600 18px var(--mono); }
 .t .code { font: 600 12px var(--mono); background: color-mix(in srgb, var(--ok) 16%, transparent); color: var(--ok); padding: 3px 6px; border-radius: 4px; }
@@ -50,23 +50,23 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
 </style>
 </head>
 <body>
-<header class="topbar"><div class="wrap"><a class="brand" href="./"><span class="brand-mark">AI</span>부천 AI 프로젝트 클럽 <small>운영 · 선발 보기</small></a><nav class="nav"><span class="demo-flag" id="demo" hidden>DEMO</span></nav></div></header>
+<header class="topbar"><div class="wrap"><a class="brand" href="./"><span class="brand-mark">AI</span>부천 AI 프로젝트 클럽 <small>운영 · 신청 관리</small></a><nav class="nav"><span class="demo-flag" id="demo" hidden>DEMO</span></nav></div></header>
 
 <main class="wrap" id="gate" style="padding:80px 0;max-width:420px">
-  <span class="eyebrow">Admin</span><h1 style="font-size:28px;margin:10px 0 18px">선발 보기</h1>
+  <span class="eyebrow">Admin</span><h1 style="font-size:28px;margin:10px 0 18px">신청 관리</h1>
   <form id="kform" style="display:grid;gap:12px"><input class="input" id="key" type="password" placeholder="관리자 키" autocomplete="current-password"><button class="btn btn-dark">열기</button>
   <p class="muted" id="khint" style="font-size:13px" hidden>데모 모드 키: demo</p></form>
 </main>
 
 <main class="wrap" id="main" hidden style="padding-bottom:80px">
-  <div class="ahead"><div><span class="eyebrow">Selection</span><h1>신청자 선발 보기</h1></div>
+  <div class="ahead"><div><span class="eyebrow">Applications</span><h1>신청자 관리</h1></div>
     <div style="display:flex;gap:8px"><button class="btn btn-ghost btn-sm" id="reload">새로고침</button><button class="btn btn-dark btn-sm" id="csv">CSV 내보내기</button></div></div>
   <div class="kpis" id="kpis"></div>
   <div class="dist" id="dist"></div>
   <div class="toolbar"><span class="muted" style="font-size:13px">정렬</span>
-    <select id="sort"><option value="total">총점 높은 순 (①→③→④)</option><option value="at">신청 순</option></select>
-    <select id="filter"><option value="">전체 상태</option><option>접수</option><option>선발</option><option>대기</option><option>미선발</option></select>
-    <span class="muted" style="font-size:12px;margin-left:auto">① 구체성(Q7) · ③ 코스 적합도(Q6) · ④ 출석(Q8) = 3/2/1점 · ② 다양성은 위 분포를 보며 조정 · 선발로 바꾸면 멤버 코드가 발급돼요</span></div>
+    <select id="sort"><option value="at">신청 순 (선착순)</option><option value="total">참고 점수순</option></select>
+    <select id="filter"><option value="">전체 상태</option><option>접수</option><option>입금확인</option><option>대기</option><option>취소</option></select>
+    <span class="muted" style="font-size:12px;margin-left:auto">선착순 · 입금을 확인하면 상태를 <b>입금확인</b>으로 바꾸세요 (멤버 라운지 코드가 발급돼요). 정원 8명이 차면 나머지는 <b>대기</b></span></div>
   <div class="tbl-wrap"><table class="t"><thead><tr>
     <th>#</th><th>이름 · 연락</th><th><span class="c">②</span>하는 일</th><th><span class="c">②</span>도구 · 사용 범위 · 코딩</th><th><span class="c">①</span>Q7 바꿔 볼 일</th><th><span class="c">③</span>Q6 기대</th><th><span class="c">④</span>Q8 출석</th>
     <th>① 점</th><th>③ 점</th><th>④ 점</th><th>합</th><th>상태</th><th>메모</th></tr></thead><tbody id="rows"></tbody></table></div>
@@ -74,8 +74,8 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
 
 <div class="detail" id="detail"><div class="card" id="dcard"></div></div>
 
-<script src="assets/config.js?v=1005b"></script>
-<script src="assets/app.js?v=1005b"></script>
+<script src="assets/config.js?v=1008"></script>
+<script src="assets/app.js?v=1008"></script>
 <script>
 (function () {
   const C = CLUB, B = BAPC, $ = s => document.querySelector(s);
@@ -105,12 +105,12 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
 
   function bars(title, counts, selCounts) {
     const max = Math.max(1, ...Object.values(counts));
-    return `<div class="card"><h3>${title} <span class="muted" style="font-weight:500">· 회색 전체 / 주황 선발</span></h3>${Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([k, v]) =>
+    return `<div class="card"><h3>${title} <span class="muted" style="font-weight:500">· 회색 전체 / 초록 입금확인</span></h3>${Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([k, v]) =>
       `<div class="hb"><span>${B.esc(k)}</span><span style="display:grid;gap:2px"><i style="--w:${v / max * 100}%"></i><i class="sel" style="--w:${(selCounts[k] || 0) / max * 100}%"></i></span><span>${selCounts[k] || 0}/${v}</span></div>`).join('') || '<p class="muted">—</p>'}</div>`;
   }
   function render() {
-    const sel = APPS.filter(a => a.status === '선발');
-    $('#kpis').innerHTML = [['신청', APPS.length], ['선발', sel.length + ' / ' + C.seats], ['대기', APPS.filter(a => a.status === '대기').length], ['마감까지', Math.max(0, Math.ceil((new Date(C.deadline) - Date.now()) / 864e5)) + '일']]
+    const sel = APPS.filter(a => a.status === '입금확인');
+    $('#kpis').innerHTML = [['신청', APPS.length], ['입금확인', sel.length + ' / ' + C.seats], ['대기', APPS.filter(a => a.status === '대기').length], ['마감까지', Math.max(0, Math.ceil((new Date(C.deadline) - Date.now()) / 864e5)) + '일']]
       .map(([k, v]) => `<div class="card kpi"><b>${v}</b><span>${k}</span></div>`).join('');
     const cnt = (list, f) => list.reduce((o, a) => { [].concat(f(a)).filter(Boolean).forEach(k => o[k] = (o[k] || 0) + 1); return o; }, {});
     const role = a => a.role === '기타' ? '기타:' + a.roleOther : a.role, tools = a => (a.tools || []).filter(t => t !== '기타');
@@ -129,7 +129,7 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
         <td>${B.esc(a.attend)}${a.absent ? '<br><span class="muted">불참 ' + B.esc(a.absent) + '</span>' : ''}<br><span class="muted">노트북 ${/^예/.test(a.laptop) ? 'O' : 'X'}</span></td>
         <td><select data-s="s1">${opt('s1', s.s1)}</select></td><td><select data-s="s3">${opt('s3', s.s3)}</select></td><td><select data-s="s4">${opt('s4', s.s4)}</select></td>
         <td class="tot">${sum(a)}</td>
-        <td><select data-status>${['접수', '선발', '대기', '미선발'].map(x => `<option ${x === st ? 'selected' : ''}>${x}</option>`).join('')}</select></td>
+        <td><select data-status>${['접수', '입금확인', '대기', '취소'].map(x => `<option ${x === st ? 'selected' : ''}>${x}</option>`).join('')}</select></td>
         <td><input class="memo" data-memo value="${B.esc(a.memo || '')}" placeholder="메모"></td></tr>`; }).join('') || '<tr><td colspan="13" style="padding:40px;text-align:center" class="muted">아직 신청이 없어요.</td></tr>';
   }
   $('#sort').onchange = render; $('#filter').onchange = render;

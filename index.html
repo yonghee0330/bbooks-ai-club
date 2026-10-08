@@ -12,18 +12,18 @@
 <meta property="og:title" content="부천 AI 프로젝트 클럽 1기 모집">
 <meta property="og:description" content="동네에서 함께 공부하고 실천해보는 AI 스터디 모임! 막연한 공부에 그치지 않고, 구체적인 숫자를 만들어봅니다.">
 <meta property="og:url" content="https://bbooks.co.kr/ai-study/">
-<meta property="og:image" content="https://bbooks.co.kr/ai-study/images/og.png">
+<meta property="og:image" content="https://bbooks.co.kr/ai-study/images/og.png?v=1008">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="1기 모집 — 동네에서 함께 공부하고 실천해보는 AI 스터디 모임">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="부천 AI 프로젝트 클럽 1기 모집">
 <meta name="twitter:description" content="동네에서 함께 공부하고 실천해보는 AI 스터디 모임! 막연한 공부에 그치지 않고, 구체적인 숫자를 만들어봅니다.">
-<meta name="twitter:image" content="https://bbooks.co.kr/ai-study/images/og.png">
+<meta name="twitter:image" content="https://bbooks.co.kr/ai-study/images/og.png?v=1008">
 <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0d1411" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234e6813'/%3E%3Cpath d='M7 22l6-6 4 4 8-9' stroke='%23ffffff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/style.css?v=1005b">
+<link rel="stylesheet" href="assets/style.css?v=1008">
 <style>
 /* ---------- HERO ---------- */
 .hero { background: var(--paper); border-bottom: 1px solid var(--line); padding: clamp(48px, 7vw, 88px) 0 clamp(48px, 7vw, 80px); }
@@ -186,12 +186,12 @@
 .idea .metric::before { content: '지표 · '; color: var(--muted); font-weight: 500; }
 
 /* ---------- FIT ---------- */
-.fit { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; }
+.fit { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 32px; }
 @media (max-width: 760px) { .fit { grid-template-columns: 1fr; } }
-.fit .card { padding: 24px 26px; }
+.fit .card { padding: 26px 28px; max-width: 720px; }
 .fit h3 { margin: 0 0 14px; font-size: 19px; display: flex; gap: 10px; align-items: center; }
 .fit ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
-.fit li { display: flex; gap: 10px; font-size: 17px; color: var(--ink-2); }
+.fit li { display: flex; gap: 12px; font-weight: 600; font-size: 17px; color: var(--ink-2); }
 .fit li::before { content: '✓'; font-weight: 800; color: var(--ok); flex: none; }
 .fit .no li::before { content: '–'; color: var(--muted); }
 
@@ -211,7 +211,7 @@
 @media (max-width: 720px) { .space-info { grid-template-columns: 1fr; } .space-info > div + div { border-left: 0; border-top: 1px solid var(--line); } }
 
 /* ---------- PROCESS ---------- */
-.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 40px; position: relative; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 40px; position: relative; }
 .steps::before { content: ''; position: absolute; top: 13px; left: 14px; right: 14px; height: 2px; background: var(--line); }
 .steps .prog { position: absolute; top: 13px; left: 14px; height: 2px; background: var(--signal); width: 0; transition: width 1.4s cubic-bezier(.6,0,.2,1) .3s; }
 .steps.in .prog { width: calc(var(--p) * (100% - 28px)); }
@@ -228,9 +228,9 @@
   .steps .prog { display: none; }
   .step { padding-left: 46px; } .step .pt { position: absolute; left: 0; top: 0; } .step .d { margin-top: 2px; }
 }
-.select { display: grid; grid-template-columns: 1.2fr .8fr; gap: 16px; margin-top: 40px; }
+.select { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 40px; }
 @media (max-width: 860px) { .select { grid-template-columns: 1fr; } }
-.select .card { padding: 24px 26px; }
+.select .card { padding: 26px 28px; max-width: 720px; }
 .select h3 { margin: 0 0 6px; font-size: 19px; }
 .select ol { margin: 14px 0 0; padding: 0; list-style: none; counter-reset: c; display: grid; gap: 12px; }
 .select li { counter-increment: c; display: grid; grid-template-columns: 28px 1fr; gap: 10px; font-size: 17px; }
@@ -308,16 +308,16 @@
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <div class="recruit"><span class="recruit-tag">1기 모집</span><span class="recruit-when">신청 10/6(화) 시작 · 10/16(금) 12:00 마감</span></div>
+      <div class="recruit"><span class="recruit-tag">1기 모집</span><span class="recruit-when">선착순 8명 · 10/16(금) 12:00까지</span></div>
       <h1>
         <span class="line"><span style="--i:0">동네에서 함께 공부하고</span></span>
         <span class="line"><span style="--i:1"><span class="num-word">실천해보는</span> AI 스터디 모임!</span></span>
       </h1>
-      <p class="sub">막연한 공부에 그치지 않고, <b>구체적인 숫자</b>를 만들어봅니다. 매주 토요일 비북스에서 8명이 함께해요.</p>
+      <p class="sub">막연한 공부에 그치지 않고, <b>구체적인 숫자</b>를 만들어봅니다. 매주 토요일 비북스에서 선착순 8명이 함께해요.</p>
       <dl class="meta">
         <div><dt>When</dt><dd>토 14:00–15:30</dd></div>
         <div><dt>Period</dt><dd>10.17 – 12.19<br><span class="muted" style="font-weight:500">총 10회</span></dd></div>
-        <div><dt>Seats</dt><dd>8명</dd></div>
+        <div><dt>Seats</dt><dd>8명<br><span class="muted" style="font-weight:500">선착순</span></dd></div>
         <div><dt>Where</dt><dd>비북스<br><span class="muted" style="font-weight:500">부천 원미동</span></dd></div>
       </dl>
       <div class="cta-row">
@@ -347,7 +347,7 @@
 
     <div class="stats" data-reveal>
       <div><div class="v"><span data-count="10">0</span><small>회</small></div><div class="k">매주 토요일 · 10/17 ~ 12/19</div></div>
-      <div><div class="v"><span data-count="8">0</span><small>명</small></div><div class="k">서로 깊게 볼 수 있는 인원</div></div>
+      <div><div class="v"><span data-count="8">0</span><small>명</small></div><div class="k">서로 깊게 볼 수 있는 인원 (진행자 별도)</div></div>
       <div><div class="v"><span data-count="1">0</span><small>개의 숫자</small></div><div class="k">3개월 동안 만들어 갈 숫자</div></div>
     </div>
 
@@ -516,10 +516,13 @@
     <span class="eyebrow" data-reveal>Is this for me?</span>
     <h2 class="h2" data-reveal>이런 분께 <em>맞아요</em>.</h2>
     <div class="fit">
-      <div class="card" data-reveal><h3><span class="chip" style="background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)">맞아요</span></h3>
-        <ul><li>AI를 몇 번이라도 써 봤어요</li><li>내 일에 붙여 숫자로 확인하고 싶어요</li><li>코딩을 몰라도 괜찮아요</li><li>잘 안 된 시도도 나눌 수 있어요</li><li>10회 중 8회 이상 올 수 있어요</li></ul></div>
-      <div class="card no" data-reveal style="--d:.1s"><h3><span class="chip">이런 분은 다음 기회에</span></h3>
-        <ul><li>AI를 한 번도 안 써 봤어요 (입문 강의 먼저)</li><li>붙일 일이 아직 전혀 없어요</li><li>수익을 보장받고 싶어요</li><li>듣기만 하고 싶어요</li></ul></div>
+      <div class="card" data-reveal><ul>
+        <li>AI를 처음 써 보는 분도, 이미 쓰고 있는 분도 환영해요</li>
+        <li>내 일에 붙여 숫자로 확인해 보고 싶어요</li>
+        <li>코딩을 몰라도 괜찮아요</li>
+        <li>잘 안 된 시도도 편하게 나눌 수 있어요</li>
+        <li>10회 중 8회 이상 함께할 수 있어요</li>
+      </ul></div>
     </div>
   </div>
 </section>
@@ -529,7 +532,7 @@
   <div class="wrap">
     <span class="eyebrow" data-reveal>Where we meet</span>
     <h2 class="h2" data-reveal>책장에 둘러싸인<br><em>비북스 세미나실</em>에서.</h2>
-    <p class="lead" data-reveal>양쪽 벽이 서가인 작은 모임방이에요. 8명이 둘러앉기 좋아요.</p>
+    <p class="lead" data-reveal>양쪽 벽이 서가인 작은 모임방이에요. 모두 둘러앉기 좋아요.</p>
     <div class="space-grid" data-reveal>
       <figure><img src="images/space/seminar-2.jpg" width="1200" height="674" loading="lazy" alt="화이트보드와 모니터, 테이블이 있는 비북스 세미나실"><figcaption>화이트보드와 모니터가 있는 세미나실</figcaption></figure>
       <figure><img src="images/space/seminar-3.jpg" width="1200" height="674" loading="lazy" alt="서가 앞에 놓인 긴 테이블"><figcaption>여덟 명이 둘러앉기 딱 좋은 테이블</figcaption></figure>
@@ -550,25 +553,15 @@
     <h2 class="h2" data-reveal>신청부터 <em>첫 모임</em>까지.</h2>
     <div class="steps" id="steps" data-reveal>
       <span class="prog"></span>
-      <div class="step"><span class="pt">1</span><div class="d">10/6(화) –</div><h4>신청서 작성</h4><p>10문항 · 3~5분</p></div>
-      <div class="step"><span class="pt">2</span><div class="d">10/16(금) 12:00</div><h4>신청 마감</h4><p>8명 초과 시 선발</p></div>
-      <div class="step"><span class="pt">3</span><div class="d">10/16(금) 20:00</div><h4>결과 안내</h4><p>문자 · 메일</p></div>
-      <div class="step"><span class="pt">4</span><div class="d">10/17(토) 14:00</div><h4>1회차 킥오프</h4><p>각자 쓰는 AI 공유</p></div>
+      <div class="step"><span class="pt">1</span><div class="d">10/6(화) ~ 10/16(금) 12:00</div><h4>신청서 작성</h4><p>10문항 · 3~5분</p></div>
+      <div class="step"><span class="pt">2</span><div class="d">선착순 8명</div><h4>송금하면 신청 완료</h4><p>입금 확인 순서대로 확정돼요</p></div>
+      <div class="step"><span class="pt">3</span><div class="d">10/17(토) 14:00</div><h4>1회차 킥오프</h4><p>각자 쓰는 AI 공유</p></div>
     </div>
     <div class="select">
-      <div class="card" data-reveal>
-        <h3>8명을 넘으면, 이렇게 선발해요</h3>
-        <ol>
-          <li><div><b>붙여 볼 일</b><span>구체적인가</span></div></li>
-          <li><div><b>다양성</b><span>직군 · 도구 · 경험이 겹치지 않게</span></div></li>
-          <li><div><b>코스 적합도</b><span>기대하는 것이 맞는가</span></div></li>
-          <li><div><b>출석</b><span>10회 중 8회 이상 가능한가</span></div></li>
-        </ol>
-      </div>
       <div class="card fee" data-reveal style="--d:.1s">
-        <h3>참여 조건</h3>
+        <h3>참가비 · 준비물</h3>
         <dl>
-          <div><dt>FEE</dt><dd id="fee"></dd><p class="muted" style="margin:4px 0 0">회당 5,000원 꼴 · 공간 대관 + 다과·음료 포함<br>중간에 빠져도 환불되지 않아요</p></div>
+          <div><dt>FEE</dt><dd id="fee"></dd><p class="muted" style="margin:6px 0 0">회당 5,000원 꼴이에요. 끝까지 함께하는 <b>책임감</b>을 위해 한 번에 받고, 중간에 빠져도 환불되지 않아요. 비북스 공간 대관과 모임 <b>다과·음료</b>에 보태요.</p></div>
           <div><dt>BRING</dt><dd>노트북</dd></div>
           <div><dt>SPACE</dt><dd>비북스 세미나실 · 와이파이 · 모니터</dd></div>
         </dl>
@@ -583,16 +576,16 @@
     <span class="eyebrow" data-reveal>FAQ</span>
     <h2 class="h2" data-reveal>자주 묻는 질문</h2>
     <div class="faq" data-reveal>
-      <details><summary>AI를 얼마나 잘 써야 하나요?</summary><div class="a"><p>가끔 질문하는 정도면 충분해요. 수준 차이는 서로에게 도움이 돼요.</p></div></details>
+      <details><summary>어떻게 신청하나요?</summary><div class="a"><p>신청서(10문항, 3~5분)를 작성하고 송금하면 신청이 완료돼요. 선착순 8명이고, 입금 확인 순서대로 확정돼요. 별도 선발은 없어요.</p></div></details>
+      <details><summary>참가비는 얼마인가요? 왜 한 번에 받나요?</summary><div class="a"><p id="fee-faq"></p></div></details>
       <details><summary>누가 이끄나요? 강의가 있나요?</summary><div class="a"><p>가르치는 수업은 아니에요. Hose는 각자의 시도를 응원하고 돕는 사람이에요. 새로운 정보 공유(미니특강 포함), 프로젝트 진행현황 공유, Q&A로 진행돼요.</p></div></details>
       <details><summary>10회는 어떻게 흘러가나요?</summary><div class="a"><p>1회 킥오프, 2~9회 각자 목표대로 실행, 10회 마무리예요. 정해진 커리큘럼 없이 함께 실험해요.</p></div></details>
-      <details><summary>코딩을 못 해도 되나요?</summary><div class="a"><p>괜찮아요. AI에게 말로 설명해서 만드는 방식(바이브코딩)이라, 코딩 경험이 없어도 따라올 수 있어요.</p></div></details>
+      <details><summary>코딩을 못 해도 되나요?</summary><div class="a"><p>괜찮아요. AI에게 말로 설명해서 만드는 방식(바이브코딩)이라 코딩 경험이 없어도 돼요.</p></div></details>
       <details><summary>시간이 얼마나 드나요?</summary><div class="a"><p>모임 1시간 30분 외에 주 1~2시간이면 충분해요.</p></div></details>
       <details><summary>어떤 도구를 써야 하나요?</summary><div class="a"><p>제한 없어요. 유료 구독도 필수가 아니에요.</p></div></details>
-      <details><summary>프로젝트를 아직 못 정했어요.</summary><div class="a"><p>방향만 있으면 돼요. 킥오프에서 함께 다듬어요. 다만 붙일 일(업무·가게·사업 등)은 있어야 해요.</p></div></details>
+      <details><summary>프로젝트를 아직 못 정했어요.</summary><div class="a"><p>방향만 있으면 돼요. 킥오프에서 함께 다듬어요.</p></div></details>
       <details><summary>수익이 안 나면 실패인가요?</summary><div class="a"><p>아니요. 시간을 줄이는 것, 문의가 늘어나는 것도 숫자예요. 못 미쳐도 괜찮아요.</p></div></details>
       <details><summary>빠지는 날이 있으면요?</summary><div class="a"><p>10회 중 8회 이상을 권해요. 불참 예정일은 신청서에 적어 주세요.</p></div></details>
-      <details><summary>참가비가 있나요?</summary><div class="a"><p id="fee-faq"></p></div></details>
     </div>
   </div>
 </section>
@@ -600,7 +593,7 @@
 <!-- FINAL -->
 <section class="block final">
   <div class="wrap">
-    <span class="eyebrow" data-reveal>1기 모집 · 8 seats</span>
+    <span class="eyebrow" data-reveal>1기 모집 · 선착순 8명</span>
     <h2 data-reveal>혼자는 어렵지만,<br>함께 하면 <em>쉽습니다</em>.</h2>
     <p class="lead" data-reveal>AI 공부도 그렇습니다. 신청서는 3~5분이면 돼요.</p>
     <a class="btn btn-primary" href="apply.html" data-reveal data-cta style="font-size:19px;padding:16px 28px">1기 신청서 작성하기 <span class="arr">→</span></a>
@@ -617,8 +610,8 @@
 
 <div class="sticky-cta" id="sticky"><span class="lbl" id="sticky-lbl"></span><a class="btn btn-primary btn-sm" href="apply.html">신청하기 →</a></div>
 
-<script src="assets/config.js?v=1005b"></script>
-<script src="assets/app.js?v=1005b"></script>
+<script src="assets/config.js?v=1008"></script>
+<script src="assets/app.js?v=1008"></script>
 <script>
 (function () {
   const C = CLUB, B = BAPC;
@@ -727,10 +720,10 @@
   document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
 
   /* process progress: 오늘 날짜 기준 */
-  const now = B.today(), marks = [C.open, C.deadline, C.announce, C.firstSession].map(d => new Date(d));
+  const now = B.today(), marks = [C.open, C.open, C.firstSession].map(d => new Date(d));
   const done = marks.filter(m => m <= now).length;
   document.querySelectorAll('#steps .step').forEach((s, k) => { if (k < done) s.classList.add('done'); else if (k === done) s.classList.add('now'); });
-  document.getElementById('steps').style.setProperty('--p', Math.max(0, done - 1) / 3 + (done > 0 && done < 4 ? .12 : 0));
+  document.getElementById('steps').style.setProperty('--p', done >= 3 ? 1 : done > 0 ? (done - 1) / 2 + .25 : 0);
 
   /* sticky cta */
   const sticky = document.getElementById('sticky'), st = document.getElementById('sticky-lbl'), hero = document.querySelector('.hero'), fin = document.querySelector('.final');
