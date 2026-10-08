@@ -21,15 +21,41 @@
     ]);
     store.set('apps', []);
     store.set('posts', [
-      { id: 'P-EX1', by: 'M-EX1', kind: '정보 공유', text: '요즘 회의록 정리에 쓰는 방법: 녹음 → 텍스트 → AI에게 "결정사항 / 할 일 / 담당자"로 나눠 달라고 해요. 시간이 꽤 줄었어요. (예시 글)', link: '', at: new Date(Date.now() - 3600e3).toISOString() },
-      { id: 'P-EX2', by: 'M-EX2', kind: '질문', text: '인스타 문구를 AI로 만들면 다 비슷하게 나오는데, 우리 가게 말투로 쓰게 하려면 어떻게 하세요? (예시 글)', link: '', at: new Date(Date.now() - 1800e3).toISOString() }
+      { id: 'P-EX1', by: 'M-EX1', kind: '정보 공유', cat: '프롬프트', title: '회의록 정리 프롬프트', text: '요즘 회의록 정리에 쓰는 방법: 녹음 → 텍스트 → AI에게 "결정사항 / 할 일 / 담당자"로 나눠 달라고 해요. 시간이 꽤 줄었어요. (예시 글)', link: '', at: new Date(Date.now() - 3600e3).toISOString() },
+      { id: 'P-EX2', by: 'M-EX2', kind: '질문', cat: '프롬프트', title: '우리 가게 말투로 쓰게 하려면?', text: '인스타 문구를 AI로 만들면 다 비슷하게 나오는데, 우리 가게 말투로 쓰게 하려면 어떻게 하세요? (예시 글)', link: '', at: new Date(Date.now() - 1800e3).toISOString() }
     ]);
+    store.set('posts', store.get('posts').concat([{ id: 'P-EX3', by: 'M-EX1', kind: '진행현황', project: '회의록 자동 정리', pno: 1, tried: '녹음 파일을 텍스트로 바꾸고 요약 프롬프트를 돌려 봤어요.', result: '결정사항 / 할 일 표가 나왔어요.', learned: '담당자 이름을 미리 알려 주면 정확도가 올라가요. (예시 글)', text: '녹음 파일을 텍스트로', link: '', at: new Date(Date.now() - 2400e3).toISOString() }]));
     store.set('comments', [{ id: 'C-EX1', postId: 'P-EX2', by: 'M-HOSE', text: '예전에 쓴 글 3개를 예시로 붙여 주고 "이 말투로"라고 해 보세요! (예시 댓글)', at: new Date(Date.now() - 900e3).toISOString() }]);
     store.set('seeded', true);
   }
   const counts = () => { let pm = 0, pmWait = 0, am = 0; store.get('apps', []).forEach(a => { const st = a.status || '접수'; if (st === '취소') return; if (a.slot === '오전반') am++; else if (st === '대기') pmWait++; else pm++; }); return { pm, pmWait, am }; };
   const me = (code) => { seed(); return store.get('members', []).find(x => x.code === code); };
 
+
+  // 글 종류별 입력 점검 (프런트 데모와 같은 규칙)
+  const INFO_TYPES = ['프롬프트', '도구·서비스', '글·영상', '기타'], Q_CATS = ['AI 기초', '프롬프트', '코딩·바이브코딩', '도구·설정', '업무·일상 적용', '기타'];
+  function normPost_(x, meId, all) {
+    x = x || {}; const s = (v, n) => String(v == null ? '' : v).trim().slice(0, n);
+    const kind = ['정보 공유', '진행현황', '질문'].indexOf(x.kind) >= 0 ? x.kind : '정보 공유';
+    const link = s(x.link, 300); if (link && !/^https?:\/\/\S{3,300}$/i.test(link)) return { error: '링크는 http(s)로 시작해야 해요' };
+    const o = { kind: kind, link: link, title: '', cat: '', project: '', pno: '', tried: '', result: '', learned: '', text: '' };
+    if (kind === '정보 공유') {
+      o.cat = INFO_TYPES.indexOf(x.cat) >= 0 ? x.cat : '기타'; o.title = s(x.title, 60); o.text = s(x.text, 3000);
+      if (!o.text && !link) return { error: '코멘트나 링크를 적어 주세요' }; o.text = o.text || o.title || link;
+    } else if (kind === '질문') {
+      o.cat = Q_CATS.indexOf(x.cat) >= 0 ? x.cat : '기타'; o.title = s(x.title, 80); o.text = s(x.text, 1500);
+      if (!o.title) return { error: '질문 제목을 적어 주세요' }; if (!o.text) return { error: '질문 내용을 적어 주세요' };
+    } else {
+      o.project = s(x.project, 40); if (!o.project) return { error: '프로젝트 이름을 적어 주세요' };
+      o.tried = s(x.tried, 1000); o.result = s(x.result, 1000); o.learned = s(x.learned, 1000);
+      if (!o.tried && !o.result && !o.learned) return { error: '시도한 것·결과물·깨달은 것 중 하나는 적어 주세요' };
+      o.text = o.tried || o.result || o.learned;
+      const mine = (all || []).filter(r => r.by === meId && r.kind === '진행현황' && r.project), same = mine.find(r => r.project === o.project);
+      o.pno = same ? Number(same.pno) : mine.reduce((m, r) => Math.max(m, Number(r.pno) || 0), 0) + 1;
+    }
+    return { post: o };
+  }
+  
   const demo = {
     status() { const c = counts(), M = C.morning; return { ok: true, seats: C.seats, taken: c.pm, closed: c.pm >= C.seats, waitlist: c.pmWait, am: { count: c.am, min: M.min, seats: M.seats, open: c.am >= M.min, full: c.am >= M.seats } }; },
     apply({ data: d }) {
@@ -50,9 +76,8 @@
     },
     addPost({ code, post }) {
       const m = me(code); if (!m) return { ok: false, error: 'auth' };
-      const t = String(post.text || '').trim(); if (!t || t.length > 1500) return { ok: false, error: '내용을 1~1500자로 적어 주세요' };
-      const link = String(post.link || '').trim(); if (link && !/^https?:\/\/\S{3,300}$/i.test(link)) return { ok: false, error: '링크는 http(s)로 시작해야 해요' };
-      const ps = store.get('posts', []); const x = { id: uid('P'), by: m.id, kind: post.kind || '정보 공유', text: t, link, at: now() };
+      const ps = store.get('posts', []); const n = normPost_(post, m.id, ps); if (n.error) return { ok: false, error: n.error };
+      const x = Object.assign({ id: uid('P'), by: m.id, at: now() }, n.post);
       ps.push(x); store.set('posts', ps); return { ok: true, post: x };
     },
     addComment({ code, postId, text }) {

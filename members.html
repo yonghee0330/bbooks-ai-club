@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://script.google.com">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="assets/style.css?v=1013">
+<link rel="stylesheet" href="assets/style.css?v=1014">
 <style>
 /* 로그인 */
 .gate { min-height: calc(100vh - 60px); display: grid; place-items: center; padding: 32px 0; }
@@ -66,6 +66,25 @@
 .c .cwhen { font-size: 13px; color: var(--muted); margin-left: 6px; }
 .cform { display: flex; gap: 8px; margin-top: 6px; }
 .cform input { flex: 1; min-width: 0; padding: 10px 12px; font-size: 16px; }
+/* 탭 · 필터 */
+.tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 22px; background: var(--line); padding: 4px; border-radius: 10px; }
+.tab { all: unset; cursor: pointer; text-align: center; padding: 11px 6px; border-radius: 7px; font-weight: 700; font-size: 16px; color: var(--muted); }
+.tab small { font-weight: 600; opacity: .8; margin-left: 3px; }
+.tab[aria-selected="true"] { background: #fff; color: var(--signal); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+.thint { margin: 14px 2px 0; font-size: 16px; color: var(--ink-2); }
+.compose label.l { font-size: 14px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 4px; }
+.compose textarea.s { min-height: 64px; }
+.filters { display: flex; gap: 6px; flex-wrap: wrap; margin: 4px 0 12px; align-items: center; }
+.fb { all: unset; cursor: pointer; font-size: 14px; font-weight: 600; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-2); background: #fff; }
+.fb[aria-pressed="true"] { background: var(--signal); border-color: var(--signal); color: var(--signal-ink); }
+.filters select { max-width: 100%; font-size: 15px; padding: 8px 10px; }
+.ptitle { margin: 12px 0 0; font-size: 19px; font-weight: 800; letter-spacing: -.02em; line-height: 1.4; }
+.ptitle + .pt { margin-top: 6px; }
+.lg { margin-top: 10px; }
+.lg b { display: block; font-size: 13px; color: var(--signal); letter-spacing: .02em; margin-bottom: 2px; }
+.lg p { margin: 0; white-space: pre-wrap; word-break: break-word; font-size: 17px; line-height: 1.6; }
+.pn { font-variant-numeric: tabular-nums; }
+.hide { display: none !important; }
 .pend { opacity: .6; }
 .empty { padding: 36px 20px; text-align: center; color: var(--muted); border: 1px dashed var(--line); border-radius: var(--r); font-size: 17px; }
 @media (max-width: 520px) { .sched li { grid-template-columns: 30px 78px 1fr; } .lounge { padding-top: 20px; } }
@@ -101,25 +120,39 @@
   <section class="week" id="week" aria-label="이번 회차"></section>
   <details class="sched"><summary>10회 일정 보기</summary><ol id="sched"></ol></details>
 
+  <div class="tabs" id="tabs" role="tablist"></div>
+  <p class="thint" id="thint"></p>
+
   <form class="card compose" id="compose">
-    <div class="kinds" role="radiogroup" aria-label="글 종류">
-      <label class="opt-pill"><input type="radio" name="kind" value="정보 공유" checked><span>새로운 정보 공유</span></label>
-      <label class="opt-pill"><input type="radio" name="kind" value="진행현황"><span>진행현황</span></label>
-      <label class="opt-pill"><input type="radio" name="kind" value="질문"><span>질문</span></label>
-    </div>
-    <textarea class="input" name="text" maxlength="1500" placeholder="새로 알게 된 것, 해 본 것, 궁금한 것을 편하게 남겨 주세요. (처음이라면 자기소개 한 줄과 지금 쓰는 AI부터!)" required></textarea>
+    <!-- 정보 공유 -->
+    <div data-k="정보 공유" class="kinds" role="radiogroup" aria-label="자료 종류" id="typepills"></div>
+    <input data-k="정보 공유" class="input" name="title" maxlength="60" placeholder="자료 이름 (선택)">
+    <!-- 진행현황 -->
+    <div data-k="진행현황" class="field"><label class="l" for="proj">프로젝트</label>
+      <select class="input" id="proj" name="proj"></select>
+      <input class="input hide" id="newproj" name="newproj" maxlength="40" placeholder="새 프로젝트 이름 (예: 가게 인스타 자동화)" style="margin-top:8px"></div>
+    <div data-k="진행현황"><label class="l" for="tried">오늘 시도한 것</label><textarea class="input s" id="tried" name="tried" maxlength="1000" placeholder="무엇을 해 봤나요?"></textarea></div>
+    <div data-k="진행현황"><label class="l" for="result">결과물</label><textarea class="input s" id="result" name="result" maxlength="1000" placeholder="나온 결과, 달라진 점 (링크는 아래에)"></textarea></div>
+    <div data-k="진행현황"><label class="l" for="learned">깨달은 것</label><textarea class="input s" id="learned" name="learned" maxlength="1000" placeholder="알게 된 점, 다음에 해 볼 것"></textarea></div>
+    <!-- 질문 -->
+    <div data-k="질문" class="kinds" role="radiogroup" aria-label="질문 분류" id="catpills"></div>
+    <input data-k="질문" class="input" name="qtitle" maxlength="80" placeholder="질문 제목">
+    <!-- 공통 -->
+    <textarea data-k="정보 공유" class="input" name="text" id="t-info" maxlength="3000" placeholder="한마디 코멘트 · 프롬프트라면 프롬프트를 그대로 붙여 주세요"></textarea>
+    <textarea data-k="질문" class="input" name="qtext" id="t-q" maxlength="1500" placeholder="어떤 상황에서, 무엇이 궁금한가요?"></textarea>
     <div class="row">
-      <input class="input" name="link" type="url" placeholder="관련 링크 (선택)">
+      <input class="input" name="link" type="url" placeholder="관련 링크 (선택)" id="linkin">
       <button class="btn btn-primary" type="submit" id="post-btn">올리기</button>
     </div>
   </form>
 
-  <div class="feedbar"><h2>함께 올린 글 <span id="sync" class="muted" style="font-size:14px;font-weight:500"></span></h2><button type="button" id="refresh">새로고침</button></div>
+  <div class="feedbar"><h2 id="fh">함께 올린 글 <span id="sync" class="muted" style="font-size:14px;font-weight:500"></span></h2><button type="button" id="refresh">새로고침</button></div>
+  <div class="filters" id="filters"></div>
   <div id="feed"></div>
 </main>
 
-<script src="assets/config.js?v=1013"></script>
-<script src="assets/app.js?v=1013"></script>
+<script src="assets/config.js?v=1014"></script>
+<script src="assets/app.js?v=1014"></script>
 <script>
 /* 빠르게 쓰는 방법: ① 저장해 둔 글을 먼저 보여 주고 서버는 뒤에서 확인 ② 글·댓글은 서버 응답을 기다리지 않고 바로 화면에 올린다 */
 (function () {
@@ -203,37 +236,98 @@
   const mine = id => id === S.me.id || S.me.role === '운영자';
   const avatar = id => `<span class="av${isOp(id) ? ' op' : ''}">${B.esc(nameOf(id).slice(0, 1))}</span>`;
 
+  const KINDS = [['정보 공유', '정보 공유', '발견한 자료·링크·프롬프트를 짧은 코멘트와 함께 모아 두는 곳이에요.'], ['진행현황', '진행현황', '프로젝트마다 번호를 붙여 일지처럼 쌓아요. 프로젝트는 여러 개 만들 수 있어요.'], ['질문', '질문', '분류를 고르고 질문하면, 답변은 아래에 타래로 이어져요.']];
+  const TYPES = ['프롬프트', '도구·서비스', '글·영상', '기타'], CATS = ['AI 기초', '프롬프트', '코딩·바이브코딩', '도구·설정', '업무·일상 적용', '기타'];
+  S.tab = B.store.get('tab') || '정보 공유'; S.f = { '정보 공유': '전체', '진행현황': '전체', '질문': '전체' }; S.type = TYPES[0]; S.cat = CATS[0];
+  const pkey = p => p.by + '|' + p.pno, logs = () => S.posts.filter(p => p.kind === '진행현황' && p.project);
+  const projects = () => { const m = {}; logs().forEach(p => { const k = pkey(p); (m[k] = m[k] || { key: k, by: p.by, pno: +p.pno, name: p.project, n: 0 }).n++; }); return Object.values(m).sort((a, b) => a.by.localeCompare(b.by) || a.pno - b.pno); };
+  const pills = (el, list, cur, name) => { el.innerHTML = list.map(x => `<label class="opt-pill"><input type="radio" name="${name}" value="${B.esc(x)}"${x === cur ? ' checked' : ''}><span>${B.esc(x)}</span></label>`).join(''); };
+
+  function renderTabs() {
+    const cnt = k => S.posts.filter(p => (p.kind || '정보 공유') === k).length;
+    $('#tabs').innerHTML = KINDS.map(([k, n]) => `<button type="button" class="tab" role="tab" data-tab="${B.esc(k)}" aria-selected="${k === S.tab}">${n}<small>${cnt(k)}</small></button>`).join('');
+    $('#thint').textContent = KINDS.find(x => x[0] === S.tab)[2];
+    document.querySelectorAll('#compose [data-k]').forEach(el => el.classList.toggle('hide', el.dataset.k !== S.tab));
+    $('#fh').firstChild.textContent = { '정보 공유': '모아 둔 자료 ', '진행현황': '진행 일지 ', '질문': '질문과 답변 ' }[S.tab];
+  }
+  function renderProj() { // 내 프로젝트 목록(선택 유지) + 새 프로젝트
+    const sel = $('#proj'), cur = sel.value, mineP = projects().filter(x => x.by === S.me.id);
+    sel.innerHTML = mineP.map(x => `<option value="${B.esc(x.key)}">#${x.pno} ${B.esc(x.name)} (${x.n}회)</option>`).join('') + '<option value="__new">＋ 새 프로젝트 만들기</option>';
+    sel.value = [...sel.options].some(o => o.value === cur) ? cur : (mineP.length ? mineP[mineP.length - 1].key : '__new');
+    $('#newproj').classList.toggle('hide', sel.value !== '__new');
+  }
+  function renderFilters() {
+    const f = S.f[S.tab], el = $('#filters');
+    if (S.tab === '진행현황') {
+      const ps = projects();
+      el.innerHTML = ps.length ? `<select class="input" id="pf" aria-label="프로젝트 선택"><option value="전체">전체 프로젝트</option>${ps.map(x => `<option value="${B.esc(x.key)}"${x.key === f ? ' selected' : ''}>${B.esc(nameOf(x.by))} · #${x.pno} ${B.esc(x.name)} (${x.n})</option>`).join('')}</select>` : '';
+    } else {
+      const list = S.tab === '질문' ? CATS : TYPES;
+      el.innerHTML = ['전체'].concat(list).map(x => `<button type="button" class="fb" data-f="${B.esc(x)}" aria-pressed="${x === f}">${B.esc(x)}</button>`).join('');
+    }
+  }
+  function postBody(p) {
+    const link = p.link ? `<a class="plink" href="${B.esc(p.link)}" target="_blank" rel="noopener nofollow">🔗 ${B.esc(p.link.replace(/^https?:\/\//, '').slice(0, 60))}</a>` : '';
+    if (p.kind === '진행현황' && p.project) {
+      const sec = (t, v) => v ? `<div class="lg"><b>${t}</b><p>${linkify(v)}</p></div>` : '';
+      return sec('오늘 시도한 것', p.tried) + sec('결과물', p.result) + sec('깨달은 것', p.learned) + link;
+    }
+    return (p.title ? `<h3 class="ptitle">${B.esc(p.title)}</h3>` : '') + `<p class="pt">${linkify(p.text)}</p>` + link;
+  }
   function renderFeed(force) {
-    const sig = JSON.stringify([S.posts.map(p => p.id + (p.pending ? '*' : '')), S.comments.map(c => c.id + (c.pending ? '*' : ''))]);
+    const sig = JSON.stringify([S.tab, S.f, S.posts.map(p => p.id + (p.pending ? '*' : '')), S.comments.map(c => c.id + (c.pending ? '*' : ''))]);
     if (!force && sig === S.sig) return; S.sig = sig;
+    renderTabs(); renderProj(); renderFilters();
+    const f = S.f[S.tab];
+    let list = S.posts.filter(p => (p.kind || '정보 공유') === S.tab);
+    if (S.tab === '정보 공유' && f !== '전체') list = list.filter(p => (p.cat || '기타') === f);
+    if (S.tab === '질문' && f !== '전체') list = list.filter(p => (p.cat || '기타') === f);
+    if (S.tab === '진행현황' && f !== '전체') list = list.filter(p => pkey(p) === f).sort((a, b) => a.at.localeCompare(b.at)); // 프로젝트 하나를 보면 일지 순서대로
+    const order = {}; logs().slice().sort((a, b) => a.at.localeCompare(b.at)).forEach(p => { const k = pkey(p); order[p.id] = (order[k] = (order[k] || 0) + 1); });
     const drafts = {}; document.querySelectorAll('.cform input').forEach(i => { if (i.value) drafts[i.dataset.p] = i.value; });
     const ae = document.activeElement, focus = ae && ae.matches && ae.matches('.cform input') ? { p: ae.dataset.p, pos: ae.selectionStart } : null;
-    $('#feed').innerHTML = S.posts.length ? S.posts.map(p => {
+    const q = S.tab === '질문';
+    $('#feed').innerHTML = list.length ? list.map(p => {
       const cs = S.comments.filter(c => c.postId === p.id);
+      const chip = p.kind === '진행현황' && p.project ? `<span class="chip kind pn">#${p.pno} ${B.esc(p.project)} · ${order[p.id]}번째</span>` : (p.cat ? `<span class="chip kind">${B.esc(p.cat)}</span>` : '');
       return `<article class="card post${p.pending ? ' pend' : ''}" data-id="${B.esc(p.id)}">
-        <div class="ph">${avatar(p.by)}<div><div class="who">${B.esc(nameOf(p.by))}${isOp(p.by) ? ' <span class="chip">운영</span>' : ''}</div><div class="when">${p.pending ? '올리는 중…' : ago(p.at)}${!p.pending && mine(p.by) ? `<button class="del" data-delpost="${B.esc(p.id)}">삭제</button>` : ''}</div></div><span class="chip kind">${B.esc(p.kind || '정보 공유')}</span></div>
-        <p class="pt">${linkify(p.text)}</p>
-        ${p.link ? `<a class="plink" href="${B.esc(p.link)}" target="_blank" rel="noopener nofollow">🔗 ${B.esc(p.link.replace(/^https?:\/\//, '').slice(0, 60))}</a>` : ''}
-        <div class="cm">${cs.map(c => `<div class="c${c.pending ? ' pend' : ''}"><span class="cw">${B.esc(nameOf(c.by))}${isOp(c.by) ? ' ✓' : ''}</span><span class="ct">${linkify(c.text)}</span><span class="cwhen">${c.pending ? '올리는 중…' : ago(c.at)}</span>${!c.pending && mine(c.by) ? `<button class="del" data-delc="${B.esc(c.id)}">삭제</button>` : ''}</div>`).join('')}
-          <form class="cform" data-p="${B.esc(p.id)}"><input class="input" data-p="${B.esc(p.id)}" maxlength="600" placeholder="${p.pending ? '올리는 중…' : '댓글 달기'}" ${p.pending ? 'disabled' : ''} value="${B.esc(drafts[p.id] || '')}" aria-label="댓글"><button class="btn btn-ghost btn-sm" type="submit" ${p.pending ? 'disabled' : ''}>등록</button></form>
+        <div class="ph">${avatar(p.by)}<div><div class="who">${B.esc(nameOf(p.by))}${isOp(p.by) ? ' <span class="chip">운영</span>' : ''}</div><div class="when">${p.pending ? '올리는 중…' : ago(p.at)}${!p.pending && mine(p.by) ? `<button class="del" data-delpost="${B.esc(p.id)}">삭제</button>` : ''}</div></div>${chip}</div>
+        ${postBody(p)}
+        <div class="cm">${q && cs.length ? `<div class="when" style="margin-bottom:4px">답변 ${cs.length}개</div>` : ''}${cs.map(c => `<div class="c${c.pending ? ' pend' : ''}"><span class="cw">${B.esc(nameOf(c.by))}${isOp(c.by) ? ' ✓' : ''}</span><span class="ct">${linkify(c.text)}</span><span class="cwhen">${c.pending ? '올리는 중…' : ago(c.at)}</span>${!c.pending && mine(c.by) ? `<button class="del" data-delc="${B.esc(c.id)}">삭제</button>` : ''}</div>`).join('')}
+          <form class="cform" data-p="${B.esc(p.id)}"><input class="input" data-p="${B.esc(p.id)}" maxlength="600" placeholder="${p.pending ? '올리는 중…' : q ? '답변 달기' : '댓글 달기'}" ${p.pending ? 'disabled' : ''} value="${B.esc(drafts[p.id] || '')}" aria-label="댓글"><button class="btn btn-ghost btn-sm" type="submit" ${p.pending ? 'disabled' : ''}>등록</button></form>
         </div></article>`;
-    }).join('') : '<div class="empty">아직 올라온 글이 없어요.<br>첫 글을 남겨 보세요 — 자기소개 한 줄도 좋아요.</div>';
+    }).join('') : `<div class="empty">${f !== '전체' ? '이 분류에는 아직 글이 없어요.' : S.tab === '질문' ? '아직 질문이 없어요.<br>궁금한 건 뭐든 올려 보세요.' : S.tab === '진행현황' ? '아직 진행 기록이 없어요.<br>첫 프로젝트를 만들어 오늘 한 걸 남겨 보세요.' : '아직 올라온 자료가 없어요.<br>쓸 만한 링크나 프롬프트를 올려 보세요.'}</div>`;
     if (focus) { const el = document.querySelector(`.cform input[data-p="${CSS.escape(focus.p)}"]`); if (el) { el.focus(); try { el.setSelectionRange(focus.pos, focus.pos); } catch (e) {} } }
   }
+  $('#tabs').addEventListener('click', e => { const t = e.target.closest('[data-tab]'); if (!t) return; S.tab = t.dataset.tab; B.store.set('tab', S.tab); renderFeed(true); });
+  $('#filters').addEventListener('click', e => { const t = e.target.closest('[data-f]'); if (!t) return; S.f[S.tab] = t.dataset.f; renderFeed(true); });
+  $('#filters').addEventListener('change', e => { if (e.target.id === 'pf') { S.f['진행현황'] = e.target.value; renderFeed(true); } });
+  $('#proj').addEventListener('change', e => $('#newproj').classList.toggle('hide', e.target.value !== '__new'));
+  pills($('#typepills'), TYPES, S.type, 'type'); pills($('#catpills'), CATS, S.cat, 'cat');
 
   /* ---------- 올리기 · 댓글 · 삭제 (화면에 먼저 반영) ---------- */
   $('#compose').addEventListener('submit', async e => {
-    e.preventDefault(); const f = e.target;
-    const text = f.text.value.trim(), link = f.link.value.trim(), kind = f.kind.value; if (!text) return B.toast('내용을 적어 주세요', 'err');
-    const tmp = { id: 'tmp-' + Date.now(), by: S.me.id, kind, text, link, at: new Date().toISOString(), pending: true };
-    S.posts.unshift(tmp); renderFeed(true); f.text.value = ''; f.link.value = ''; S.busy++;
+    e.preventDefault(); const f = e.target, kind = S.tab, post = { kind }, v = n => (f[n].value || '').trim();
+    if (f.link.value.trim()) post.link = v('link');
+    if (kind === '정보 공유') { post.cat = f.type.value; post.title = v('title'); post.text = v('text'); if (!post.text && !post.link) return B.toast('코멘트나 링크를 적어 주세요', 'err'); post.text = post.text || post.title || post.link; }
+    else if (kind === '질문') { post.cat = f.cat.value; post.title = v('qtitle'); post.text = v('qtext'); if (!post.title) return B.toast('질문 제목을 적어 주세요', 'err'); if (!post.text) return B.toast('질문 내용을 적어 주세요', 'err'); }
+    else {
+      const sel = f.proj.value; post.tried = v('tried'); post.result = v('result'); post.learned = v('learned');
+      if (sel === '__new') { post.project = v('newproj'); if (!post.project) return B.toast('프로젝트 이름을 적어 주세요', 'err'); const ex = projects().find(x => x.by === S.me.id && x.name === post.project); if (ex) post.pno = ex.pno; else post.pno = projects().filter(x => x.by === S.me.id).reduce((m, x) => Math.max(m, x.pno), 0) + 1; }
+      else { const ex = projects().find(x => x.key === sel); post.project = ex.name; post.pno = ex.pno; }
+      if (!post.tried && !post.result && !post.learned) return B.toast('시도한 것·결과물·깨달은 것 중 하나는 적어 주세요', 'err');
+      post.text = post.tried || post.result || post.learned;
+    }
+    const tmp = Object.assign({ id: 'tmp-' + Date.now(), by: S.me.id, at: new Date().toISOString(), pending: true }, post);
+    const keep = {}; ['title', 'text', 'link', 'tried', 'result', 'learned', 'newproj', 'qtitle', 'qtext'].forEach(n => { keep[n] = f[n].value; f[n].value = ''; });
+    S.posts.unshift(tmp); S.f[kind] = '전체'; renderFeed(true); S.busy++;
     try {
-      const r = await B.api('addPost', { code: S.code, cid: tmp.id, post: { kind, text, link } });
+      const r = await B.api('addPost', { code: S.code, cid: tmp.id, post });
       if (!r.ok) throw new Error(r.error || '올리지 못했어요');
       S.posts = S.posts.filter(p => p !== tmp && p.id !== r.post.id); S.posts.unshift(r.post); S.posts.sort((a, b) => b.at.localeCompare(a.at));
       saveCache(); renderFeed(true);
     } catch (err) {
-      S.posts = S.posts.filter(p => p !== tmp); renderFeed(true); f.text.value = text; f.link.value = link; B.toast('올리지 못했어요: ' + err.message, 'err');
+      S.posts = S.posts.filter(p => p !== tmp); renderFeed(true); Object.keys(keep).forEach(n => f[n].value = keep[n]); B.toast('올리지 못했어요: ' + err.message, 'err');
     } finally { S.busy--; }
   });
   $('#feed').addEventListener('submit', async e => {
@@ -262,7 +356,7 @@
   $('#refresh').onclick = async () => { const ok = await sync(); B.toast(ok ? '새로 불러왔어요' : '연결이 느려요. 잠시 후 다시 눌러 주세요', ok ? '' : 'err'); };
 
   // 자동 새로고침: 화면이 보일 때, 올리는 중이거나 입력 중이 아닐 때만 (30초 / 탭으로 돌아왔을 때)
-  const idle = () => { const ae = document.activeElement; return !S.busy && !(ae && ['INPUT', 'TEXTAREA'].includes(ae.tagName) && ae.value) && !$('#compose').text.value; };
+  const idle = () => { const ae = document.activeElement; return !S.busy && !(ae && ['INPUT', 'TEXTAREA'].includes(ae.tagName) && ae.value) && !['text', 'qtext', 'tried', 'result', 'learned'].some(n => $('#compose')[n].value); };
   setInterval(() => { if (!document.hidden && S.me && idle()) sync(); }, 30000);
   document.addEventListener('visibilitychange', () => { if (!document.hidden && S.me && idle() && Date.now() - S.last > 15000) sync(); });
 
