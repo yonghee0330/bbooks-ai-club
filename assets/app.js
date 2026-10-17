@@ -28,7 +28,7 @@
     store.set('comments', [{ id: 'C-EX1', postId: 'P-EX2', by: 'M-HOSE', text: '예전에 쓴 글 3개를 예시로 붙여 주고 "이 말투로"라고 해 보세요! (예시 댓글)', at: new Date(Date.now() - 900e3).toISOString() }]);
     store.set('seeded', true);
   }
-  const counts = () => { let pm = 0, pmWait = 0, am = 0; store.get('apps', []).forEach(a => { const st = a.status || '접수'; if (st === '취소') return; if (a.slot === '오전반') am++; else if (st === '대기') pmWait++; else pm++; }); return { pm, pmWait, am }; };
+  const counts = () => { let pm = 0, pmWait = 0, am = 0; store.get('apps', []).forEach(a => { const st = a.status || '접수'; if (st === '취소' || a.join === '1회') return; if (a.slot === '오전반') am++; else if (st === '대기') pmWait++; else pm++; }); return { pm, pmWait, am }; };
   const me = (code) => { seed(); return store.get('members', []).find(x => x.code === code); };
 
 
@@ -57,8 +57,16 @@
   }
   
   const demo = {
-    status() { const c = counts(), M = C.morning; return { ok: true, seats: C.seats, taken: c.pm, closed: c.pm >= C.seats, waitlist: c.pmWait, am: { count: c.am, min: M.min, seats: M.seats, open: c.am >= M.min, full: c.am >= M.seats } }; },
+    status() { const c = counts(), M = C.morning; return { ok: true, seats: C.seats, taken: c.pm, closed: c.pm >= C.seats, reg: { open: feeNow().regularOpen }, waitlist: c.pmWait, am: { count: c.am, min: M.min, seats: M.seats, open: c.am >= M.min, full: c.am >= M.seats } }; },
     apply({ data: d }) {
+      const fn = feeNow();
+      if (d.join === '1회') { // 1회 참관(맛보기): 정원과 별개, 회당 visit 금액
+        const n = Number(d.visit), ss = C.sessions[n - 1]; if (!ss || new Date(ss.date + 'T16:00:00+09:00') < today()) return { ok: false, error: '참관할 회차를 다시 골라 주세요' };
+        const apps = store.get('apps', []), id = 'AI1-' + String(apps.length + 1).padStart(3, '0') + '-' + Math.random().toString(36).slice(2, 4).toUpperCase();
+        apps.push(Object.assign({ id, at: now() }, d, { status: '접수', slot: '참관', join: '1회', visit: n + '회차(' + ss.date.slice(5).replace('-', '/') + ')', fee: fn.visit })); store.set('apps', apps);
+        return { ok: true, id, status: '접수', slot: '참관', fee: fn.visit, visit: n };
+      }
+      if (!fn.regularOpen) return { ok: false, regClosed: true, error: '정규 합류 신청은 마감됐어요. 1회 참관으로 신청해 주세요' };
       const c = counts(), M = C.morning; let slot = ['오후반', '오전반', '오후반 대기'].includes(d.slot) ? d.slot : '오후반', status = '접수';
       if (slot === '오전반') { if (c.am >= M.seats) return { ok: false, closed: true, error: '오전반도 정원이 모두 찼어요' }; status = '대기'; }
       else if (c.pm >= C.seats) { if (slot !== '오후반 대기') return { ok: false, closed: true, full: true, error: '오후반 정원 ' + C.seats + '명이 모두 찼어요' }; status = '대기'; }
@@ -191,8 +199,8 @@
 
   // 신청 시점 참가비: 정가에서 이미 지나간 회차마다 step 차감 (최소 step). 신청서에서만 보여 준다
   function feeNow() {
-    const { done } = currentSession(), f = C.fees || { base: 50000, step: 5000 }, amount = Math.max(f.step, f.base - f.step * done);
-    return { done, next: done + 1, amount, text: amount.toLocaleString('ko-KR') + '원', base: f.base, step: f.step, discounted: done > 0, nextDate: (C.sessions[done] || {}).date };
+    const { done } = currentSession(), f = C.fees || { base: 50000, step: 5000, visit: 10000, regularMax: 4 }, amount = Math.max(f.step, f.base - f.step * done);
+    return { done, next: done + 1, amount, text: amount.toLocaleString('ko-KR') + '원', base: f.base, step: f.step, discounted: done > 0, nextDate: (C.sessions[done] || {}).date, regularOpen: done + 1 <= f.regularMax, visit: f.visit, visitText: f.visit.toLocaleString('ko-KR') + '원' };
   }
 
   // 정원 현황 { seats, taken, closed } — 서버가 안 되면 null (이때는 마감으로 막지 않는다)

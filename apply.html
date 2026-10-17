@@ -12,20 +12,20 @@
 <meta property="og:title" content="1기 신청서 · 부천 AI 특공대">
 <meta property="og:description" content="10문항, 3~5분이면 끝나요. 선착순 8명 · 신청서 작성 후 송금하면 신청 완료.">
 <meta property="og:url" content="https://bbooks.co.kr/ai-study/apply.html">
-<meta property="og:image" content="https://bbooks.co.kr/ai-study/images/og.png?v=1017">
+<meta property="og:image" content="https://bbooks.co.kr/ai-study/images/og.png?v=1018">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="1기 모집 — 동네에서 함께 공부하고 실천해보는 AI 스터디 모임">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="1기 신청서 · 부천 AI 특공대">
 <meta name="twitter:description" content="10문항, 3~5분이면 끝나요. 선착순 8명 · 신청서 작성 후 송금하면 신청 완료.">
-<meta name="twitter:image" content="https://bbooks.co.kr/ai-study/images/og.png?v=1017">
+<meta name="twitter:image" content="https://bbooks.co.kr/ai-study/images/og.png?v=1018">
 <meta name="theme-color" content="#f8fafc">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234e6813'/%3E%3Cpath d='M7 22l6-6 4 4 8-9' stroke='%23ffffff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://script.google.com">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="assets/style.css?v=1017">
+<link rel="stylesheet" href="assets/style.css?v=1018">
 <style>
 .page { display: grid; grid-template-columns: 1fr 340px; gap: 48px; padding: 40px 0 96px; align-items: start; }
 @media (max-width: 980px) { .page { grid-template-columns: 1fr; } .side { display: none; } }
@@ -137,6 +137,13 @@
 .closed { padding: 40px; text-align: center; margin-top: 32px; }
 .feebox { margin: 4px 0 12px; padding: 16px 18px; border-radius: 8px; background: var(--signal-soft); color: var(--ink); font-size: 17px; line-height: 1.55; display: grid; gap: 4px; }
 .feebox b:first-child { font-size: 22px; color: var(--signal); }
+.joinsel { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
+.joinsel label { cursor: pointer; }
+.joinsel input { position: absolute; opacity: 0; }
+.joinsel span { display: block; padding: 14px 16px; border: 2px solid var(--line); border-radius: 10px; background: #fff; font-size: 15px; color: var(--muted); line-height: 1.4; }
+.joinsel b { display: block; font-size: 19px; color: var(--ink); }
+.joinsel input:checked + span { border-color: var(--signal); background: var(--signal-soft); }
+.joinsel input:checked + span b { color: var(--signal); }
 </style>
 </head>
 <body>
@@ -155,6 +162,10 @@
         <h1>1기 신청서</h1>
         <p>10문항, 3~5분이면 끝나요. 신청서를 작성하고 <b>송금(또는 현장 결제)하면 신청 완료</b>예요. 별도 선발 없이 선착순이에요.</p>
         <div class="meta"><span class="chip" id="seat-chip"><i style="color:var(--signal)"></i>선착순 8명 (진행자 별도)</span><span class="chip">1기 추가 모집 중</span><span class="chip" id="fee-chip">참가비 5만 원 (10회 일괄)</span><span class="chip">모임 외 주 1~2시간</span></div>
+        <div class="joinsel" id="joinsel" role="radiogroup" aria-label="참여 방식" hidden>
+          <label><input type="radio" name="jm" value="reg" checked><span><b>1기 합류</b>남은 회차를 함께해요</span></label>
+          <label><input type="radio" name="jm" value="visit"><span><b>1회 참관</b>맛보기로 한 번만 와 봐요</span></label>
+        </div>
       </div>
 
       <form id="form" novalidate autocomplete="on">
@@ -217,12 +228,18 @@
             <div class="count" data-for="goal"></div>
             <span class="err">한 줄로 적어 주세요 (4자 이상).</span>
           </div>
-          <div class="field" data-q="attend">
+          <div class="field" data-q="attend" id="attend-field">
             <div class="lab"><span class="num">Q8</span>10회 출석 가능 여부 <span class="req">필수</span></div>
             <p class="help"><b>참가비 5만 원</b>은 10회 일괄이고, 중간에 빠져도 환불되지 않아요. 끝까지 함께하는 책임감을 위해, 그리고 다과·음료비에 보태려고 한 번에 받아요.<br>10/17 · 10/24 · 10/31 · 11/7 · 11/14 · 11/21 · 11/28 · 12/5 · 12/12 · 12/19 (토 14:00–15:30). 가능하면 8회 이상 함께해 주세요.</p>
             <div class="opts" id="opt-attend"></div>
             <input class="input other" name="absent" maxlength="40" placeholder="불참 예정일 (예: 11/21, 12/5)">
             <span class="err">하나를 고르고, 불참 예정일이 있으면 적어 주세요.</span>
+          </div>
+          <div class="field" data-q="visit" id="visit-field" hidden>
+            <div class="lab"><span class="num">Q8</span>참관할 회차 <span class="req">필수</span></div>
+            <p class="help">한 번만 참여해 보는 참관(맛보기)이에요. 날짜 하나를 골라 주세요. 모임은 매주 토 14:00–15:30이에요.</p>
+            <div class="opts" id="opt-visit"></div>
+            <span class="err">하나를 골라 주세요.</span>
           </div>
           <div class="field" data-q="slot" id="slot-field" hidden>
             <div class="lab"><span class="num">Q9</span>참여 반 <span class="req">필수</span></div>
@@ -271,7 +288,7 @@
         <svg class="seal" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="56"/><path d="M38 62 L54 77 L84 44"/></svg>
         <span class="eyebrow">Received</span>
         <h2 style="margin-top:14px">신청서를 받았어요.</h2>
-        <p style="color:var(--ink-2);margin:0"><b id="done-lead">결제하면 신청이 완료돼요.</b> 선착순 8명이에요.</p>
+        <p style="color:var(--ink-2);margin:0"><b id="done-lead">결제하면 신청이 완료돼요.</b></p>
         <div class="rid" id="rid"></div>
         <div class="paybox" id="paybox"></div>
         <ol id="done-steps">
@@ -307,8 +324,8 @@
 
 <footer class="foot"><div class="wrap"><div>부천 AI 특공대 1기 · 비북스</div><div>문의 · <a href="https://www.instagram.com/bbooks_bucheon/" target="_blank" rel="noopener">@bbooks_bucheon</a></div></div></footer>
 
-<script src="assets/config.js?v=1017"></script>
-<script src="assets/app.js?v=1017"></script>
+<script src="assets/config.js?v=1018"></script>
+<script src="assets/app.js?v=1018"></script>
 <script>
 (function () {
   const C = CLUB, B = BAPC, form = document.getElementById('form');
@@ -358,10 +375,27 @@
     if (els.type === 'checkbox') return els.checked ? els.value : ''; return els.value.trim(); };
   /* 오후반 정원이 차면 '대기 신청' 모드: 오전반(개설형) 또는 오후반 대기를 고르고, 결제는 받지 않는다 */
   const MODE = { full: false, st: null };
+  /* 참여 방식: 1기 합류(reg) / 1회 참관(visit). 정규 합류는 regularMax 회차까지만, 이후엔 참관만 */
+  let JOIN = 'reg';
+  const _intro = document.querySelector('.head p'), _chip = document.getElementById('seat-chip');
+  let INTRO_REG = _intro.innerHTML, CHIP_REG = _chip.innerHTML;
+  const visitLabel = n => { const s = C.sessions[n - 1]; return s ? n + '회차(' + (+s.date.slice(5, 7)) + '/' + (+s.date.slice(8)) + ')' : ''; };
+  function refreshJoin() {
+    const visit = JOIN === 'visit', wait = MODE.full && !visit;
+    document.getElementById('slot-field').hidden = !wait; document.getElementById('pay-field').hidden = wait;
+    document.getElementById('visit-field').hidden = !visit; document.getElementById('attend-field').hidden = visit;
+    const intro = document.querySelector('.head p'), chip = document.getElementById('seat-chip');
+    if (visit) {
+      intro.innerHTML = '한 번만 와 보는 <b>1회 참관(맛보기)</b>이에요. 신청서를 작성하고 <b>송금(또는 현장 결제)하면 신청 완료</b>예요.' + (B.feeNow().regularOpen ? '' : ' 1기 정규 합류는 마감됐어요.');
+      chip.innerHTML = '<i style="color:var(--signal)"></i>1회 참관 · 정원과 별개로 받아요';
+    } else { intro.innerHTML = INTRO_REG; chip.innerHTML = CHIP_REG; }
+    renderFee(); sync();
+  }
+  function setJoin(v) { JOIN = v; document.querySelectorAll('#joinsel input').forEach(i => i.checked = i.value === v); refreshJoin(); }
+  document.getElementById('joinsel').addEventListener('change', e => { if (e.target.name === 'jm') setJoin(e.target.value); });
   function applyMode(st) {
     MODE.st = st; MODE.full = !!(st && st.closed && !(st.am && st.am.full));
     const M = C.morning, am = st && st.am, left = st ? st.seats - st.taken : 0;
-    document.getElementById('slot-field').hidden = !MODE.full; document.getElementById('pay-field').hidden = MODE.full;
     const chip = document.getElementById('seat-chip'), intro = document.querySelector('.head p');
     if (MODE.full) {
       document.getElementById('opt-slot').innerHTML = [
@@ -372,9 +406,9 @@
       chip.innerHTML = '<i style="color:var(--signal)"></i>오후반 마감 · 대기 신청 중';
       intro.innerHTML = `오후반(토 14:00–15:30) 정원 ${st.seats}명이 마감됐어요. <b>대기 신청</b>을 받고 있어요. 토요일 <b>오전반(${M.time})</b>은 ${M.min}명 이상 신청하면 개설돼요 <b>(현재 ${am ? am.count : 0}/${M.min}명${am && am.open ? ' · 개설 확정' : ''})</b>.`;
     } else if (st && left < st.seats) chip.innerHTML = `<i style="color:var(--signal)"></i>남은 자리 ${left}명 (선착순 ${st.seats}명)`;
-    sync();
+    INTRO_REG = intro.innerHTML; CHIP_REG = chip.innerHTML; refreshJoin();
   }
-  const NAMES = ['name', 'slot', 'phone', 'email', 'role', 'roleOther', 'tools', 'toolsOther', 'level', 'coding', 'hope', 'goal', 'attend', 'absent', 'pay', 'consent', 'consentNext'];
+  const NAMES = ['name', 'slot', 'visit', 'phone', 'email', 'role', 'roleOther', 'tools', 'toolsOther', 'level', 'coding', 'hope', 'goal', 'attend', 'absent', 'pay', 'consent', 'consentNext'];
   const collect = () => Object.fromEntries(NAMES.map(n => [n, val(n)]));
   const RULES = {
     contact: d => d.name.length >= 2 && /^0\d{1,2}-?\d{3,4}-?\d{4}$/.test(d.phone.replace(/\s/g, '')) && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email),
@@ -384,9 +418,10 @@
     coding: d => !!d.coding,
     hope: d => d.hope.length >= 1 && d.hope.length <= 2,
     goal: d => d.goal.length >= 4,
-    attend: d => d.attend && (d.attend === '10회 모두 가능' || d.absent),
-    slot: d => !MODE.full || !!d.slot,
-    pay: d => MODE.full || !!d.pay,
+    attend: d => JOIN === 'visit' || (d.attend && (d.attend === '10회 모두 가능' || d.absent)),
+    visit: d => JOIN !== 'visit' || !!d.visit,
+    slot: d => !(MODE.full && JOIN === 'reg') || !!d.slot,
+    pay: d => (MODE.full && JOIN === 'reg') || !!d.pay,
     consent: d => d.consent === 'Y'
   };
   function validate(step, quiet) {
@@ -445,23 +480,34 @@
     document.getElementById('review').innerHTML =
       sec('나에 대해', 0, [['이름', d.name], ['연락처', d.phone], ['이메일', d.email], ['하는 일', d.role === '기타' ? '기타 · ' + d.roleOther : d.role]]) +
       sec('AI 사용', 1, [['도구', d.tools.filter(x => x !== '기타').concat(d.toolsOther ? [d.toolsOther] : []).join(', ')], ['AI 사용 범위', d.level], ['코딩 경험', d.coding]]) +
-      sec('기대와 참여', 2, [['기대하는 것', d.hope.join(' · ')], ['바꿔 보고 싶은 일', d.goal], ['출석', d.attend + (d.absent ? ' · 불참: ' + d.absent : '')], ...(MODE.full ? [['참여 반', d.slot]] : [['결제 방법', d.pay], ['참가비', FEE.text + (FEE.discounted ? ' (' + FEE.next + '회차부터)' : '')]]), ['2기 소식', d.consentNext ? '받음' : '받지 않음']]);
+      sec('기대와 참여', 2, [['기대하는 것', d.hope.join(' · ')], ['바꿔 보고 싶은 일', d.goal], ...(JOIN === 'visit' ? [['참여 방식', '1회 참관(맛보기)'], ['참관 회차', visitLabel(+d.visit)], ['결제 방법', d.pay], ['참관비', FEE.visitText]] : [['출석', d.attend + (d.absent ? ' · 불참: ' + d.absent : '')], ...(MODE.full ? [['참여 반', d.slot]] : [['결제 방법', d.pay], ['참가비', FEE.text + (FEE.discounted ? ' (' + FEE.next + '회차부터)' : '')]])]), ['2기 소식', d.consentNext ? '받음' : '받지 않음']]);
     document.querySelectorAll('[data-edit]').forEach(b => b.onclick = () => show(+b.dataset.edit));
   }
   function showClosed() {
     form.innerHTML = '<div class="card closed"><h2 style="margin:0 0 8px">정원 8명이 모두 찼어요</h2><p class="muted" style="margin:0 0 18px">1기 모집이 마감되었어요. 2기 소식은 인스타그램 @bbooks_bucheon 에서 알려드릴게요.</p><a class="btn btn-dark" href="./">모집 안내로 돌아가기</a></div>';
     const sd = document.querySelector('.side'); if (sd) sd.hidden = true; document.getElementById('page').style.gridTemplateColumns = '1fr';
   }
-  /* 추가 모집 비용 안내 — 이미 지나간 회차만큼 차감한 금액을 신청서에서만 보여 준다 */
+  /* 비용 안내 — 신청서에서만 보여 준다: 정규는 지나간 회차만큼 차감, 참관은 회당 금액 */
   const FEE = B.feeNow();
-  (function () {
+  function renderFee() {
     const chip = document.getElementById('fee-chip'), box = document.getElementById('feebox'), help = document.getElementById('pay-help');
-    if (!FEE.discounted) return;
+    if (JOIN === 'visit') {
+      chip.textContent = '참관비 ' + FEE.visitText + ' (1회)';
+      help.textContent = '노트북은 모임 때 챙겨 와 주세요.';
+      box.hidden = false; box.innerHTML = `<b>참관비 ${B.esc(FEE.visitText)}</b><span>1회 참관(맛보기)은 회당 ${B.esc(FEE.visitText)}이에요. 고른 회차에 비북스로 와 주세요.</span>`; return;
+    }
+    if (!FEE.discounted) { chip.textContent = '참가비 5만 원 (10회 일괄)'; help.textContent = '참가비 5만 원. 신청서를 제출하면 안내가 나와요. 노트북은 모임 때 챙겨 와 주세요.'; box.hidden = true; return; }
     const sd = C.sessions[FEE.done], dt = sd ? new Date(sd.date + 'T12:00:00+09:00') : null, md = dt ? (dt.getMonth() + 1) + '/' + dt.getDate() + '(토)' : '';
     chip.textContent = '참가비 ' + FEE.text + ' (' + FEE.next + '회차부터 합류)';
     help.textContent = '1기는 이미 시작했어요. 노트북은 모임 때 챙겨 와 주세요.';
     box.hidden = false;
     box.innerHTML = `<b>참가비 ${B.esc(FEE.text)}</b><span>정가 ${FEE.base.toLocaleString('ko-KR')}원에서 이미 지나간 ${FEE.done}회 × ${FEE.step.toLocaleString('ko-KR')}원을 뺀 금액이에요. 지금 신청하면 <b>${FEE.next}회차${md ? '(' + B.esc(md) + ')' : ''}</b>부터 함께해요.</span>`;
+  }
+  (function () { // 참관 가능한 회차(아직 안 끝난 회차)
+    const up = C.sessions.filter(s => new Date(s.date + 'T16:00:00+09:00') >= B.today());
+    document.getElementById('opt-visit').innerHTML = up.map(s => `<label class="opt-pill"><input type="radio" name="visit" value="${s.n}"><span>${s.n}회차 · ${(+s.date.slice(5, 7))}/${(+s.date.slice(8))}(토) 14:00–15:30</span></label>`).join('') || '<p class="help">참관할 수 있는 회차가 없어요.</p>';
+    const sel = document.getElementById('joinsel');
+    if (FEE.regularOpen) sel.hidden = false; else setJoin('visit');
   })();
   let sending = false;
   async function submit() {
@@ -470,9 +516,10 @@
     if (Date.now() > new Date(C.deadline).getTime() && !/[?&]late=1/.test(location.search)) { B.toast('모집이 마감되었어요', 'err'); return; }
     sending = true; const nx = document.getElementById('next'); nx.disabled = true; nx.textContent = '제출 중…';
     try {
-      const d = collect(); d.ua = navigator.userAgent.slice(0, 120); if (!MODE.full) d.slot = '오후반'; else d.pay = '';
+      const d = collect(); d.ua = navigator.userAgent.slice(0, 120); d.join = JOIN === 'visit' ? '1회' : '정규'; if (JOIN === 'visit') { d.slot = ''; d.attend = ''; } else { d.visit = ''; if (!MODE.full) d.slot = '오후반'; else d.pay = ''; }
       d.reqId = B.store.get('reqId') || ('R' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8)); B.store.set('reqId', d.reqId);
       const r = await B.api('apply', { data: d });
+      if (r.regClosed) { B.toast('정규 합류는 마감됐어요. 1회 참관으로 신청해 주세요', 'err'); document.getElementById('joinsel').hidden = true; setJoin('visit'); show(2); nx.disabled = false; nx.textContent = '신청서 제출하기'; return; }
       if (r.closed && r.full) { const st = await B.seatStatus(); applyMode(st); show(2); B.toast('오후반이 방금 마감됐어요. 대기 신청으로 이어서 신청해 주세요', 'err'); nx.disabled = false; nx.textContent = '신청서 제출하기'; return; }
       if (r.closed) { showClosed(); return; }
       if (!r.ok) throw new Error(r.error || '접수 실패');
@@ -480,7 +527,7 @@
       form.hidden = true; document.querySelector('.head').hidden = true; document.querySelector('.side').hidden = true;
       document.getElementById('page').style.gridTemplateColumns = '1fr';
       document.getElementById('rid').textContent = r.id;
-      const P = C.pay || {}, M = C.morning, bank = d.pay === '계좌 입금', wait = r.status === '대기', amt = (r.fee ? Number(r.fee).toLocaleString('ko-KR') + '원' : FEE.text);
+      const visit = d.join === '1회', P = C.pay || {}, M = C.morning, bank = d.pay === '계좌 입금', wait = r.status === '대기', amt = (r.fee ? Number(r.fee).toLocaleString('ko-KR') + '원' : FEE.text);
       if (wait) {
         const am = d.slot === '오전반', n = r.am || 0, open = am && n >= M.min;
         document.getElementById('done-lead').textContent = am ? (open ? '오전반 개설이 확정됐어요!' : '오전반 대기 신청을 받았어요.') : '오후반 대기 신청을 받았어요.';
@@ -494,6 +541,9 @@
         ? `<dl><dt>금액</dt><dd class="amt">${B.esc(amt)}</dd><dt>은행</dt><dd>${B.esc(P.bank)}</dd><dt>계좌</dt><dd><span id="acct">${B.esc(P.account)}</span> <button type="button" class="copy" id="copy-acct">복사</button></dd><dt>예금주</dt><dd>${B.esc(P.holder)}</dd></dl><div class="sm">입금자명은 신청서의 이름과 같게 해 주세요. 10회 일괄 · 환불 불가</div>`
         : `<dl><dt>금액</dt><dd class="amt">${B.esc(amt)}</dd><dt>장소</dt><dd>비북스 매장<br><span style="font-weight:500">부천시 원미구 부천로 136번길 24, B02호</span></dd></dl><div class="sm">매장에 방문해서 카드로 결제해 주세요. 방문 전 문의는 인스타그램 @bbooks_bucheon 으로 편하게 주세요. 10회 일괄 · 환불 불가</div>`;
       }
+      const nx2 = FEE.nextDate ? new Date(FEE.nextDate + 'T12:00:00+09:00') : null, nxl = nx2 ? (nx2.getMonth() + 1) + '/' + nx2.getDate() + '(토)' : '';
+      if (visit) document.getElementById('done-steps').innerHTML = `<li>결제가 확인되면 <b>문자로 신청 완료</b>를 알려드려요.</li><li><b>${B.esc(visitLabel(+d.visit))} 14:00</b> 비북스로 오세요 — 노트북 챙겨 오세요.</li>`;
+      else if (!wait && nxl) document.getElementById('done-steps').innerHTML = `<li>결제가 확인되면 <b>문자로 신청 완료</b>와 함께, 멤버끼리 이야기하는 <b>‘함께 쓰는 공간’ 입장 코드</b>를 보내드려요.</li><li><b>${nxl} 14:00</b> 비북스에서 ${FEE.next}회차 — 노트북 챙겨 오세요.</li>`;
       const cb = document.getElementById('copy-acct');
       if (cb) cb.onclick = () => navigator.clipboard.writeText(P.account).then(() => B.toast('계좌번호를 복사했어요'), () => B.toast('복사하지 못했어요', 'err'));
       document.getElementById('done').classList.add('on'); scrollTo(0, 0);
@@ -504,7 +554,7 @@
   }
 
   restore(); sync(); show(0);
-  B.seatStatus().then(st => { if (!st) return; if (st.closed && st.am && st.am.full) return showClosed(); applyMode(st); });
+  B.seatStatus().then(st => { if (!st) return; applyMode(st); if (st.closed && st.am && st.am.full) { document.getElementById('joinsel').hidden = true; setJoin('visit'); } });
   if (B.store.get(DKEY)) { const s = document.getElementById('saved'); s.textContent = '✓ 작성하던 내용을 불러왔어요'; }
   if (Date.now() < new Date(C.open).getTime() && !/[?&]open=1/.test(location.search)) {
     form.innerHTML = '<div class="card closed"><h2 style="margin:0 0 8px">신청은 10/6(화)부터 열려요</h2><p class="muted" style="margin:0 0 18px">10/6(화) 00:00부터 10/16(금) 12:00까지 이 페이지에서 신청서를 작성할 수 있어요.</p><a class="btn btn-dark" href="./">모집 안내로 돌아가기</a></div>';
