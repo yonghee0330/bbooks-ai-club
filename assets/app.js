@@ -65,8 +65,8 @@
       else if (slot === '오후반 대기') slot = '오후반';
       const apps = store.get('apps', []);
       const id = 'AI1-' + String(apps.length + 1).padStart(3, '0') + '-' + Math.random().toString(36).slice(2, 4).toUpperCase();
-      apps.push(Object.assign({ id, at: now() }, d, { status, slot, pay: status === '대기' ? '' : d.pay })); store.set('apps', apps);
-      return { ok: true, id, status, slot, am: counts().am };
+      const fee = feeNow(); apps.push(Object.assign({ id, at: now() }, d, { status, slot, pay: status === '대기' ? '' : d.pay, fee: fee.amount })); store.set('apps', apps);
+      return { ok: true, id, status, slot, am: counts().am, fee: fee.amount, next: fee.next };
     },
     feed({ code, name }) {
       const m = me(code);
@@ -189,8 +189,14 @@
     return { next, done };
   }
 
+  // 신청 시점 참가비: 정가에서 이미 지나간 회차마다 step 차감 (최소 step). 신청서에서만 보여 준다
+  function feeNow() {
+    const { done } = currentSession(), f = C.fees || { base: 50000, step: 5000 }, amount = Math.max(f.step, f.base - f.step * done);
+    return { done, next: done + 1, amount, text: amount.toLocaleString('ko-KR') + '원', base: f.base, step: f.step, discounted: done > 0, nextDate: (C.sessions[done] || {}).date };
+  }
+
   // 정원 현황 { seats, taken, closed } — 서버가 안 되면 null (이때는 마감으로 막지 않는다)
   async function seatStatus() { try { const r = await api('status'); return r && r.ok ? r : null; } catch (e) { return null; } }
 
-  window.BAPC = { api, seatStatus, store, reveal, toast, countdown, countUp, esc, fmtDate, today, currentSession, reduced, demoMode: !C.apiUrl };
+  window.BAPC = { api, seatStatus, store, reveal, toast, countdown, countUp, esc, fmtDate, today, currentSession, feeNow, reduced, demoMode: !C.apiUrl };
 })();
