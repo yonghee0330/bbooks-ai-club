@@ -199,8 +199,8 @@
 
   // 신청 시점 참가비: 정가에서 이미 지나간 회차마다 step 차감 (최소 step). 신청서에서만 보여 준다
   function feeNow() {
-    const { done } = currentSession(), f = C.fees || { base: 50000, step: 5000, visit: 10000, regularMax: 4 }, amount = Math.max(f.step, f.base - f.step * done);
-    return { done, next: done + 1, amount, text: amount.toLocaleString('ko-KR') + '원', base: f.base, step: f.step, discounted: done > 0, nextDate: (C.sessions[done] || {}).date, regularOpen: done + 1 <= f.regularMax, visit: f.visit, visitText: f.visit.toLocaleString('ko-KR') + '원' };
+    const { done } = currentSession(), f = C.fees || { base: 50000, visit: 10000, regularMax: 4 }, amount = f.base; // 1기 전체 회비 — 합류 시점과 무관
+    return { done, next: done + 1, amount, text: amount.toLocaleString('ko-KR') + '원', base: f.base, discounted: false, nextDate: (C.sessions[done] || {}).date, regularOpen: done + 1 <= f.regularMax, visit: f.visit, visitText: f.visit.toLocaleString('ko-KR') + '원' };
   }
 
   // 정원 현황 { seats, taken, closed } — 서버가 안 되면 null (이때는 마감으로 막지 않는다)
