@@ -100,6 +100,18 @@
       const cs = store.get('comments', []); const x = { id: uid('C'), postId, by: m.id, text: t, at: now() };
       cs.push(x); store.set('comments', cs); return { ok: true, comment: x };
     },
+    editPost({ code, id, post }) {
+      const m = me(code); if (!m) return { ok: false, error: 'auth' }; const ps = store.get('posts', []), x = ps.find(p => p.id === id);
+      if (!x) return { ok: false, error: '글을 찾을 수 없어요' }; if (x.by !== m.id) return { ok: false, error: '내 글만 수정할 수 있어요' };
+      const n = normPost_(Object.assign({}, post, { kind: x.kind, project: x.project }), m.id, ps); if (n.error) return { ok: false, error: n.error };
+      const f = Object.assign({}, n.post, { edited: now() }); delete f.kind; Object.assign(x, f); store.set('posts', ps); return { ok: true, post: x };
+    },
+    editComment({ code, id, text }) {
+      const m = me(code); if (!m) return { ok: false, error: 'auth' }; const cs = store.get('comments', []), x = cs.find(c => c.id === id);
+      const t = String(text || '').trim(); if (!t || t.length > 600) return { ok: false, error: '댓글을 1~600자로 적어 주세요' };
+      if (!x) return { ok: false, error: '댓글을 찾을 수 없어요' }; if (x.by !== m.id) return { ok: false, error: '내 댓글만 수정할 수 있어요' };
+      x.text = t; x.edited = now(); store.set('comments', cs); return { ok: true, comment: x };
+    },
     deletePost({ code, id }) {
       const m = me(code); if (!m) return { ok: false, error: 'auth' }; const ps = store.get('posts', []); const x = ps.find(p => p.id === id); if (!x) return { ok: true };
       if (x.by !== m.id && m.role !== '운영자') return { ok: false, error: '내 글만 지울 수 있어요' };
