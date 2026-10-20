@@ -131,7 +131,7 @@
       const apps = store.get('apps', []); const a = apps.find(x => x.id === id);
       if (!a) return { ok: false, error: 'not found' };
       if (status) a.status = status; if (memo !== undefined) a.memo = memo;
-      if (a.status === '입금확인' && !a.memberCode) { // 입금확인 시 라운지 입장 코드 자동 발급
+      if (a.status === '입금확인' && !a.memberCode) { // 입금확인 시 베이스캠프 입장 코드 자동 발급
         seed(); const ms = store.get('members', []); const code = Math.random().toString(36).slice(2, 8);
         ms.push({ id: 'M-' + a.id, name: a.name, code, role: a.role }); store.set('members', ms); a.memberCode = code;
       }

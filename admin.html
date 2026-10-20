@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://script.google.com">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="assets/style.css?v=1021">
+<link rel="stylesheet" href="assets/style.css?v=1022">
 <style>
 .ahead { padding: 30px 0 10px; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
 .ahead h1 { font: 800 30px/1.2 var(--sans); letter-spacing: -.04em; margin: 8px 0 0; }
@@ -63,7 +63,7 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
 
 <main class="wrap" id="main" hidden style="padding-bottom:80px">
   <div class="ahead"><div><span class="eyebrow">Applications</span><h1>신청자 관리</h1></div>
-    <div style="display:flex;gap:8px"><button class="btn btn-ghost btn-sm" id="reload">새로고침</button><button class="btn btn-ghost btn-sm" id="codesBtn">라운지 코드</button><button class="btn btn-dark btn-sm" id="csv">CSV 내보내기</button></div></div>
+    <div style="display:flex;gap:8px"><button class="btn btn-ghost btn-sm" id="reload">새로고침</button><button class="btn btn-ghost btn-sm" id="codesBtn">베이스캠프 코드</button><button class="btn btn-dark btn-sm" id="csv">CSV 내보내기</button></div></div>
   <div class="card" id="codes" hidden style="padding:18px;margin-bottom:16px"></div>
   <div class="kpis" id="kpis"></div>
   <div class="dist" id="dist"></div>
@@ -75,8 +75,8 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
 
 <div class="detail" id="detail"><div class="card" id="dcard"></div></div>
 
-<script src="assets/config.js?v=1021"></script>
-<script src="assets/app.js?v=1021"></script>
+<script src="assets/config.js?v=1022"></script>
+<script src="assets/app.js?v=1022"></script>
 <script>
 (function () {
   const C = CLUB, B = BAPC, $ = s => document.querySelector(s);
@@ -137,12 +137,12 @@ table.t { border-collapse: collapse; width: 100%; min-width: 1280px; font-size: 
     $('#detail').classList.add('on');
   });
   $('#detail').addEventListener('click', e => { if (e.target.id === 'detail' || e.target.closest('[data-x]')) $('#detail').classList.remove('on'); });
-  /* 라운지 입장 정보: 아이디 = 신청서 이름, 코드 = 입금확인 때 발급된 코드 */
+  /* 베이스캠프 입장 정보: 아이디 = 신청서 이름, 코드 = 입금확인 때 발급된 코드 */
   $('#codesBtn').onclick = () => {
     const box = $('#codes'); box.hidden = !box.hidden; if (box.hidden) return;
     const url = 'https://bbooks.co.kr/ai-study/members.html', list = APPS.filter(a => a.memberCode && a.join !== '1회' && (a.status || '') !== '취소');
-    const msg = a => a.name + '님, 부천 AI 특공대 1기 신청이 완료됐어요!\n함께 쓰는 공간(멤버 라운지): ' + url + '\n이름(아이디): ' + a.name + ' / 입장 코드: ' + a.memberCode + '\n미리 들어와서 자기소개 한 줄 남겨 주세요 :)';
-    box.innerHTML = '<b style="font-size:17px">멤버 라운지 입장 정보</b><p class="muted" style="margin:6px 0 12px;font-size:14px">아이디는 신청서에 적은 <b>이름</b>이고, 입장 코드는 상태를 <b>입금확인</b>으로 바꿀 때 만들어져요. 1회 참관 신청은 라운지 입장이 없어요.</p>' +
+    const msg = a => a.name + '님, 부천 AI 특공대 1기 신청이 완료됐어요!\n베이스캠프: ' + url + '\n이름(아이디): ' + a.name + ' / 입장 코드: ' + a.memberCode + '\n미리 들어와서 자기소개 한 줄 남겨 주세요 :)';
+    box.innerHTML = '<b style="font-size:17px">베이스캠프 입장 정보</b><p class="muted" style="margin:6px 0 12px;font-size:14px">아이디는 신청서에 적은 <b>이름</b>이고, 입장 코드는 상태를 <b>입금확인</b>으로 바꿀 때 만들어져요. 1회 참관 신청은 베이스캠프 입장이 없어요.</p>' +
       (list.length ? `<table class="t"><thead><tr><th>이름(아이디)</th><th>입장 코드</th><th>상태</th><th></th></tr></thead><tbody>${list.map((a, i) => `<tr><td><b>${B.esc(a.name)}</b></td><td style="font-family:monospace;font-size:16px">${B.esc(a.memberCode)}</td><td>${B.esc(a.status || '')}</td><td><button class="btn btn-ghost btn-sm" data-msg="${i}">안내 문자 복사</button></td></tr>`).join('')}</tbody></table><div style="margin-top:12px"><button class="btn btn-dark btn-sm" id="copyAll">전체 목록 복사</button></div>` : '<p class="muted">아직 발급된 코드가 없어요. 신청자의 상태를 입금확인으로 바꾸면 코드가 만들어져요.</p>');
     box.onclick = e => {
       const b = e.target.closest('[data-msg]'), all = e.target.closest('#copyAll'); if (!b && !all) return;
